@@ -1,0 +1,35 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  
+  <g>
+    <rect style="fill: #ffe700;" x="88.64" y="49.36" width="4" height="151.33"/>
+    <rect style="fill: #ffe700;" x="103.13" y="49.36" width="4" height="151.33"/>
+    <rect style="fill: #ffe700;" x="117.63" y="49.36" width="4" height="151.33"/>
+    <rect style="fill: #ffe700;" x="132.13" y="49.36" width="4" height="151.33"/>
+    <rect style="fill: #ffe700;" x="146.62" y="49.36" width="4" height="151.33"/>
+    <rect style="fill: #ffe700;" x="161.12" y="49.36" width="4" height="151.33"/>
+  </g>
+  <g>
+    <g>
+      <rect style="fill: #ffe700;" x="68.18" y="87.54" width="114.04" height="8"/>
+      <g>
+        <rect style="fill: #ffe700;" x="177.01" y="82.97" width="17.15" height="17.15"/>
+        <path style="fill: #ffe700;" d="M194.66,100.62h-18.15v-18.15h18.15v18.15ZM177.5,99.62h16.15v-16.15h-16.15v16.15Z"/>
+      </g>
+      <g>
+        <rect style="fill: #ffe700;" x="59.6" y="82.97" width="17.15" height="17.15"/>
+        <path style="fill: #ffe700;" d="M77.25,100.62h-18.15v-18.15h18.15v18.15ZM60.1,99.62h16.15v-16.15h-16.15v16.15Z"/>
+      </g>
+    </g>
+    <g>
+      <rect style="fill: #ffe700;" x="68.18" y="154.52" width="114.04" height="8"/>
+      <g>
+        <rect style="fill: #ffe700;" x="177.01" y="149.94" width="17.15" height="17.15"/>
+        <path style="fill: #ffe700;" d="M194.66,167.59h-18.15v-18.15h18.15v18.15ZM177.5,166.59h16.15v-16.15h-16.15v16.15Z"/>
+      </g>
+      <g>
+        <rect style="fill: #ffe700;" x="59.6" y="149.94" width="17.15" height="17.15"/>
+        <path style="fill: #ffe700;" d="M77.25,167.59h-18.15v-18.15h18.15v18.15ZM60.1,166.59h16.15v-16.15h-16.15v16.15Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
