@@ -3,8 +3,24 @@
 window.JamAudio={
  ctx:null,voices:new Set(),buffers:new Map(),loading:new Map(),
  async ready(){
-  if(!this.ctx){this.ctx=new(window.AudioContext||window.webkitAudioContext)();const comp=this.ctx.createDynamicsCompressor();comp.threshold.value=-22;comp.knee.value=18;comp.ratio.value=8;comp.attack.value=.005;comp.release.value=.12;this.master=this.ctx.createGain();this.master.gain.value=.64;this.master.connect(comp);comp.connect(this.ctx.destination);}
-  if(this.ctx.state!=='running')await this.ctx.resume();
+  // Request a media-playback session where the browser supports it.
+  try{if(navigator.audioSession)navigator.audioSession.type='playback';}catch{}
+  if(!this.ctx||this.ctx.state==='closed'){
+   this.buffers.clear();this.loading.clear();this.voices.clear();
+   this.ctx=new(window.AudioContext||window.webkitAudioContext)();
+   this.compressor=this.ctx.createDynamicsCompressor();
+   this.compressor.threshold.value=-22;this.compressor.knee.value=18;
+   this.compressor.ratio.value=8;this.compressor.attack.value=.005;this.compressor.release.value=.12;
+   this.master=this.ctx.createGain();this.master.gain.value=.64;
+   this.output=this.ctx.createAnalyser();this.output.fftSize=2048;
+   this.master.connect(this.compressor);this.compressor.connect(this.output);this.output.connect(this.ctx.destination);
+  }
+  if(this.ctx.state!=='running'){
+   let timer;
+   try{await Promise.race([this.ctx.resume(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('소리 시작이 차단됐어요. PLAY를 다시 눌러 주세요.')),4000);})]);}
+   finally{clearTimeout(timer);}
+  }
+  if(this.ctx.state!=='running')throw Error('오디오가 중단됐어요. PLAY를 다시 눌러 주세요.');
  },
  target(n,e){const scale=[0,2,4,7,9,12,14,16,19,21,24,26,28],group=Number(n.icon.split('-')[0]);return (group===2?28:group===1?48:40)+scale[12-n.y]+(e.semitones||0);},
  resolve(n,e){if(!e.samples?.length)return e;const target=this.target(n,e),sample=e.samples.reduce((a,b)=>Math.abs(JAM_AUDIO_SAMPLES[b].rootMidi-target)<Math.abs(JAM_AUDIO_SAMPLES[a].rootMidi-target)?b:a);return {...e,sample};},
@@ -24,7 +40,7 @@ window.JamAudio={
   const entry=JAM_AUDIO_BANK[n.icon];if(!entry||!this.ctx)return;const base=at??this.ctx.currentTime+.01;
   for(const original of entry.events){
    const e=this.resolve(n,original),duration=this.eventDuration(n,e,bpm),offset=Math.max(0,elapsed-e.beat*60/bpm);if(offset>=duration)continue;
-   const buffer=this.buffers.get(e.sample);if(!buffer)continue;
+   const buffer=this.buffers.get(e.sample);if(!buffer)throw Error('음원이 준비되지 않았어요. PLAY를 다시 눌러 주세요.');
    const t=base+Math.max(0,e.beat*60/bpm-elapsed),remaining=duration-offset,node=this.ctx.createBufferSource(),gain=this.ctx.createGain(),rate=this.pitch(n,e),nodes=[node,gain],bendRate=2**((e.bend||0)/12),ramp=duration*.8,progress=Math.min(offset/ramp,1);
    node.buffer=buffer;node.playbackRate.setValueAtTime(rate*(1+(bendRate-1)*progress),t);
    if(e.bend&&offset<ramp)node.playbackRate.linearRampToValueAtTime(rate*bendRate,t+ramp-offset);

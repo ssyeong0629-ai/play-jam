@@ -1,6 +1,6 @@
-const cacheName = 'play-jam-mobile-v3';
+const cacheName = 'play-jam-mobile-v4';
 const files = ['./index.html', './css/app.css', './js/icons.js', './assets/audio/bank.js',
-  './js/audio.js', './js/model.js', './js/app.js', './js/install.js',
+  './js/audio.js?v=audio4', './js/model.js', './js/app.js?v=audio4', './js/install.js',
   './manifest.webmanifest', './app-icon.png', './app-icon-192.png'];
 
 self.addEventListener('install', event => {
