@@ -1,0 +1,1305 @@
+{
+  "0-0": {
+    "name": "킥",
+    "events": [
+      {
+        "sample": "kick",
+        "beat": 0,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-1": {
+    "name": "스네어",
+    "events": [
+      {
+        "sample": "snare",
+        "beat": 0,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-2": {
+    "name": "하이햇 패턴",
+    "events": [
+      {
+        "sample": "hat",
+        "beat": 0,
+        "semitones": 0,
+        "gain": 0.6
+      },
+      {
+        "sample": "hat-pedal",
+        "beat": 0.25,
+        "semitones": 0,
+        "gain": 0.6
+      },
+      {
+        "sample": "hat",
+        "beat": 0.5,
+        "semitones": 0,
+        "gain": 0.6
+      },
+      {
+        "sample": "hat-open",
+        "beat": 0.75,
+        "semitones": 0,
+        "gain": 0.6,
+        "gate": 0.45
+      }
+    ],
+    "drums": true
+  },
+  "0-3": {
+    "name": "킥 + 스네어",
+    "events": [
+      {
+        "sample": "kick",
+        "beat": 0,
+        "semitones": 0
+      },
+      {
+        "sample": "snare",
+        "beat": 1,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-4": {
+    "name": "킥 + 킥 + 스네어",
+    "events": [
+      {
+        "sample": "kick",
+        "beat": 0,
+        "semitones": 0
+      },
+      {
+        "sample": "kick",
+        "beat": 0.5,
+        "semitones": 0
+      },
+      {
+        "sample": "snare",
+        "beat": 1,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-5": {
+    "name": "탐 + 심벌 필인",
+    "events": [
+      {
+        "sample": "tom",
+        "beat": 0,
+        "semitones": 0
+      },
+      {
+        "sample": "tom",
+        "beat": 0.25,
+        "semitones": -3
+      },
+      {
+        "sample": "snare",
+        "beat": 0.5,
+        "semitones": 0
+      },
+      {
+        "sample": "crash",
+        "beat": 1,
+        "semitones": 0,
+        "gain": 0.45
+      }
+    ],
+    "drums": true
+  },
+  "1-0": {
+    "name": "신디 단일음",
+    "events": [
+      {
+        "sample": "keys-all_all_all-48",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.65,
+        "samples": [
+          "keys-all_all_all-48",
+          "keys-all_all_all-60",
+          "keys-all_all_all-72"
+        ]
+      }
+    ],
+    "filter": 4500
+  },
+  "1-1": {
+    "name": "신디 플럭",
+    "events": [
+      {
+        "sample": "keys-clarinet-48",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.2,
+        "samples": [
+          "keys-clarinet-48",
+          "keys-clarinet-60",
+          "keys-clarinet-72"
+        ]
+      }
+    ],
+    "filter": 1800
+  },
+  "1-2": {
+    "name": "신디 코드",
+    "events": [
+      {
+        "sample": "keys-all_all_all-48",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.7,
+        "gain": 0.4,
+        "samples": [
+          "keys-all_all_all-48",
+          "keys-all_all_all-60",
+          "keys-all_all_all-72"
+        ]
+      },
+      {
+        "sample": "keys-all_all_all-48",
+        "beat": 0,
+        "semitones": 4,
+        "gate": 0.7,
+        "gain": 0.4,
+        "samples": [
+          "keys-all_all_all-48",
+          "keys-all_all_all-60",
+          "keys-all_all_all-72"
+        ]
+      },
+      {
+        "sample": "keys-all_all_all-48",
+        "beat": 0,
+        "semitones": 7,
+        "gate": 0.7,
+        "gain": 0.4,
+        "samples": [
+          "keys-all_all_all-48",
+          "keys-all_all_all-60",
+          "keys-all_all_all-72"
+        ]
+      }
+    ],
+    "filter": 2800
+  },
+  "1-3": {
+    "name": "신디 아르페지오",
+    "events": [
+      {
+        "sample": "keys-flutes-48",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.25,
+        "samples": [
+          "keys-flutes-48",
+          "keys-flutes-60",
+          "keys-flutes-72"
+        ]
+      },
+      {
+        "sample": "keys-flutes-48",
+        "beat": 0.25,
+        "semitones": 4,
+        "gate": 0.25,
+        "samples": [
+          "keys-flutes-48",
+          "keys-flutes-60",
+          "keys-flutes-72"
+        ]
+      },
+      {
+        "sample": "keys-flutes-48",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.25,
+        "samples": [
+          "keys-flutes-48",
+          "keys-flutes-60",
+          "keys-flutes-72"
+        ]
+      },
+      {
+        "sample": "keys-flutes-48",
+        "beat": 0.75,
+        "semitones": 12,
+        "gate": 0.25,
+        "samples": [
+          "keys-flutes-48",
+          "keys-flutes-60",
+          "keys-flutes-72"
+        ]
+      }
+    ],
+    "filter": 3200
+  },
+  "1-4": {
+    "name": "신디 리드",
+    "events": [
+      {
+        "sample": "keys-clarinet-48",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.28,
+        "samples": [
+          "keys-clarinet-48",
+          "keys-clarinet-60",
+          "keys-clarinet-72"
+        ]
+      },
+      {
+        "sample": "keys-clarinet-48",
+        "beat": 0.25,
+        "semitones": 2,
+        "gate": 0.28,
+        "samples": [
+          "keys-clarinet-48",
+          "keys-clarinet-60",
+          "keys-clarinet-72"
+        ]
+      },
+      {
+        "sample": "keys-clarinet-48",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.28,
+        "samples": [
+          "keys-clarinet-48",
+          "keys-clarinet-60",
+          "keys-clarinet-72"
+        ]
+      },
+      {
+        "sample": "keys-clarinet-48",
+        "beat": 0.75,
+        "semitones": 4,
+        "gate": 0.28,
+        "samples": [
+          "keys-clarinet-48",
+          "keys-clarinet-60",
+          "keys-clarinet-72"
+        ]
+      },
+      {
+        "sample": "keys-clarinet-48",
+        "beat": 1,
+        "semitones": 2,
+        "gate": 0.28,
+        "samples": [
+          "keys-clarinet-48",
+          "keys-clarinet-60",
+          "keys-clarinet-72"
+        ]
+      },
+      {
+        "sample": "keys-clarinet-48",
+        "beat": 1.25,
+        "semitones": 0,
+        "gate": 0.28,
+        "samples": [
+          "keys-clarinet-48",
+          "keys-clarinet-60",
+          "keys-clarinet-72"
+        ]
+      }
+    ],
+    "filter": 4000
+  },
+  "1-5": {
+    "name": "신디 패드",
+    "events": [
+      {
+        "sample": "keys-violin-48",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 1.8,
+        "gain": 0.4,
+        "attack": 0.22,
+        "samples": [
+          "keys-violin-48",
+          "keys-violin-60",
+          "keys-violin-72"
+        ]
+      },
+      {
+        "sample": "keys-violin-48",
+        "beat": 0,
+        "semitones": 7,
+        "gate": 1.8,
+        "gain": 0.4,
+        "attack": 0.22,
+        "samples": [
+          "keys-violin-48",
+          "keys-violin-60",
+          "keys-violin-72"
+        ]
+      },
+      {
+        "sample": "keys-violin-48",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 1.8,
+        "gain": 0.4,
+        "attack": 0.22,
+        "samples": [
+          "keys-violin-48",
+          "keys-violin-60",
+          "keys-violin-72"
+        ]
+      }
+    ],
+    "filter": 1200
+  },
+  "2-0": {
+    "name": "베이스 기본",
+    "events": [
+      {
+        "sample": "bass-finger-36",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      }
+    ]
+  },
+  "2-1": {
+    "name": "베이스 피크 피킹",
+    "events": [
+      {
+        "sample": "bass-pick-36",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.3,
+        "samples": [
+          "bass-pick-36",
+          "bass-pick-40",
+          "bass-pick-43",
+          "bass-pick-48",
+          "bass-pick-55"
+        ]
+      }
+    ]
+  },
+  "2-2": {
+    "name": "베이스 슬랩",
+    "events": [
+      {
+        "sample": "slap",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.6
+      }
+    ]
+  },
+  "2-3": {
+    "name": "베이스 옥타브",
+    "events": [
+      {
+        "sample": "bass-short",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 0.3
+      }
+    ]
+  },
+  "2-4": {
+    "name": "베이스 슬라이드",
+    "events": [
+      {
+        "sample": "bass-finger-36",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "bend": 7,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      }
+    ]
+  },
+  "2-5": {
+    "name": "베이스 리프",
+    "events": [
+      {
+        "sample": "bass-finger-36",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.3,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      },
+      {
+        "sample": "bass-finger-36",
+        "beat": 0.25,
+        "semitones": 0,
+        "gate": 0.3,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      },
+      {
+        "sample": "bass-finger-36",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.3,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      },
+      {
+        "sample": "bass-finger-36",
+        "beat": 0.75,
+        "semitones": 12,
+        "gate": 0.3,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      },
+      {
+        "sample": "bass-finger-36",
+        "beat": 1,
+        "semitones": 7,
+        "gate": 0.3,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      },
+      {
+        "sample": "bass-finger-36",
+        "beat": 1.25,
+        "semitones": 0,
+        "gate": 0.3,
+        "samples": [
+          "bass-finger-36",
+          "bass-finger-40",
+          "bass-finger-43",
+          "bass-finger-48",
+          "bass-finger-55"
+        ]
+      }
+    ]
+  },
+  "3-0": {
+    "name": "어쿠스틱 단일 피킹",
+    "events": [
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      }
+    ]
+  },
+  "3-1": {
+    "name": "어쿠스틱 핑거패턴",
+    "events": [
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.6,
+        "gain": 0.7,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      },
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0.25,
+        "semitones": 7,
+        "gate": 0.6,
+        "gain": 0.7,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      },
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0.5,
+        "semitones": 12,
+        "gate": 0.6,
+        "gain": 0.7,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      },
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0.75,
+        "semitones": 7,
+        "gate": 0.6,
+        "gain": 0.7,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      }
+    ]
+  },
+  "3-2": {
+    "name": "어쿠스틱 아르페지오",
+    "events": [
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.65,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      },
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0.3,
+        "semitones": 4,
+        "gate": 0.65,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      },
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0.6,
+        "semitones": 7,
+        "gate": 0.65,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      },
+      {
+        "sample": "acoustic-01-40",
+        "beat": 0.8999999999999999,
+        "semitones": 12,
+        "gate": 0.65,
+        "samples": [
+          "acoustic-01-40",
+          "acoustic-01-48",
+          "acoustic-01-55",
+          "acoustic-01-60",
+          "acoustic-01-67"
+        ]
+      }
+    ]
+  },
+  "3-3": {
+    "name": "어쿠스틱 다운 스트로크",
+    "events": [
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.025,
+        "semitones": 7,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.05,
+        "semitones": 12,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.07500000000000001,
+        "semitones": 16,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.1,
+        "semitones": 19,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      }
+    ]
+  },
+  "3-4": {
+    "name": "어쿠스틱 업 스트로크",
+    "events": [
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0,
+        "semitones": 19,
+        "gate": 0.6,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.025,
+        "semitones": 16,
+        "gate": 0.6,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.05,
+        "semitones": 12,
+        "gate": 0.6,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.07500000000000001,
+        "semitones": 7,
+        "gate": 0.6,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      },
+      {
+        "sample": "acoustic-03-40",
+        "beat": 0.1,
+        "semitones": 0,
+        "gate": 0.6,
+        "gain": 0.5,
+        "samples": [
+          "acoustic-03-40",
+          "acoustic-03-48",
+          "acoustic-03-55",
+          "acoustic-03-60",
+          "acoustic-03-67"
+        ]
+      }
+    ]
+  },
+  "3-5": {
+    "name": "어쿠스틱 뮤트",
+    "events": [
+      {
+        "sample": "acoustic-mute",
+        "beat": 0,
+        "gate": 0.8,
+        "gain": 0.55
+      }
+    ]
+  },
+  "4-0": {
+    "name": "클린 일렉 단일음",
+    "events": [
+      {
+        "sample": "guitar-green-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      }
+    ]
+  },
+  "4-1": {
+    "name": "클린 일렉 코드",
+    "events": [
+      {
+        "sample": "guitar-green-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "gain": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      },
+      {
+        "sample": "guitar-green-40",
+        "beat": 0.025,
+        "semitones": 4,
+        "gate": 0.8,
+        "gain": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      },
+      {
+        "sample": "guitar-green-40",
+        "beat": 0.05,
+        "semitones": 7,
+        "gate": 0.8,
+        "gain": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      }
+    ]
+  },
+  "4-2": {
+    "name": "클린 일렉 슬라이드",
+    "events": [
+      {
+        "sample": "guitar-green-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "bend": 5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      }
+    ]
+  },
+  "4-3": {
+    "name": "클린 일렉 벤딩",
+    "events": [
+      {
+        "sample": "guitar-green-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9,
+        "bend": 2,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      }
+    ]
+  },
+  "4-4": {
+    "name": "클린 일렉 옥타브",
+    "events": [
+      {
+        "sample": "guitar-green-40",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 0.6,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      }
+    ]
+  },
+  "4-5": {
+    "name": "클린 일렉 멜로디",
+    "events": [
+      {
+        "sample": "guitar-green-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      },
+      {
+        "sample": "guitar-green-40",
+        "beat": 0.3,
+        "semitones": 4,
+        "gate": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      },
+      {
+        "sample": "guitar-green-40",
+        "beat": 0.6,
+        "semitones": 7,
+        "gate": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      },
+      {
+        "sample": "guitar-green-40",
+        "beat": 0.8999999999999999,
+        "semitones": 9,
+        "gate": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      },
+      {
+        "sample": "guitar-green-40",
+        "beat": 1.2,
+        "semitones": 7,
+        "gate": 0.5,
+        "samples": [
+          "guitar-green-40",
+          "guitar-green-48",
+          "guitar-green-55",
+          "guitar-green-60",
+          "guitar-green-67",
+          "guitar-green-72"
+        ]
+      }
+    ]
+  },
+  "5-0": {
+    "name": "디스토션 단일음",
+    "events": [
+      {
+        "sample": "guitar-black-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      }
+    ],
+    "drive": 18
+  },
+  "5-1": {
+    "name": "파워 코드",
+    "events": [
+      {
+        "sample": "guitar-black-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0,
+        "semitones": 7,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 0.9,
+        "gain": 0.5,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      }
+    ],
+    "drive": 22
+  },
+  "5-2": {
+    "name": "팜뮤트 리듬",
+    "events": [
+      {
+        "sample": "palm-mute",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.12,
+        "samples": [
+          "palm-mute",
+          "palm-mute-high"
+        ]
+      },
+      {
+        "sample": "palm-mute",
+        "beat": 0.25,
+        "semitones": 0,
+        "gate": 0.12,
+        "samples": [
+          "palm-mute",
+          "palm-mute-high"
+        ]
+      },
+      {
+        "sample": "palm-mute",
+        "beat": 0.5,
+        "semitones": 0,
+        "gate": 0.12,
+        "samples": [
+          "palm-mute",
+          "palm-mute-high"
+        ]
+      }
+    ]
+  },
+  "5-3": {
+    "name": "강한 벤딩",
+    "events": [
+      {
+        "sample": "guitar-black-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 1,
+        "bend": 3,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      }
+    ],
+    "drive": 24
+  },
+  "5-4": {
+    "name": "기타 리프",
+    "events": [
+      {
+        "sample": "guitar-black-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.22,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0.25,
+        "semitones": 0,
+        "gate": 0.22,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.22,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0.75,
+        "semitones": 5,
+        "gate": 0.22,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 1,
+        "semitones": 3,
+        "gate": 0.22,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 1.25,
+        "semitones": 0,
+        "gate": 0.22,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      }
+    ],
+    "drive": 18
+  },
+  "5-5": {
+    "name": "강한 스트로크",
+    "events": [
+      {
+        "sample": "guitar-black-40",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "gain": 0.4,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0.02,
+        "semitones": 7,
+        "gate": 0.8,
+        "gain": 0.4,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0.04,
+        "semitones": 12,
+        "gate": 0.8,
+        "gain": 0.4,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      },
+      {
+        "sample": "guitar-black-40",
+        "beat": 0.06,
+        "semitones": 19,
+        "gate": 0.8,
+        "gain": 0.4,
+        "samples": [
+          "guitar-black-40",
+          "guitar-black-48",
+          "guitar-black-55",
+          "guitar-black-60",
+          "guitar-black-67",
+          "guitar-black-72"
+        ]
+      }
+    ],
+    "drive": 26
+  }
+}

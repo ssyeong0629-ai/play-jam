@@ -1,0 +1,492 @@
+[
+  {
+    "id": "bass-finger-36",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_c2_mf_rr1.wav",
+    "rootMidi": 36,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.671356201171875
+  },
+  {
+    "id": "bass-pick-36",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_c2_f_rr1.wav",
+    "rootMidi": 36,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-finger-40",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_e2_mf_rr1.wav",
+    "rootMidi": 40,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-pick-40",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_e2_f_rr1.wav",
+    "rootMidi": 40,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-finger-43",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_g2_mf_rr1.wav",
+    "rootMidi": 43,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-pick-43",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_g2_f_rr1.wav",
+    "rootMidi": 43,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-finger-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_c3_mf_rr1.wav",
+    "rootMidi": 48,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-pick-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_c3_f_rr1.wav",
+    "rootMidi": 48,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-finger-55",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_g3_mf_rr1.wav",
+    "rootMidi": 55,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "bass-pick-55",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_g3_f_rr1.wav",
+    "rootMidi": 55,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-green-40",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_e3_mf_rr1.wav",
+    "rootMidi": 40,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-black-40",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_e3_mf_rr1.wav",
+    "rootMidi": 40,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-green-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_c4_mf_rr1.wav",
+    "rootMidi": 48,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-black-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_c4_mf_rr1.wav",
+    "rootMidi": 48,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-green-55",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_g4_mf_rr1.wav",
+    "rootMidi": 55,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-black-55",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_g4_mf_rr1.wav",
+    "rootMidi": 55,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-green-60",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_c5_mf_rr1.wav",
+    "rootMidi": 60,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.4033203125
+  },
+  {
+    "id": "guitar-black-60",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_c5_mf_rr1.wav",
+    "rootMidi": 60,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "guitar-green-67",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_g5_mf_rr1.wav",
+    "rootMidi": 67,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.308837890625
+  },
+  {
+    "id": "guitar-black-67",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_g5_mf_rr1.wav",
+    "rootMidi": 67,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.26678125,
+    "peak": 0.438720703125
+  },
+  {
+    "id": "guitar-green-72",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_c6_mf_rr1.wav",
+    "rootMidi": 72,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.301513671875
+  },
+  {
+    "id": "guitar-black-72",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_c6_mf_rr1.wav",
+    "rootMidi": 72,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-01-40",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringLowE_Vel01_E2_01.ogg",
+    "rootMidi": 40,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-03-40",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringLowE_Vel03_E2_01.ogg",
+    "rootMidi": 40,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-01-48",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringA_Vel01_C3_01.ogg",
+    "rootMidi": 48,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-03-48",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringA_Vel03_C3_01.ogg",
+    "rootMidi": 48,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-01-55",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringD_Vel01_G3_01.ogg",
+    "rootMidi": 55,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-03-55",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringD_Vel03_G3_01.ogg",
+    "rootMidi": 55,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-01-60",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringB_Vel01_C4_01.ogg",
+    "rootMidi": 60,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-03-60",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringB_Vel03_C4_01.ogg",
+    "rootMidi": 60,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "acoustic-01-67",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringHighE_Vel01_G4_01.ogg",
+    "rootMidi": 67,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.657470703125
+  },
+  {
+    "id": "acoustic-03-67",
+    "url": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringHighE_Vel03_G4_01.ogg",
+    "rootMidi": 67,
+    "seconds": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "duration": 2.4,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-all_all_all-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/all_all_all_c4.wav",
+    "rootMidi": 48,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-all_all_all-60",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/all_all_all_c5.wav",
+    "rootMidi": 60,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-all_all_all-72",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/all_all_all_c6.wav",
+    "rootMidi": 72,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-flutes-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/flutes_c4.wav",
+    "rootMidi": 48,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-flutes-60",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/flutes_c5.wav",
+    "rootMidi": 60,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-flutes-72",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/flutes_c6.wav",
+    "rootMidi": 72,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 2.955375,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-clarinet-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/clarinet_c4.wav",
+    "rootMidi": 48,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-clarinet-60",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/clarinet_c5.wav",
+    "rootMidi": 60,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-clarinet-72",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/clarinet_c6.wav",
+    "rootMidi": 72,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 2.98134375,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-violin-48",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/violin_c4.wav",
+    "rootMidi": 48,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 2.8445625,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-violin-60",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/violin_c5.wav",
+    "rootMidi": 60,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "keys-violin-72",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/violin_c6.wav",
+    "rootMidi": 72,
+    "seconds": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "duration": 3.0,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "hat-open",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.big-rusty-drums/HEAD/Samples/hihat_14/open/cl/ht_open_vl4_rr1.flac",
+    "rootMidi": 60,
+    "seconds": 1.6,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums",
+    "duration": 1.6,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "hat-pedal",
+    "url": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.big-rusty-drums/HEAD/Samples/hihat_14/chik/cl/ht_chik_vl4_rr1.flac",
+    "rootMidi": 60,
+    "seconds": 1.6,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums",
+    "duration": 1.6,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "palm-mute",
+    "url": "https://cdn.freesound.org/previews/12/12035_6479-hq.mp3",
+    "rootMidi": 52,
+    "seconds": 1.5,
+    "license": "CC0-1.0",
+    "source": "https://freesound.org/people/SpeedY/sounds/12035/",
+    "duration": 1.5,
+    "peak": 0.67138671875
+  },
+  {
+    "id": "palm-mute-high",
+    "url": "https://cdn.freesound.org/previews/12/12031_6479-hq.mp3",
+    "rootMidi": 64,
+    "seconds": 0.65,
+    "license": "CC0-1.0",
+    "source": "https://freesound.org/people/SpeedY/sounds/12031/",
+    "duration": 0.65,
+    "peak": 0.671356201171875
+  },
+  {
+    "id": "acoustic-mute",
+    "url": "https://cdn.freesound.org/previews/315/315705_4831592-hq.mp3",
+    "rootMidi": 50,
+    "seconds": 0.6,
+    "license": "CC0-1.0",
+    "source": "https://freesound.org/people/spitefuloctopus/sounds/315705/",
+    "duration": 0.6,
+    "peak": 0.67138671875
+  }
+]
