@@ -1,56 +1,21 @@
-# PLAY JAM
+# PLAY JAM — 핵심 편집 수정본
 
-A graphic sound-poster prototype. Open **index.html** directly in a browser. No installation, server, build step, framework, CDN, module imports or remote samples.
+압축을 풀어 내용물(index.html, css, js, assets)을 GitHub 저장소의 기존 index.html과 같은 위치에 업로드하세요. 설치와 빌드는 필요 없습니다.
 
-## Edit
+## 반영
+- Figma 개선안 03 팔레트의 실제 배치 순서: 제작 SVG 30개 + 동그라미 6개, 색상별 6행 × 6열
+- 아이콘 26px 고정, 크기·회전 핸들과 단축키 제거
+- 클릭 및 드래그 연속 배치, 13개 높이 스냅
+- 클릭 선택, Shift 다중 선택, 그룹 이동, ×/Delete 삭제, Undo/Redo
+- 첫 페이지 7단, 이후 8단의 세로 스크롤; 끝부분 배치 시 다음 페이지 준비
+- 장식 밀도, PNG 저장, 작품 상태를 담은 공유 링크, 자동 저장
+- Clarity 프로젝트 zcrpqz8ze9 삽입
 
-- Pick an icon or Random. Click a staff to place it; placement plays its sound.
-- Click an existing icon to select. Drag to move; handles resize/rotate.
-- Click blank space or Esc to deselect; the next click places an icon.
-- Enter adds the next icon at a regular beat interval after the last one.
-- Arrow keys move; + / − resize; [ / ] rotate. Shift makes larger adjustments.
-- Delete / Backspace removes the last effect first, then the instrument.
-- Effect icons have a tiny corner dot. Select one and tap an instrument, or drag it onto an instrument. Maximum two effects.
-- Snap optionally locks horizontal positions to equal beat intervals. Soft snapping remains available when Snap is off.
-- Space plays/pauses. BPM changes timing. Loop is off by default.
-- Drag the pink playhead to seek. Audio is quiet while dragging and resumes only if it was playing.
-- Continuous scrolling score: 7 staves on the first page, 8 on each subsequent page. Reaching the last beat of a page creates the next page automatically. Enter continues onto the next staff.
-- Playback ends half a beat after the last symbol, ignoring empty staves. Drag the playhead across staves to seek.
-- Width view is the default. Fit page shows one complete A4. The default canvas fills the available width; the bottom Library can minimize or close.
+## 남은 작업 — 반드시 확인
+- 실제 악기 녹음 파일은 포함되지 않았습니다. 임의 합성음으로 대체하지 않았으며 현재 재생은 시각 애니메이션만 확인할 수 있습니다. assets/audio/bank.js의 검증된 음원 연결이 필요합니다.
+- 사이드바 및 원형 팔레트의 세부 디자인과 동작은 초안이며 최종 검증 전입니다.
+- 실제 브라우저 UI/음원 청취 검증은 실행 환경 제한으로 완료하지 못했습니다. JavaScript 문법 및 모델 로직 검사는 통과했습니다.
+- 이전 v2 작업은 덮어쓰지 않도록 별도 v3 저장 키를 사용합니다. 이전 작품 자동 변환은 포함되지 않습니다.
+- 제작 아이콘과 5개 연주법의 최종 대응은 미확정입니다. 파일 번호를 연주법 순서로 사용하지 않았습니다.
 
-## Save
-
-Autosave uses this browser's localStorage. Browser/file permissions can affect persistence; use **Export → Project** for a portable JSON backup. Open project restores it.
-
-PNG and PDF contain the poster artwork, not editing handles. Check “all pages” for all pages. Wallpaper is 1080 × 1920 with the complete poster centered. Hosted share links contain the score data in the fragment. Local files use JSON sharing instead of a non-working file URL.
-
-Video recording is a short (up to 12 seconds) browser-native capture with audio. MP4 is used if supported, otherwise WebM. GIF is not implemented. Video support must be verified on each browser.
-
-## Files
-
-- `index.html`: all app views and menus
-- `css/base.css`: colors, typography and shared controls
-- `css/editor.css`: poster, editor and responsive layout
-- `js/icons.js`: editable icon catalog and offline SVG strings for export
-- `assets/icons/`: supplied artwork copied for this prototype (originals stay untouched)
-- `js/editor.js`: project data, editing, selection, keyboard shortcuts, snapping, pagination, playback
-- `js/audio.js`: Web Audio synthesis, adapted from the original PLAY-JAM.html
-- `js/export.js`: PNG/PDF/project/link/video export
-- `netlify.toml`: zero-build static publication configuration
-
-## Updating
-
-Keep the same GitHub repository and Netlify project. Commit updates to the connected production branch; Netlify redeploys automatically. Build command: **empty**. Publish directory: **.**. Never upload private project backups or credentials.
-
-Project data has a `version: 2` field. Future incompatible schema changes must add a migration before changing this version. The original v1 HTML's browser storage is not overwritten.
-
-## Prototype limitations
-
-- The new icon-to-sound mapping and effect meanings are provisional, not a finalized musical taxonomy.
-- Touch haptics depend on browser/device support; visual snapping feedback is always present.
-- Audio begins after a user gesture; hover previews work after audio has been enabled by a tap/click.
-- Offline saving/export, mobile pinch, recording and audible timing require real-browser QA. Automated syntax/DOM checks do not replace these.
-- No separate bouncing “Toy” mode: placement sound, snap and neon feedback happen in the normal editor.
-
-## Welcome and guide
-START opens a four-step guide over the editor. Skip enters the editor directly. Use 사용법 to replay the guide. Shared score links bypass the welcome screen. The intro animation respects reduced motion.
+공유 링크는 GitHub Pages에서 생성하세요. 로컬 index.html에서는 편집과 PNG 저장이 가능합니다.
