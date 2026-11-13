@@ -1,0 +1,808 @@
+{
+  "0-0": {
+    "name": "킥",
+    "events": [
+      {
+        "sample": "kick",
+        "beat": 0,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-1": {
+    "name": "스네어",
+    "events": [
+      {
+        "sample": "snare",
+        "beat": 0,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-2": {
+    "name": "하이햇 패턴",
+    "events": [
+      {
+        "sample": "hat",
+        "beat": 0.0,
+        "semitones": 0,
+        "gain": 0.6
+      },
+      {
+        "sample": "hat",
+        "beat": 0.25,
+        "semitones": 0,
+        "gain": 0.6
+      },
+      {
+        "sample": "hat",
+        "beat": 0.5,
+        "semitones": 0,
+        "gain": 0.6
+      },
+      {
+        "sample": "hat",
+        "beat": 0.75,
+        "semitones": 0,
+        "gain": 0.6
+      }
+    ],
+    "drums": true
+  },
+  "0-3": {
+    "name": "킥 + 스네어",
+    "events": [
+      {
+        "sample": "kick",
+        "beat": 0,
+        "semitones": 0
+      },
+      {
+        "sample": "snare",
+        "beat": 1,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-4": {
+    "name": "킥 + 킥 + 스네어",
+    "events": [
+      {
+        "sample": "kick",
+        "beat": 0,
+        "semitones": 0
+      },
+      {
+        "sample": "kick",
+        "beat": 0.5,
+        "semitones": 0
+      },
+      {
+        "sample": "snare",
+        "beat": 1,
+        "semitones": 0
+      }
+    ],
+    "drums": true
+  },
+  "0-5": {
+    "name": "탐 + 심벌 필인",
+    "events": [
+      {
+        "sample": "tom",
+        "beat": 0,
+        "semitones": 0
+      },
+      {
+        "sample": "tom",
+        "beat": 0.25,
+        "semitones": -3
+      },
+      {
+        "sample": "snare",
+        "beat": 0.5,
+        "semitones": 0
+      },
+      {
+        "sample": "crash",
+        "beat": 1,
+        "semitones": 0,
+        "gain": 0.45
+      }
+    ],
+    "drums": true
+  },
+  "1-0": {
+    "name": "신디 단일음",
+    "events": [
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.65
+      }
+    ],
+    "filter": 4500
+  },
+  "1-1": {
+    "name": "신디 플럭",
+    "events": [
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.2
+      }
+    ],
+    "filter": 1800
+  },
+  "1-2": {
+    "name": "신디 코드",
+    "events": [
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.7,
+        "gain": 0.4
+      },
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 4,
+        "gate": 0.7,
+        "gain": 0.4
+      },
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 7,
+        "gate": 0.7,
+        "gain": 0.4
+      }
+    ],
+    "filter": 2800
+  },
+  "1-3": {
+    "name": "신디 아르페지오",
+    "events": [
+      {
+        "sample": "synth",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.25
+      },
+      {
+        "sample": "synth",
+        "beat": 0.25,
+        "semitones": 4,
+        "gate": 0.25
+      },
+      {
+        "sample": "synth",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.25
+      },
+      {
+        "sample": "synth",
+        "beat": 0.75,
+        "semitones": 12,
+        "gate": 0.25
+      }
+    ],
+    "filter": 3200
+  },
+  "1-4": {
+    "name": "신디 리드",
+    "events": [
+      {
+        "sample": "synth",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.28
+      },
+      {
+        "sample": "synth",
+        "beat": 0.25,
+        "semitones": 2,
+        "gate": 0.28
+      },
+      {
+        "sample": "synth",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.28
+      },
+      {
+        "sample": "synth",
+        "beat": 0.75,
+        "semitones": 4,
+        "gate": 0.28
+      },
+      {
+        "sample": "synth",
+        "beat": 1.0,
+        "semitones": 2,
+        "gate": 0.28
+      },
+      {
+        "sample": "synth",
+        "beat": 1.25,
+        "semitones": 0,
+        "gate": 0.28
+      }
+    ],
+    "filter": 4000
+  },
+  "1-5": {
+    "name": "신디 패드",
+    "events": [
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 1.8,
+        "gain": 0.4,
+        "attack": 0.22
+      },
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 7,
+        "gate": 1.8,
+        "gain": 0.4,
+        "attack": 0.22
+      },
+      {
+        "sample": "synth",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 1.8,
+        "gain": 0.4,
+        "attack": 0.22
+      }
+    ],
+    "filter": 1200
+  },
+  "2-0": {
+    "name": "베이스 기본",
+    "events": [
+      {
+        "sample": "bass",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8
+      }
+    ]
+  },
+  "2-1": {
+    "name": "베이스 스타카토",
+    "events": [
+      {
+        "sample": "bass-short",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.3
+      }
+    ]
+  },
+  "2-2": {
+    "name": "베이스 슬랩",
+    "events": [
+      {
+        "sample": "slap",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.6
+      }
+    ]
+  },
+  "2-3": {
+    "name": "베이스 옥타브",
+    "events": [
+      {
+        "sample": "bass-short",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 0.3
+      }
+    ]
+  },
+  "2-4": {
+    "name": "베이스 슬라이드",
+    "events": [
+      {
+        "sample": "bass",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "bend": 7
+      }
+    ]
+  },
+  "2-5": {
+    "name": "베이스 리프",
+    "events": [
+      {
+        "sample": "bass",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.3
+      },
+      {
+        "sample": "bass",
+        "beat": 0.25,
+        "semitones": 0,
+        "gate": 0.3
+      },
+      {
+        "sample": "bass",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.3
+      },
+      {
+        "sample": "bass",
+        "beat": 0.75,
+        "semitones": 12,
+        "gate": 0.3
+      },
+      {
+        "sample": "bass",
+        "beat": 1.0,
+        "semitones": 7,
+        "gate": 0.3
+      },
+      {
+        "sample": "bass",
+        "beat": 1.25,
+        "semitones": 0,
+        "gate": 0.3
+      }
+    ]
+  },
+  "3-0": {
+    "name": "어쿠스틱 단일 피킹",
+    "events": [
+      {
+        "sample": "acoustic",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9
+      }
+    ]
+  },
+  "3-1": {
+    "name": "어쿠스틱 핑거패턴",
+    "events": [
+      {
+        "sample": "acoustic",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.6,
+        "gain": 0.7
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.25,
+        "semitones": 7,
+        "gate": 0.6,
+        "gain": 0.7
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.5,
+        "semitones": 12,
+        "gate": 0.6,
+        "gain": 0.7
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.75,
+        "semitones": 7,
+        "gate": 0.6,
+        "gain": 0.7
+      }
+    ]
+  },
+  "3-2": {
+    "name": "어쿠스틱 아르페지오",
+    "events": [
+      {
+        "sample": "acoustic",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.65
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.3,
+        "semitones": 4,
+        "gate": 0.65
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.6,
+        "semitones": 7,
+        "gate": 0.65
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.8999999999999999,
+        "semitones": 12,
+        "gate": 0.65
+      }
+    ]
+  },
+  "3-3": {
+    "name": "어쿠스틱 다운 스트로크",
+    "events": [
+      {
+        "sample": "acoustic",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.9,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.025,
+        "semitones": 7,
+        "gate": 0.9,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.05,
+        "semitones": 12,
+        "gate": 0.9,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.07500000000000001,
+        "semitones": 16,
+        "gate": 0.9,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.1,
+        "semitones": 19,
+        "gate": 0.9,
+        "gain": 0.5
+      }
+    ]
+  },
+  "3-4": {
+    "name": "어쿠스틱 업 스트로크",
+    "events": [
+      {
+        "sample": "acoustic",
+        "beat": 0.0,
+        "semitones": 19,
+        "gate": 0.6,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.025,
+        "semitones": 16,
+        "gate": 0.6,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.05,
+        "semitones": 12,
+        "gate": 0.6,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.07500000000000001,
+        "semitones": 7,
+        "gate": 0.6,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.1,
+        "semitones": 0,
+        "gate": 0.6,
+        "gain": 0.5
+      }
+    ]
+  },
+  "3-5": {
+    "name": "어쿠스틱 뮤트",
+    "events": [
+      {
+        "sample": "acoustic",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.12,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.02,
+        "semitones": 7,
+        "gate": 0.12,
+        "gain": 0.5
+      },
+      {
+        "sample": "acoustic",
+        "beat": 0.04,
+        "semitones": 12,
+        "gate": 0.12,
+        "gain": 0.5
+      }
+    ],
+    "filter": 1800
+  },
+  "4-0": {
+    "name": "클린 일렉 단일음",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9
+      }
+    ]
+  },
+  "4-1": {
+    "name": "클린 일렉 코드",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.8,
+        "gain": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 0.025,
+        "semitones": 4,
+        "gate": 0.8,
+        "gain": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 0.05,
+        "semitones": 7,
+        "gate": 0.8,
+        "gain": 0.5
+      }
+    ]
+  },
+  "4-2": {
+    "name": "클린 일렉 슬라이드",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8,
+        "bend": 5
+      }
+    ]
+  },
+  "4-3": {
+    "name": "클린 일렉 벤딩",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9,
+        "bend": 2
+      }
+    ]
+  },
+  "4-4": {
+    "name": "클린 일렉 옥타브",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 0.6
+      }
+    ]
+  },
+  "4-5": {
+    "name": "클린 일렉 멜로디",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 0.3,
+        "semitones": 4,
+        "gate": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 0.6,
+        "semitones": 7,
+        "gate": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 0.8999999999999999,
+        "semitones": 9,
+        "gate": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 1.2,
+        "semitones": 7,
+        "gate": 0.5
+      }
+    ]
+  },
+  "5-0": {
+    "name": "디스토션 단일음",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.8
+      }
+    ],
+    "drive": 18
+  },
+  "5-1": {
+    "name": "파워 코드",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 0.9,
+        "gain": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 7,
+        "gate": 0.9,
+        "gain": 0.5
+      },
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 12,
+        "gate": 0.9,
+        "gain": 0.5
+      }
+    ],
+    "drive": 22
+  },
+  "5-2": {
+    "name": "팜뮤트 리듬",
+    "events": [
+      {
+        "sample": "electric-short",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.12
+      },
+      {
+        "sample": "electric-short",
+        "beat": 0.25,
+        "semitones": 0,
+        "gate": 0.12
+      },
+      {
+        "sample": "electric-short",
+        "beat": 0.5,
+        "semitones": 0,
+        "gate": 0.12
+      }
+    ],
+    "drive": 14,
+    "filter": 2200
+  },
+  "5-3": {
+    "name": "강한 벤딩",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0,
+        "semitones": 0,
+        "gate": 1,
+        "bend": 3
+      }
+    ],
+    "drive": 24
+  },
+  "5-4": {
+    "name": "기타 리프",
+    "events": [
+      {
+        "sample": "electric-short",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.22
+      },
+      {
+        "sample": "electric-short",
+        "beat": 0.25,
+        "semitones": 0,
+        "gate": 0.22
+      },
+      {
+        "sample": "electric-short",
+        "beat": 0.5,
+        "semitones": 7,
+        "gate": 0.22
+      },
+      {
+        "sample": "electric-short",
+        "beat": 0.75,
+        "semitones": 5,
+        "gate": 0.22
+      },
+      {
+        "sample": "electric-short",
+        "beat": 1.0,
+        "semitones": 3,
+        "gate": 0.22
+      },
+      {
+        "sample": "electric-short",
+        "beat": 1.25,
+        "semitones": 0,
+        "gate": 0.22
+      }
+    ],
+    "drive": 18
+  },
+  "5-5": {
+    "name": "강한 스트로크",
+    "events": [
+      {
+        "sample": "electric",
+        "beat": 0.0,
+        "semitones": 0,
+        "gate": 0.8,
+        "gain": 0.4
+      },
+      {
+        "sample": "electric",
+        "beat": 0.02,
+        "semitones": 7,
+        "gate": 0.8,
+        "gain": 0.4
+      },
+      {
+        "sample": "electric",
+        "beat": 0.04,
+        "semitones": 12,
+        "gate": 0.8,
+        "gain": 0.4
+      },
+      {
+        "sample": "electric",
+        "beat": 0.06,
+        "semitones": 19,
+        "gate": 0.8,
+        "gain": 0.4
+      }
+    ],
+    "drive": 26
+  }
+}

@@ -1,0 +1,87 @@
+[
+  {
+    "name": "bass",
+    "filename": "bass.wav",
+    "midi": 36,
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses/blob/main/Samples/darkblack/reg/darkblack_c2_mf_rr1.wav",
+    "bytes": 661580
+  },
+  {
+    "name": "bass-short",
+    "filename": "bass-short.wav",
+    "midi": 36,
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses/blob/main/Samples/darkblack/stac/darkblack_c2_stac_rr1.wav",
+    "bytes": 245618
+  },
+  {
+    "name": "electric",
+    "filename": "electric.wav",
+    "midi": 60,
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars/blob/main/Samples/black/ord/twang_c4_mf_rr1.wav",
+    "bytes": 397554
+  },
+  {
+    "name": "electric-short",
+    "filename": "electric-short.wav",
+    "midi": 60,
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars/blob/main/Samples/black/stac/staccato_c4_rr1.wav",
+    "bytes": 113576
+  },
+  {
+    "name": "kick",
+    "filename": "kick.flac",
+    "midi": 0,
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/kick_24/kick/kick/k_vl10_rr1.flac",
+    "bytes": 39943
+  },
+  {
+    "name": "snare",
+    "filename": "snare.flac",
+    "midi": 0,
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/snare_14/center/top/sn_center_vl10_rr1.flac",
+    "bytes": 46798
+  },
+  {
+    "name": "hat",
+    "filename": "hat.flac",
+    "midi": 0,
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/hihat_14/tc/cl/ht_tc_vl4_rr1.flac",
+    "bytes": 30697
+  },
+  {
+    "name": "tom",
+    "filename": "tom.flac",
+    "midi": 0,
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/tom_14/center/cl/t14_vl4_rr1.flac",
+    "bytes": 50576
+  },
+  {
+    "name": "crash",
+    "filename": "crash.flac",
+    "midi": 0,
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/crash_17/cr/cl/cr_vl4_rr1.flac",
+    "bytes": 317377
+  },
+  {
+    "name": "synth",
+    "filename": "synth.wav",
+    "midi": 60,
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut/blob/master/Samples/all_all_all_c4.wav",
+    "bytes": 748882
+  },
+  {
+    "name": "acoustic",
+    "filename": "acoustic.ogg",
+    "midi": 48,
+    "source": "https://github.com/facebookincubator/Meta-open-sound/blob/main/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringA_Vel02_C3_01.ogg",
+    "bytes": 112325
+  },
+  {
+    "name": "slap",
+    "filename": "slap.mp3",
+    "midi": 36,
+    "source": "https://freesound.org/people/hkutluay/sounds/147299/",
+    "license": "CC0",
+    "note": "Recorded Ken Smith bass, pitch reference pending listening verification"
+  }
+]
