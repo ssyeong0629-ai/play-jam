@@ -1,0 +1,506 @@
+[
+  {
+    "id": "bass-short",
+    "filename": "bass-short.wav",
+    "rootMidi": 36,
+    "duration": 1,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses/blob/main/Samples/darkblack/stac/darkblack_c2_stac_rr1.wav",
+    "download": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses/blob/main/Samples/darkblack/stac/darkblack_c2_stac_rr1.wav"
+  },
+  {
+    "id": "kick",
+    "filename": "kick.wav",
+    "rootMidi": 0,
+    "duration": 1,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/kick_24/kick/kick/k_vl10_rr1.flac",
+    "download": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/kick_24/kick/kick/k_vl10_rr1.flac"
+  },
+  {
+    "id": "snare",
+    "filename": "snare.wav",
+    "rootMidi": 0,
+    "duration": 1,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/snare_14/center/top/sn_center_vl10_rr1.flac",
+    "download": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/snare_14/center/top/sn_center_vl10_rr1.flac"
+  },
+  {
+    "id": "hat",
+    "filename": "hat.wav",
+    "rootMidi": 0,
+    "duration": 1,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/hihat_14/tc/cl/ht_tc_vl4_rr1.flac",
+    "download": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/hihat_14/tc/cl/ht_tc_vl4_rr1.flac"
+  },
+  {
+    "id": "tom",
+    "filename": "tom.wav",
+    "rootMidi": 0,
+    "duration": 1,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/tom_14/center/cl/t14_vl4_rr1.flac",
+    "download": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/tom_14/center/cl/t14_vl4_rr1.flac"
+  },
+  {
+    "id": "crash",
+    "filename": "crash.wav",
+    "rootMidi": 0,
+    "duration": 2.2,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/crash_17/cr/cl/cr_vl4_rr1.flac",
+    "download": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums/blob/main/Samples/crash_17/cr/cl/cr_vl4_rr1.flac"
+  },
+  {
+    "id": "slap",
+    "filename": "slap.wav",
+    "rootMidi": 36,
+    "duration": 0.7,
+    "license": "CC0-1.0",
+    "source": "https://freesound.org/people/hkutluay/sounds/147299/",
+    "download": "https://freesound.org/people/hkutluay/sounds/147299/"
+  },
+  {
+    "id": "bass-finger-36",
+    "filename": "bass-finger-36.wav",
+    "rootMidi": 36,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_c2_mf_rr1.wav"
+  },
+  {
+    "id": "bass-pick-36",
+    "filename": "bass-pick-36.wav",
+    "rootMidi": 36,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_c2_f_rr1.wav"
+  },
+  {
+    "id": "bass-finger-40",
+    "filename": "bass-finger-40.wav",
+    "rootMidi": 40,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_e2_mf_rr1.wav"
+  },
+  {
+    "id": "bass-pick-40",
+    "filename": "bass-pick-40.wav",
+    "rootMidi": 40,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_e2_f_rr1.wav"
+  },
+  {
+    "id": "bass-finger-43",
+    "filename": "bass-finger-43.wav",
+    "rootMidi": 43,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_g2_mf_rr1.wav"
+  },
+  {
+    "id": "bass-pick-43",
+    "filename": "bass-pick-43.wav",
+    "rootMidi": 43,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_g2_f_rr1.wav"
+  },
+  {
+    "id": "bass-finger-48",
+    "filename": "bass-finger-48.wav",
+    "rootMidi": 48,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_c3_mf_rr1.wav"
+  },
+  {
+    "id": "bass-pick-48",
+    "filename": "bass-pick-48.wav",
+    "rootMidi": 48,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_c3_f_rr1.wav"
+  },
+  {
+    "id": "bass-finger-55",
+    "filename": "bass-finger-55.wav",
+    "rootMidi": 55,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/darkblack/reg/darkblack_g3_mf_rr1.wav"
+  },
+  {
+    "id": "bass-pick-55",
+    "filename": "bass-pick-55.wav",
+    "rootMidi": 55,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-blue-basses",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-blue-basses/HEAD/Samples/babyblue/reg/babyblue_g3_f_rr1.wav"
+  },
+  {
+    "id": "guitar-green-40",
+    "filename": "guitar-green-40.wav",
+    "rootMidi": 40,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_e3_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-black-40",
+    "filename": "guitar-black-40.wav",
+    "rootMidi": 40,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_e3_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-green-48",
+    "filename": "guitar-green-48.wav",
+    "rootMidi": 48,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_c4_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-black-48",
+    "filename": "guitar-black-48.wav",
+    "rootMidi": 48,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_c4_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-green-55",
+    "filename": "guitar-green-55.wav",
+    "rootMidi": 55,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_g4_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-black-55",
+    "filename": "guitar-black-55.wav",
+    "rootMidi": 55,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_g4_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-green-60",
+    "filename": "guitar-green-60.wav",
+    "rootMidi": 60,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_c5_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-black-60",
+    "filename": "guitar-black-60.wav",
+    "rootMidi": 60,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_c5_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-green-67",
+    "filename": "guitar-green-67.wav",
+    "rootMidi": 67,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_g5_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-black-67",
+    "filename": "guitar-black-67.wav",
+    "rootMidi": 67,
+    "duration": 2.26678125,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_g5_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-green-72",
+    "filename": "guitar-green-72.wav",
+    "rootMidi": 72,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/green/ord/twang_c6_mf_rr1.wav"
+  },
+  {
+    "id": "guitar-black-72",
+    "filename": "guitar-black-72.wav",
+    "rootMidi": 72,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.black-and-green-guitars",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.black-and-green-guitars/HEAD/Samples/black/ord/twang_c6_mf_rr1.wav"
+  },
+  {
+    "id": "acoustic-01-40",
+    "filename": "acoustic-01-40.wav",
+    "rootMidi": 40,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringLowE_Vel01_E2_01.ogg"
+  },
+  {
+    "id": "acoustic-03-40",
+    "filename": "acoustic-03-40.wav",
+    "rootMidi": 40,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringLowE_Vel03_E2_01.ogg"
+  },
+  {
+    "id": "acoustic-01-48",
+    "filename": "acoustic-01-48.wav",
+    "rootMidi": 48,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringA_Vel01_C3_01.ogg"
+  },
+  {
+    "id": "acoustic-03-48",
+    "filename": "acoustic-03-48.wav",
+    "rootMidi": 48,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringA_Vel03_C3_01.ogg"
+  },
+  {
+    "id": "acoustic-01-55",
+    "filename": "acoustic-01-55.wav",
+    "rootMidi": 55,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringD_Vel01_G3_01.ogg"
+  },
+  {
+    "id": "acoustic-03-55",
+    "filename": "acoustic-03-55.wav",
+    "rootMidi": 55,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringD_Vel03_G3_01.ogg"
+  },
+  {
+    "id": "acoustic-01-60",
+    "filename": "acoustic-01-60.wav",
+    "rootMidi": 60,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringB_Vel01_C4_01.ogg"
+  },
+  {
+    "id": "acoustic-03-60",
+    "filename": "acoustic-03-60.wav",
+    "rootMidi": 60,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringB_Vel03_C4_01.ogg"
+  },
+  {
+    "id": "acoustic-01-67",
+    "filename": "acoustic-01-67.wav",
+    "rootMidi": 67,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringHighE_Vel01_G4_01.ogg"
+  },
+  {
+    "id": "acoustic-03-67",
+    "filename": "acoustic-03-67.wav",
+    "rootMidi": 67,
+    "duration": 2.4,
+    "license": "CC0-1.0",
+    "source": "https://github.com/facebookincubator/Meta-open-sound",
+    "download": "https://raw.githubusercontent.com/facebookincubator/Meta-open-sound/HEAD/systems/instruments/meta-steel-guitar/ogg/INSGuitarSteel_StringHighE_Vel03_G4_01.ogg"
+  },
+  {
+    "id": "keys-all_all_all-48",
+    "filename": "keys-all_all_all-48.wav",
+    "rootMidi": 48,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/all_all_all_c4.wav"
+  },
+  {
+    "id": "keys-all_all_all-60",
+    "filename": "keys-all_all_all-60.wav",
+    "rootMidi": 60,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/all_all_all_c5.wav"
+  },
+  {
+    "id": "keys-all_all_all-72",
+    "filename": "keys-all_all_all-72.wav",
+    "rootMidi": 72,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/all_all_all_c6.wav"
+  },
+  {
+    "id": "keys-flutes-48",
+    "filename": "keys-flutes-48.wav",
+    "rootMidi": 48,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/flutes_c4.wav"
+  },
+  {
+    "id": "keys-flutes-60",
+    "filename": "keys-flutes-60.wav",
+    "rootMidi": 60,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/flutes_c5.wav"
+  },
+  {
+    "id": "keys-flutes-72",
+    "filename": "keys-flutes-72.wav",
+    "rootMidi": 72,
+    "duration": 2.955375,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/flutes_c6.wav"
+  },
+  {
+    "id": "keys-clarinet-48",
+    "filename": "keys-clarinet-48.wav",
+    "rootMidi": 48,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/clarinet_c4.wav"
+  },
+  {
+    "id": "keys-clarinet-60",
+    "filename": "keys-clarinet-60.wav",
+    "rootMidi": 60,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/clarinet_c5.wav"
+  },
+  {
+    "id": "keys-clarinet-72",
+    "filename": "keys-clarinet-72.wav",
+    "rootMidi": 72,
+    "duration": 2.98134375,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/clarinet_c6.wav"
+  },
+  {
+    "id": "keys-violin-48",
+    "filename": "keys-violin-48.wav",
+    "rootMidi": 48,
+    "duration": 2.8445625,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/violin_c4.wav"
+  },
+  {
+    "id": "keys-violin-60",
+    "filename": "keys-violin-60.wav",
+    "rootMidi": 60,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/violin_c5.wav"
+  },
+  {
+    "id": "keys-violin-72",
+    "filename": "keys-violin-72.wav",
+    "rootMidi": 72,
+    "duration": 3,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.caveman-cosmonaut",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.caveman-cosmonaut/HEAD/Samples/violin_c6.wav"
+  },
+  {
+    "id": "hat-open",
+    "filename": "hat-open.wav",
+    "rootMidi": 60,
+    "duration": 1.6,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.big-rusty-drums/HEAD/Samples/hihat_14/open/cl/ht_open_vl4_rr1.flac"
+  },
+  {
+    "id": "hat-pedal",
+    "filename": "hat-pedal.wav",
+    "rootMidi": 60,
+    "duration": 1.6,
+    "license": "CC0-1.0",
+    "source": "https://github.com/sfzinstruments/karoryfer.big-rusty-drums",
+    "download": "https://raw.githubusercontent.com/sfzinstruments/karoryfer.big-rusty-drums/HEAD/Samples/hihat_14/chik/cl/ht_chik_vl4_rr1.flac"
+  },
+  {
+    "id": "palm-mute",
+    "filename": "palm-mute.wav",
+    "rootMidi": 52,
+    "duration": 1.5,
+    "license": "CC0-1.0",
+    "source": "https://freesound.org/people/SpeedY/sounds/12035/",
+    "download": "https://cdn.freesound.org/previews/12/12035_6479-hq.mp3"
+  },
+  {
+    "id": "palm-mute-high",
+    "filename": "palm-mute-high.wav",
+    "rootMidi": 64,
+    "duration": 0.65,
+    "license": "CC0-1.0",
+    "source": "https://freesound.org/people/SpeedY/sounds/12031/",
+    "download": "https://cdn.freesound.org/previews/12/12031_6479-hq.mp3"
+  },
+  {
+    "id": "acoustic-mute",
+    "filename": "acoustic-mute.wav",
+    "rootMidi": 50,
+    "duration": 0.6,
+    "license": "CC0-1.0",
+    "source": "https://freesound.org/people/spitefuloctopus/sounds/315705/",
+    "download": "https://cdn.freesound.org/previews/315/315705_4831592-hq.mp3"
+  }
+]

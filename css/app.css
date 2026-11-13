@@ -3,3 +3,6 @@
 .source.circle-icon svg,#radial .circle-icon svg{width:18px;height:18px}.note.circle-icon .shape{width:18px;height:18px}
 
 #delete-mode{font-size:11px;margin-left:8px}#delete-mode[aria-pressed=true]{color:#ff0049;background:#ff004918;outline:1px solid #ff0049}.delete-mode .staff{cursor:default}.delete-mode .note{cursor:crosshair}.delete-mode .note:hover:before{content:"";position:absolute;inset:1px;border:1px solid #ff0049;border-radius:50%;background:#ff004912}
+
+/* Brief particles stay behind the icon silhouette. */
+.shape{position:relative}.note.hit .shape:after,.note.landing .shape:after{content:"";position:absolute;left:50%;top:50%;width:2px;height:2px;border-radius:50%;background:var(--color);box-shadow:18px 0 var(--color),-18px 0 var(--color),0 18px var(--color),0 -18px var(--color),13px 13px var(--color),-13px -13px var(--color);opacity:0;pointer-events:none;animation:particles .55s ease-out}.playing .poster{animation:poster-pulse 1.2s ease-in-out infinite alternate}@keyframes particles{0%{opacity:.85;transform:scale(.7)}100%{opacity:0;transform:scale(1.7)}}@keyframes poster-pulse{to{box-shadow:inset 0 0 70px #ff008c12}}@media(prefers-reduced-motion:reduce){.note.hit .shape:after,.note.landing .shape:after,.playing .poster{animation:none}}

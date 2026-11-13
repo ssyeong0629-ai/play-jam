@@ -1,11 +1,11 @@
 'use strict';
 (()=>{
-const M=JamModel,A=JamAudio,$=id=>document.getElementById(id),icons=new Map(JAM_ICONS.map(i=>[i.id,i])),KEY=location.hash.startsWith('#jam=')?'playjam.shared.v3':'playjam.project.v3';
+const M=JamModel,A=JamAudio,$=id=>document.getElementById(id),icons=new Map(JAM_ICONS.map(i=>[i.id,i])),KEY=location.hash.startsWith('#jam=')?'playjam.shared.v3.'+Math.round(M.hash(location.hash)*4294967296).toString(36):'playjam.project.v3';
 let deleteMode=false,gestureFrame=0,lastPointer=null;
 let s=M.fresh(),selected=new Set(),chosen='0-0',undo=[],redo=[],ratio=1,zoom=1,extra=0,gesture=null,playing=false,pos=0,epoch=0,frame=0,sounded=new Set(),previewAt=0,pending=0;
 const clone=x=>JSON.parse(JSON.stringify(x)),esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let toastTimer;function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3500);}
-try{const raw=localStorage.getItem(KEY);if(raw)s=M.validate(JSON.parse(raw));if(location.hash.startsWith('#jam=')){const str=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');s=M.validate(JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(str),c=>c.charCodeAt(0)))));}}catch{setTimeout(()=>toast('작품 데이터를 읽지 못했어요.'),300);}
+try{const raw=localStorage.getItem(KEY);if(raw)s=M.validate(JSON.parse(raw));else if(location.hash.startsWith('#jam=')){const str=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');s=M.validate(JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(str),c=>c.charCodeAt(0)))));}}catch{setTimeout(()=>toast('작품 데이터를 읽지 못했어요.'),300);}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(s));}catch{toast('이 브라우저에 저장할 수 없어요. 공유 링크로 보관하세요.');}controls();}
 function push(before=clone(s)){undo.push(before);if(undo.length>60)undo.shift();redo=[];}
 function history(back){end(true);pause();const from=back?undo:redo,to=back?redo:undo;if(!from.length)return;to.push(clone(s));s=from.pop();selected.clear();extra=0;render();save();}
@@ -21,8 +21,14 @@ function point(clientX,clientY){const b=$('pages').getBoundingClientRect(),x=(cl
 async function preview(n){if(performance.now()-previewAt<240)return;previewAt=performance.now();const token=pending;try{await A.prepare([n]);if(token===pending&&!playing)A.note(n,undefined,s.bpm);}catch{toast('음원을 불러오지 못했어요.');}}
 function place(p){if(!p||p.row>=M.MAX)return false;if(s.notes.length>=5000){toast('이 작품의 아이콘 한도에 도달했어요.');return false;}if(s.notes.some(n=>n.row===p.row&&Math.hypot((n.x-p.x)*642,(n.y-p.y)*6.5)<30))return false;const n={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),icon:chosen,...p};s.notes.push(n);if(p.x>.95&&p.row===M.start(M.pageOf(p.row))+M.count(M.pageOf(p.row))-1&&p.row+1<M.MAX)extra=M.pageOf(p.row)+2;preview(n);return true;}
 function remove(){if(!selected.size)return;pause();push();s.notes=s.notes.filter(n=>!selected.has(n.id));selected.clear();extra=0;render();save();}
-$('pages').addEventListener('pointerdown',e=>{if(e.button!==0||gesture||e.target.closest('input,.playhead'))return;const el=e.target.closest('.note');if(deleteMode){e.preventDefault();if(el){pause();push();s.notes=s.notes.filter(n=>n.id!==el.dataset.note);selected.clear();extra=0;render();save();}return;}pause();const before=clone(s);if(el){const id=el.dataset.note;if(e.shiftKey){selected.has(id)?selected.delete(id):selected.add(id);render();return;}if(!selected.has(id))selected=new Set([id]);const n=s.notes.find(n=>n.id===id);gesture={type:'move',before,start:{x:e.clientX,y:e.clientY},origin:clone(n),startPoint:point(e.clientX,e.clientY),ids:new Set(selected),moved:false};render();}else{if(selected.size){selected.clear();render();return;}gesture={type:'draw',before,last:null,threshold:30,moved:false};draw(e);}e.preventDefault();lastPointer={clientX:e.clientX,clientY:e.clientY};gestureFrame=requestAnimationFrame(autoScroll);});
-function draw(e){const p=point(e.clientX,e.clientY);if(!p)return;const g=gesture;if(g.last&&g.last.row===p.row&&Math.hypot((g.last.x-p.x)*642,(g.last.y-p.y)*6.5)<g.threshold)return;if(place(p)){g.last=p;g.threshold=31+Math.random()*13;g.moved=true;render();const n=s.notes.at(-1);document.querySelector(`[data-note="${n.id}"]`)?.classList.add('landing');}}
+$('pages').addEventListener('pointerdown',e=>{if(e.button!==0||gesture||e.target.closest('input,.playhead'))return;const el=e.target.closest('.note');if(deleteMode){e.preventDefault();if(el){pause();push();s.notes=s.notes.filter(n=>n.id!==el.dataset.note);selected.clear();extra=0;render();save();}return;}pause();const before=clone(s);if(el){const id=el.dataset.note;if(e.shiftKey){selected.has(id)?selected.delete(id):selected.add(id);render();return;}if(!selected.has(id))selected=new Set([id]);const n=s.notes.find(n=>n.id===id);gesture={type:'move',before,start:{x:e.clientX,y:e.clientY},origin:clone(n),startPoint:point(e.clientX,e.clientY),ids:new Set(selected),moved:false};render();}else{if(selected.size){selected.clear();render();return;}gesture={type:'draw',before,last:null,threshold:30,moved:false};draw(e);}e.preventDefault();try{$('viewport').setPointerCapture(e.pointerId);}catch{}lastPointer={clientX:e.clientX,clientY:e.clientY};gestureFrame=requestAnimationFrame(autoScroll);});
+function draw(e){
+ const g=gesture,previous=g.pointer;g.pointer={clientX:e.clientX,clientY:e.clientY};
+ if(!previous)return stamp(e);
+ const distance=Math.hypot(e.clientX-previous.clientX,e.clientY-previous.clientY),steps=Math.max(1,Math.min(160,Math.ceil(distance/(12*zoom))));
+ for(let k=1;k<=steps;k++)stamp({clientX:previous.clientX+(e.clientX-previous.clientX)*k/steps,clientY:previous.clientY+(e.clientY-previous.clientY)*k/steps});
+}
+function stamp(e){const p=point(e.clientX,e.clientY);if(!p)return;const g=gesture;if(g.last&&g.last.row===p.row&&Math.hypot((g.last.x-p.x)*642,(g.last.y-p.y)*6.5)<g.threshold)return;if(place(p)){g.last=p;g.threshold=31+Math.random()*13;g.moved=true;render();const n=s.notes.at(-1);document.querySelector(`[data-note="${n.id}"]`)?.classList.add('landing');}}
 function moveGesture(e){
  if(!gesture)return;
  if(gesture.type==='seek'){seekMove(e);return;}
@@ -36,7 +42,7 @@ function autoScroll(){
  const v=$('viewport'),b=v.getBoundingClientRect(),e=lastPointer;
  const dy=e.clientY>b.bottom-42?Math.min(18,(e.clientY-b.bottom+42)*.5):e.clientY<b.top+42?-Math.min(18,(b.top+42-e.clientY)*.5):0;
  const dx=e.clientX>b.right-28?12:e.clientX<b.left+28?-12:0;
- if(dy||dx){const old=v.scrollTop,oldX=v.scrollLeft;v.scrollTop+=dy;v.scrollLeft+=dx;if(v.scrollTop!==old||v.scrollLeft!==oldX)moveGesture(e);}
+ if(dy||dx){const old=v.scrollTop,oldX=v.scrollLeft;v.scrollTop+=dy;v.scrollLeft+=dx;if(v.scrollTop!==old||v.scrollLeft!==oldX){if(gesture.type==='draw')gesture.pointer=null;moveGesture(e);}}
  gestureFrame=requestAnimationFrame(autoScroll);
 }
 window.addEventListener('pointermove',e=>{if(!gesture)return;lastPointer={clientX:e.clientX,clientY:e.clientY};moveGesture(e);});
@@ -78,6 +84,7 @@ const steps=[['palette','아이콘 선택','원하는 그래픽을 골라보세�
 function clearTour(){document.querySelectorAll('.tour-focus').forEach(n=>n.classList.remove('tour-focus'));}
 function guide(){clearTour();const [id,title,desc]=steps[step];$(id).classList.add('tour-focus');$('step').textContent=`${step+1} / 4`;$('tour').querySelector('h2').textContent=title;$('tour').querySelector('p').textContent=desc;$('prev-tour').disabled=step===0;$('next-tour').textContent=step===3?'만들기 시작':'다음 →';}
 function startTour(){pause();if(document.body.classList.contains('collapsed'))$('collapse').click();step=0;guide();$('tour').showModal();}function finish(){clearTour();$('tour').close();$('pages').focus();}
+document.querySelector('.brand').onclick=e=>{e.preventDefault();pause();$('welcome').showModal();};
 $('help').onclick=startTour;$('start').onclick=()=>{$('welcome').close();startTour();};$('skip-start').onclick=()=>{$('welcome').close();$('pages').focus();};$('skip-tour').onclick=finish;$('prev-tour').onclick=()=>{step=Math.max(0,step-1);guide();};$('next-tour').onclick=()=>{if(step===3)finish();else{step++;guide();}};$('tour').addEventListener('cancel',clearTour);
 $('intro-art').innerHTML=JAM_ICONS.filter(i=>i.slot===1||i.slot===3).map(i=>`<span>${i.svg}</span>`).join('');choose(chosen);render();if(!location.hash.startsWith('#jam='))$('welcome').showModal();
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
