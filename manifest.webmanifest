@@ -1,0 +1,1 @@
+{"name": "PLAY JAM", "short_name": "PLAY JAM", "start_url": "./", "scope": "./", "display": "standalone", "theme_color": "#191919", "background_color": "#191919", "icons": [{"src": "app-icon.png", "sizes": "512x512", "type": "image/png"}, {"src": "app-icon-192.png", "sizes": "192x192", "type": "image/png"}]}

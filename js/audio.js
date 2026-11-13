@@ -3,7 +3,7 @@
 window.JamAudio={
  ctx:null,voices:new Set(),buffers:new Map(),loading:new Map(),
  async ready(){
-  if(!this.ctx){this.ctx=new(window.AudioContext||window.webkitAudioContext)();const comp=this.ctx.createDynamicsCompressor();comp.threshold.value=-22;comp.knee.value=18;comp.ratio.value=8;comp.attack.value=.005;comp.release.value=.12;this.master=this.ctx.createGain();this.master.gain.value=.32;this.master.connect(comp);comp.connect(this.ctx.destination);}
+  if(!this.ctx){this.ctx=new(window.AudioContext||window.webkitAudioContext)();const comp=this.ctx.createDynamicsCompressor();comp.threshold.value=-22;comp.knee.value=18;comp.ratio.value=8;comp.attack.value=.005;comp.release.value=.12;this.master=this.ctx.createGain();this.master.gain.value=.64;this.master.connect(comp);comp.connect(this.ctx.destination);}
   if(this.ctx.state!=='running')await this.ctx.resume();
  },
  target(n,e){const scale=[0,2,4,7,9,12,14,16,19,21,24,26,28],group=Number(n.icon.split('-')[0]);return (group===2?28:group===1?48:40)+scale[12-n.y]+(e.semitones||0);},

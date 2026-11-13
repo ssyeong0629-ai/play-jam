@@ -2,9 +2,16 @@
 
 1. ZIP 압축을 풉니다.
 2. GitHub 저장소에서 Add file → Upload files를 선택합니다.
-3. 이 폴더 안의 index.html, css, js, assets를 함께 끌어 놓습니다.
+3. 이 폴더 안의 index.html, css, js, assets, sw.js, manifest.webmanifest, app-icon.png, app-icon-192.png를 함께 끌어 놓습니다.
 4. Commit changes를 누릅니다. ZIP 자체나 바깥 PLAY-JAM-upload 폴더는 올리지 않습니다.
 
 56개 녹음을 모두 유지하되 MP3 모노 32kHz / 80kbps로 압축해 assets/audio/bank.js에 내장했습니다. 별도 WAV와 중복 SVG 파일을 제외했습니다. 아이콘 SVG는 js/icons.js 안에 있어 모양이 없어지지 않습니다. 로컬 index.html 직접 실행과 오프라인 음원 재생도 유지합니다.
 MP3는 손실 압축이므로 원본 WAV와 음질이 완전히 같지는 않습니다. 편집 기능과 36개 아이콘의 음원 대응은 동일합니다. 전체 초기화·Delete 모드·사이드바 접기·56개 샘플 확장 기능을 포함합니다.
-음원 출처와 CC0 라이선스는 assets/audio의 문서를 참고하세요. FEATURE-AUDIT.md는 원본 통합본의 점검 결과입니다. 경량본은 56개 MP3 변환 후 디코딩 및 길이를 별도로 검사했습니다.
+음원 출처와 CC0 라이선스는 assets/audio의 문서를 참고하세요. FEATURE-AUDIT.md에 점검 결과와 미검증 항목을 정리했습니다. 경량본은 56개 MP3 변환 후 디코딩 및 길이를 별도로 검사했습니다.
+
+## 이번 수정
+- 전체 초기화: 제목 Untitled, 작가명 비움, 아이콘 삭제, BPM 100, 밀도 50%, 다크 모드, 반복 해제, 확대 100%, 기본 원형 선택으로 복귀. Undo로 작품 상태 복구 가능.
+- Delete 활성 후 아이콘을 눌러 삭제. 일반 클릭은 삭제하지 않음.
+- 중앙 5단계 가이드에 삭제 방식 추가.
+- 모바일 빈 여백 스크롤, 탭 팔레트, 홈 화면 추가용 PWA 파일 포함.
+- 출력 게인을 높이고 과도한 합주 음량은 컴프레서로 제한. 실제 기기의 스피커 체감 음량은 별도 확인 필요.
