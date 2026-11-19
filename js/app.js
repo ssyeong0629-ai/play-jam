@@ -13,12 +13,15 @@ let toastTimer;function toast(message){$('toast').textContent=message;$('toast')
 window.addEventListener('hashchange',()=>{if(location.hash.startsWith('#jam='))location.reload();});
 const sharedEntry=location.hash.startsWith('#jam=');
 let viewing=sharedEntry,entered=sharedEntry,editorScroll=0;
-const tabKey='playjam.integrated.fixed.tab';
+const tabKey='playjam.integrated.fixed.tab',workKey='playjam.my-work';
+let sharedSession=sharedEntry;
 const reloading=performance.getEntriesByType('navigation')[0]?.type==='reload';
 try{if(sharedEntry){const str=location.hash.slice(5).replace(/-/g,'+').replace(/_/g,'/');s=M.validate(JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(str),c=>c.charCodeAt(0)))));}}catch{viewing=false;setTimeout(()=>toast('작품 데이터를 읽지 못했어요.'),300);}
-if(!sharedEntry){try{if(reloading){const saved=JSON.parse(sessionStorage.getItem(tabKey)||'null');if(saved){s=M.validate(saved.project);viewing=!!saved.viewing;entered=!!saved.entered;inputMode='pad';if(saved.inputCursor){const c=saved.inputCursor;inputCursor={row:M.clamp(Math.floor(Number(c.row)||0),0,M.MAX-1),x:M.clamp(Number(c.x)||0,0,1-PAD_STEP),y:M.clamp(Math.round(Number.isFinite(Number(c.y))?Number(c.y):6),0,12)};}}}else sessionStorage.removeItem(tabKey);}catch{}}
+if(!sharedEntry){try{if(reloading){const saved=JSON.parse(sessionStorage.getItem(tabKey)||'null');if(saved){s=M.validate(saved.project);sharedSession=!!saved.shared;viewing=sharedSession&&!!saved.viewing;entered=!!saved.entered;inputMode='pad';if(saved.inputCursor){const c=saved.inputCursor;inputCursor={row:M.clamp(Math.floor(Number(c.row)||0),0,M.MAX-1),x:M.clamp(Number(c.x)||0,0,1-PAD_STEP),y:M.clamp(Math.round(Number.isFinite(Number(c.y))?Number(c.y):6),0,12)};}}}else sessionStorage.removeItem(tabKey);}catch{}}
+// My own work also lives in localStorage so it survives closing the tab; shared links never overwrite it.
+if(!sharedEntry&&!(reloading&&sessionStorage.getItem(tabKey))){try{const mine=JSON.parse(localStorage.getItem(workKey)||'null');if(mine?.project){s=M.validate(mine.project);const c=mine.inputCursor;if(c)inputCursor={row:M.clamp(Math.floor(Number(c.row)||0),0,M.MAX-1),x:M.clamp(Number(c.x)||0,0,1-PAD_STEP),y:M.clamp(Math.round(Number.isFinite(Number(c.y))?Number(c.y):6),0,12)};}}catch{}}
 s.bpm=130;
-function remember(){s.partCursors??={};s.partCursors[s.partGroup||0]={...inputCursor};try{sessionStorage.setItem(tabKey,JSON.stringify({project:s,viewing,entered,inputMode,inputCursor}));}catch{}}
+function remember(){s.partCursors??={};s.partCursors[s.partGroup||0]={...inputCursor};try{sessionStorage.setItem(tabKey,JSON.stringify({project:s,shared:sharedSession,viewing,entered,inputMode,inputCursor}));}catch{}if(!sharedSession){try{localStorage.setItem(workKey,JSON.stringify({project:s,inputCursor}));}catch{}}}
 addEventListener('pagehide',remember);
 // Same-tab reload retains the session. A fresh navigation starts at START.
 if(sharedEntry)window.history.replaceState(null,'',location.pathname+location.search);
@@ -89,6 +92,16 @@ const themeInstruments=[1,2,2,1,1,3,0,0,0,0,0,0].map((slot,g)=>icons.get(g+'-'+s
 function visualKind(n){return s.visualTheme==='mixed'?['instrument','note','circle'][Math.floor(M.hash(n.id)*3)]:(s.visualTheme||'instrument');}
 function themedSVG(group,kind){const color=icons.get(group+'-0').color;return kind==='instrument'?themeInstruments[group]:kind==='note'?themeNote.replaceAll('#FF0049',color):`<svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="10" fill="${color}"/></svg>`;}
 function noteSVG(n){return themedSVG(icons.get(n.icon).group,visualKind(n));}
+// Editor icons: each distinct icon is stored once as a <symbol>; notes reference it with <use> instead of repeating ~11KB of SVG per note.
+// Filters are stripped because `.shape svg [filter]{filter:none}` already disables them on screen. PNG export still uses noteSVG.
+const spriteHost=document.createElementNS('http://www.w3.org/2000/svg','svg');spriteHost.setAttribute('aria-hidden','true');spriteHost.style.cssText='position:absolute;width:0;height:0;overflow:hidden';document.body.prepend(spriteHost);
+const spriteRefs=new Map();
+function noteUse(n){const group=icons.get(n.icon).group,kind=visualKind(n),key=group+'|'+kind;let ref=spriteRefs.get(key);
+ if(!ref){const markup=themedSVG(group,kind),open=markup.match(/<svg\b[^>]*>/)[0],viewBox=(open.match(/viewBox="([^"]+)"/)||[,'0 0 26 26'])[1],id='pj-icon-'+spriteRefs.size;
+  const inner=markup.slice(markup.indexOf(open)+open.length,markup.lastIndexOf('</svg>')).replace(/<defs>[\s\S]*?<\/defs>/g,'').replace(/\sfilter="url\([^)]*\)"/g,'');
+  spriteHost.insertAdjacentHTML('beforeend',`<symbol id="${id}" viewBox="${viewBox}">${inner}</symbol>`);
+  ref=`<svg viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg"><use href="#${id}"/></svg>`;spriteRefs.set(key,ref);}
+ return ref;}
 function applyVisualTheme(){
  const mode=s.visualTheme||'instrument';
  for(const icon of JAM_ICONS)icon.svg=themedSVG(icon.group,mode==='mixed'?['instrument','note','circle'][icon.group%3]:mode);
@@ -186,10 +199,11 @@ const segmentOf=x=>Math.min(divisions-1,Math.floor(x*divisions));
 function metrics(){
  const v=$('viewport'),mobile=matchMedia('(max-width: 600px)').matches;
  const available=v.clientWidth-(mobile?24:48);
- const base=Math.max(.1,available/M.W);
+ const margin=mobile?18:16;
+ // Desktop 100% fits the staff itself (686 units) to the width instead of the whole A4 poster, so staff and icons show larger without horizontal scroll. PNG export is unaffected.
+ const base=Math.max(.1,mobile?available/M.W:(available-2*margin)/686);
  const wanted=base*ratio*(mobile?794/473:1);
  divisions=mobile?2:1;
- const margin=mobile?18:32;
  while(divisions<8 && segmentWidth()*wanted>available-2*margin+1)divisions*=2;
  zoom=Math.min(wanted,(available-2*margin)/segmentWidth());
  const normalWanted=base*(mobile?794/473:1);let normalDiv=mobile?2:1;
@@ -198,7 +212,8 @@ function metrics(){
  staffScaleX=(available-2*margin)/(normalZoom*normalWidth);
  zoom=Math.min(zoom,(available-2*margin)/(segmentWidth()*staffScaleX));
  editorStaffWidth=segmentWidth()*staffScaleX;
- $('pages').style.setProperty('--editor-margin',margin/zoom+'px');
+ // Center the score when zooming makes it narrower than the poster (it used to stick to the left).
+ $('pages').style.setProperty('--editor-margin',Math.max(margin/zoom,(available/zoom-editorStaffWidth)/2)+'px');
  $('pages').style.setProperty('--inverse-zoom',1/zoom);
  pageHeight=M.H+(divisions-1)*126*8;
  return {width:available/zoom,mobile};
@@ -206,8 +221,8 @@ function metrics(){
 function visualOffsets(){
  const out=new Map(),rows=new Map(),candidates=[[0,0],[0,-13],[0,13],[-14,0],[14,0],[-14,-13],[14,13],[14,-13],[-14,13]];
  for(const n of s.notes){const placed=rows.get(n.row)||[],base=visualKind(n)==='circle'?10:26,x=M.xOf(n.x),y=M.yOf(n.y);let best=null;
-  for(const scale of [1,.82])for(const [dx,dy] of candidates){const size=base*scale,cx=x+dx,cy=y+dy;if(cx-size/2<0||cx+size/2>686)continue;let overlap=0;for(const q of placed){const ox=Math.max(0,(size+q.size)/2+2-Math.abs(cx-q.x)),oy=Math.max(0,(size+q.size)/2+2-Math.abs(cy-q.y));overlap+=ox*oy;}
-   const score=overlap*100+dx*dx+dy*dy+(1-scale)*900;if(!best||score<best.score)best={dx,dy,size,score};
+  search:for(const scale of [1,.82])for(const [dx,dy] of candidates){const size=base*scale,cx=x+dx,cy=y+dy;if(cx-size/2<0||cx+size/2>686)continue;let overlap=0;for(const q of placed){const ox=Math.max(0,(size+q.size)/2+2-Math.abs(cx-q.x)),oy=Math.max(0,(size+q.size)/2+2-Math.abs(cy-q.y));overlap+=ox*oy;}
+   const score=overlap*100+dx*dx+dy*dy+(1-scale)*900;if(!best||score<best.score)best={dx,dy,size,score};if(best.score===0)break search;
   }
   best??={dx:0,dy:0,size:base};out.set(n.id,best);placed.push({x:x+best.dx,y:y+best.dy,size:best.size});rows.set(n.row,placed);
  }return out;
@@ -238,7 +253,7 @@ function render(anchor=0){
     html+=art+'</svg>'+`<button class="row-play" aria-label="이 줄부터 재생" title="이 줄부터 재생" data-from="${r*8+part*8/divisions}">▶</button>`;
     for(const n of s.notes.filter(n=>n.row===r&&segmentOf(n.x)===part)){
      const i=icons.get(n.icon),visual=offsets.get(n.id);
-     html+=`<div role="button" tabindex="0" aria-label="${i.name}" class="note ${visualKind(n)==='circle'?'circle-icon':''}" data-note="${n.id}" data-instrument="${i.group}" style="left:${(M.xOf(n.x)+visual.dx-offset)*staffScaleX}px;top:${M.yOf(n.y)+visual.dy}px;--color:${i.color};--circle-size:${visual.size}px"><span class="shape" style="width:${visual.size}px;height:${visual.size}px">${noteSVG(n)}</span><span class="sparkle" aria-hidden="true">✦</span></div>`;
+     html+=`<div role="button" tabindex="0" aria-label="${i.name}" class="note ${visualKind(n)==='circle'?'circle-icon':''}" data-note="${n.id}" data-instrument="${i.group}" style="left:${(M.xOf(n.x)+visual.dx-offset)*staffScaleX}px;top:${M.yOf(n.y)+visual.dy}px;--color:${i.color};--circle-size:${visual.size}px"><span class="shape" style="width:${visual.size}px;height:${visual.size}px">${noteUse(n)}</span><span class="sparkle" aria-hidden="true">✦</span></div>`;
     }
     html+='</div>';
    }
@@ -291,11 +306,14 @@ function updateScrollbar(){
 }
 $('viewport').addEventListener('scroll',updateScrollbar,{passive:true});
 async function preview(n){if(performance.now()-previewAt<85)return;previewAt=performance.now();const token=pending;try{await A.prepare([n]);if(token===pending&&!playing)A.note(n,undefined,s.bpm);}catch{toast('음원을 불러오지 못했어요.');}}
-function snapPoint(p){
- // Placement coordinates remain musical data; visualOffsets handles collisions.
- return p;
+function snapPoint(p,reach=32){
+ // Mouse placement uses the same 1/32 slots as keyboard input and never stacks on an occupied slot.
+ const k=Math.round(p.x/PAD_STEP),last=Math.round(1/PAD_STEP)-1;
+ const used=new Set(s.notes.filter(n=>n.row===p.row).map(n=>Math.round(n.x/PAD_STEP)));
+ for(let d=0;d<=reach;d++)for(const c of d?[k+d,k-d]:[k]){if(c>=0&&c<=last&&!used.has(c))return {...p,x:c*PAD_STEP};}
+ return null;
 }
-function place(p){if(!p||p.row>=M.MAX)return false;if(s.notes.length>=5000){toast('이 작품의 아이콘 한도에 도달했어요.');return false;}p=snapPoint(p);if(!p)return false;const n={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),icon:chosen,...p,voice:JamVoicePools[icons.get(chosen).group]?.[Math.floor(Math.random()*JamVoicePools[icons.get(chosen).group].length)]};s.notes.push(n);if(p.x>.95&&p.row===M.start(M.pageOf(p.row))+M.count(M.pageOf(p.row))-1&&p.row+1<M.MAX)extra=M.pageOf(p.row)+2;inputCursor=nextSlot({row:p.row,x:p.x,y:p.y});if(inputCursor.row>=M.MAX)inputCursor={row:M.MAX-1,x:1-PAD_STEP,y:p.y};extra=Math.max(extra,M.pageOf(inputCursor.row)+1);preview(n);return true;}
+function place(p,reach){if(!p||p.row>=M.MAX)return false;if(s.notes.length>=5000){toast('이 작품의 아이콘 한도에 도달했어요.');return false;}p=snapPoint(p,reach);if(!p)return false;const n={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),icon:chosen,...p,voice:JamVoicePools[icons.get(chosen).group]?.[Math.floor(Math.random()*JamVoicePools[icons.get(chosen).group].length)]};s.notes.push(n);if(p.x>.95&&p.row===M.start(M.pageOf(p.row))+M.count(M.pageOf(p.row))-1&&p.row+1<M.MAX)extra=M.pageOf(p.row)+2;inputCursor=nextSlot({row:p.row,x:p.x,y:p.y});if(inputCursor.row>=M.MAX)inputCursor={row:M.MAX-1,x:1-PAD_STEP,y:p.y};extra=Math.max(extra,M.pageOf(inputCursor.row)+1);preview(n);return true;}
 const stampInterval = 90;
 const viewport = $('viewport');
 function noteAt(x,y){
@@ -309,8 +327,8 @@ function erase(ids){
  extra=0;
  return true;
 }
-function stamp(x,y){
- if(!place(point(x,y)))return;
+function stamp(x,y,reach=32){
+ if(!place(point(x,y),reach))return;
  gesture.changed=true;
  render();
  document.querySelector(`[data-note="${s.notes.at(-1).id}"]`)?.classList.add('landing');
@@ -320,6 +338,13 @@ $('pages').addEventListener('pointerdown',e=>{
  const id=noteAt(e.clientX,e.clientY);
  if(!id&&!point(e.clientX,e.clientY))return;
  e.preventDefault();
+ if(e.altKey&&!deleteMode&&inputMode==='pad'){
+  // Option/Alt+click (or drag) moves only the keyboard input cursor; nothing is placed.
+  const p=point(e.clientX,e.clientY);if(!p)return;
+  pause();gesture={type:'input-cursor',pointerId:e.pointerId};
+  inputCursor={...p,x:M.clamp(Math.round(p.x/PAD_STEP)*PAD_STEP,0,1-PAD_STEP)};drawInputCursor();remember();
+  viewport.setPointerCapture(e.pointerId);return;
+ }
  pause();pos=0;head();
  gesture={type:deleteMode?'erase':'draw',pointerId:e.pointerId,before:clone(s),beforeCursor:{...inputCursor},x:e.clientX,y:e.clientY,at:performance.now(),changed:false};
  if(deleteMode){
@@ -343,7 +368,7 @@ function moveGesture(e){
   }
   if(erase(ids)){g.changed=true;render();}
  }else if(performance.now()-g.at>=stampInterval){
-  stamp(x,y);
+  stamp(x,y,2);
   g.at=performance.now();
  }
  g.x=x;g.y=y;
@@ -387,11 +412,13 @@ function setPanel(closed){
  fit(false);
 }
 $('collapse').onclick=()=>setPanel(!document.body.classList.contains('collapsed'));
-document.addEventListener('keydown',e=>{if(e.target.closest?.('input,textarea,select,[contenteditable],dialog')||document.querySelector('dialog[open]'))return;if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();history(!e.shiftKey);}else if(e.key==='Escape'){setDeleteMode(false);$('export-menu').hidden=true;$('share').setAttribute('aria-expanded','false');render();}else if(deleteMode&&['Delete','Backspace','Enter'].includes(e.key)&&e.target.closest('.note')){e.preventDefault();const before=clone(s);if(erase(new Set([e.target.dataset.note]))){pause();pos=0;push(before);render();save();}}else if(e.code==='Space'){resetTypeTiming();e.preventDefault();playing?pause():play();}});
+document.addEventListener('keydown',e=>{if(e.target.closest?.('input,textarea,select,[contenteditable],dialog')||document.querySelector('dialog[open]'))return;if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();history(!e.shiftKey);}else if(e.key==='Escape'&&viewing){$('edit-shared').click();}else if(e.key==='Escape'){setDeleteMode(false);$('export-menu').hidden=true;render();}else if(deleteMode&&['Delete','Backspace','Enter'].includes(e.key)&&e.target.closest('.note')){e.preventDefault();const before=clone(s);if(erase(new Set([e.target.dataset.note]))){pause();pos=0;push(before);render();save();}}else if(e.code==='Space'){resetTypeTiming();e.preventDefault();playing?pause():play();}});
 function svgPage(p){applyVisualTheme();const offsets=visualOffsets();let parts=`<svg xmlns="http://www.w3.org/2000/svg" width="794" height="1123" viewBox="0 0 794 1123"><rect width="794" height="1123" fill="${s.theme==='dark'?'#202020':'#fafafa'}"/><style>.connection{stroke-width:1;opacity:${s.theme==='dark'?.65:.85}}.export-icon{filter:${s.theme==='light'?'drop-shadow(0 .4px .4px #3339)':'none'}}</style><g font-family="Arial,sans-serif" fill="${s.theme==='dark'?'#eee':'#222'}">`;if(p===0)parts+=`<text x="54" y="65" font-size="24">${esc(s.title)}</text><text x="54" y="98" font-size="11">${esc(s.artist)}</text>`;for(let j=0;j<M.count(p);j++){const r=M.start(p)+j;parts+=`<g transform="translate(54 ${M.top(r)})">`;for(let k=2;k<=10;k+=2)parts+=`<path d="M0 ${M.yOf(k)}H686" stroke="${s.theme==='dark'?'#555':'#ccc'}" stroke-width=".6"/>`;parts+=rowArt(r);for(const n of s.notes.filter(n=>n.row===r)){const visual=offsets.get(n.id),size=visual.size;let svg=noteSVG(n).replace(/<svg\b[^>]*>/,tag=>tag.replace(/\s(width|height)="[^"]*"/g,''));parts+=svg.replace('<svg ',`<svg class="export-icon" x="${M.xOf(n.x)+visual.dx-size/2}" y="${M.yOf(n.y)+visual.dy-size/2}" width="${size}" height="${size}" `);}parts+='</g>';}if(s.theme==='light'){const colors={"#FF0049": "#EB1455", "#7DDCFF": "#176AF0", "#00E051": "#00A945", "#FF9708": "#F07800", "#FFE700": "#D5B900", "#B58AFF": "#E60091"};for(const [from,to] of Object.entries(colors))parts=parts.replace(new RegExp(from,'gi'),to);}return parts+`<text x="54" y="1085" font-size="10">PLAY JAM</text><text x="740" y="1085" font-size="10" text-anchor="end">${esc(s.date)}</text></g></svg>`;}
-$('share').onclick=()=>{$('export-menu').hidden=!$('export-menu').hidden;$('share').setAttribute('aria-expanded',!$('export-menu').hidden);};document.addEventListener('pointerdown',e=>{if(!e.target.closest('#export-menu,#share')){$('export-menu').hidden=true;$('share').setAttribute('aria-expanded','false');}});
-$('png').onclick=async()=>{const current=M.clamp(Math.floor($('viewport').scrollTop/((pageHeight+M.GAP)*zoom)),0,pageCount()-1),pages=$('all-pages').checked?Array.from({length:M.pages(s)},(_,i)=>i):[Math.min(current,M.pages(s)-1)];$('png').disabled=true;try{for(const p of pages){const url=URL.createObjectURL(new Blob([svgPage(p)],{type:'image/svg+xml'}));try{const image=new Image();image.src=url;await image.decode();const canvas=document.createElement('canvas');canvas.width=1588;canvas.height=2246;canvas.getContext('2d').drawImage(image,0,0,1588,2246);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw Error();const a=document.createElement('a'),download=URL.createObjectURL(blob);a.href=download;a.download=`PLAY-JAM-${p+1}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(download),30000);}finally{URL.revokeObjectURL(url);}}}catch{toast('이미지를 저장하지 못했어요.');}finally{$('png').disabled=false;}};
-$('copy').onclick=async()=>{chooseHarmony(true);ensureBacking();if(location.protocol==='file:')return toast('공유 링크는 GitHub Pages에 올린 뒤 사용할 수 있어요.');let binary='';for(const b of new TextEncoder().encode(JSON.stringify(s)))binary+=String.fromCharCode(b);const link=location.origin+location.pathname+'#jam='+btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');try{await navigator.clipboard.writeText(link);toast('공유 링크를 복사했어요.');}catch{$('link').hidden=false;$('link').value=link;$('link').select();}};
+// The link field only appears when copying to the clipboard fails; clicking elsewhere hides it.
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#export-menu,#copy'))$('export-menu').hidden=true;});
+// Always export every page of the score, one PNG per page.
+$('png').onclick=async()=>{const pages=Array.from({length:M.pages(s)},(_,i)=>i);$('png').disabled=true;try{for(const p of pages){const url=URL.createObjectURL(new Blob([svgPage(p)],{type:'image/svg+xml'}));try{const image=new Image();image.src=url;await image.decode();const canvas=document.createElement('canvas');canvas.width=1588;canvas.height=2246;canvas.getContext('2d').drawImage(image,0,0,1588,2246);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw Error();const a=document.createElement('a'),download=URL.createObjectURL(blob);a.href=download;a.download=`PLAY-JAM-${p+1}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(download),30000);}finally{URL.revokeObjectURL(url);}if(pages.length>1)await new Promise(r=>setTimeout(r,350));}if(pages.length>1)toast(`악보 이미지 ${pages.length}장을 저장했어요.`);}catch{toast('이미지를 저장하지 못했어요.');}finally{$('png').disabled=false;}};
+$('copy').onclick=async()=>{chooseHarmony(true);ensureBacking();if(location.protocol==='file:')return toast('공유 링크는 GitHub Pages에 올린 뒤 사용할 수 있어요.');let binary='';for(const b of new TextEncoder().encode(JSON.stringify(s)))binary+=String.fromCharCode(b);const link=location.origin+location.pathname+'#jam='+btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');try{await navigator.clipboard.writeText(link);toast('공유 링크를 복사했어요.');}catch{$('export-menu').hidden=false;$('link').value=link;$('link').select();toast('링크를 직접 복사해 주세요.');}};
 function demo(mode){
  const notes=['0-1','1-1','2-1','3-1','4-1','5-1'];
  return `<div class="demo-score ${mode}" aria-hidden="true">${notes.map((id,i)=>`<span style="--i:${i}">${icons.get(id).svg}</span>`).join('')}<i></i></div>`;
@@ -407,6 +434,7 @@ function applyViewMode(){
  $('shared-view-bar').hidden=!viewing;
  $('bpm').disabled=viewing;
  $('pages').setAttribute('aria-label',viewing?'공유 악보 재생':'그래픽 악보 편집');
+ document.querySelectorAll('.mode-switch [data-mode]').forEach(b=>b.setAttribute('aria-pressed',String((b.dataset.mode==='view')===viewing)));
  render();
 }
 $('edit-shared').onclick=()=>{pause();viewing=false;entered=true;remember();applyViewMode();$('viewport').scrollTop=editorScroll;$('pages').focus();};
