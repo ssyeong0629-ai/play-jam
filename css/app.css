@@ -421,3 +421,33 @@ main{background:#000}
 
 /* Touch devices have no keyboard: hide the A S D F typing hint. */
 @media (hover:none) and (pointer:coarse){#typing-guide{display:none!important}}
+
+/* Mobile dock: compact instrument bar + touch pads replace the tall sidebar on phones. */
+#mobile-dock{display:none}
+@media(max-width:600px){
+ main aside#sidebar{display:none}
+ body.dock-settings main aside#sidebar{display:block;order:2;height:auto;max-height:46vh}
+ #mobile-dock{display:block;order:3;flex:none;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:#111;border-top:1px solid var(--line);z-index:21}
+ .shared-view #mobile-dock{display:none}
+ .dock-bar{display:flex;align-items:center;gap:5px}
+ .dock-chips{display:flex;gap:4px;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none}
+ .dock-chips::-webkit-scrollbar{display:none}
+ .dock-chip{flex:1 1 30px;min-width:0;height:38px;min-height:38px;padding:0;display:grid;place-items:center;border:1px solid #ffffff1c;border-radius:9px;background:transparent}
+ .dock-chip svg{width:20px;height:20px}
+ .dock-chip[aria-pressed=true]{border-color:var(--color);background:color-mix(in srgb,var(--color) 18%,transparent)}
+ .dock-mode,.dock-more,.dock-min{flex:none;height:38px;min-height:38px;border:1px solid #ffffff1c;border-radius:9px;background:transparent;color:#eee;font-size:12px;padding:0 9px}
+ .dock-more,.dock-min{width:38px;padding:0;display:grid;place-items:center}
+ .dock-more[aria-expanded=true]{background:#ffffff18}
+ .dock-min svg{width:18px;height:18px;transition:transform .2s}
+ .dock-min[aria-expanded=false] svg{transform:rotate(180deg)}
+ .dock-body{margin-top:8px}
+ body.dock-collapsed .dock-body{display:none}
+ .dock-keys{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
+ .dock-key{position:relative;height:58px;min-height:58px;padding:0;border:1px solid #ffffff22;border-radius:10px;background:#1c1c1c;color:#f2f2f2;font-size:14px;touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+ .dock-key i{position:absolute;left:50%;bottom:9px;width:8px;height:calc(8px + var(--level) * 28px);border-radius:4px;transform:translateX(-50%);background:var(--color);opacity:.85}
+ .dock-key.pad-tap{animation:dock-tap .18s ease-out}
+ @keyframes dock-tap{0%{background:color-mix(in srgb,var(--color) 45%,#1c1c1c);transform:scale(.94)}100%{background:#1c1c1c;transform:none}}
+ .dock-tools{display:flex;gap:6px;margin-top:6px}
+ .dock-tools button{flex:1;height:34px;min-height:34px;border:1px solid #ffffff1c;border-radius:9px;background:transparent;color:#ccc;font-size:12px}
+ #fixed-keyboard{display:none!important}
+}

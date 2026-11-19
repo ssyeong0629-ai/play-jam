@@ -427,5 +427,47 @@ function syncPitch(){comparison.querySelectorAll('[data-pitch]').forEach(b=>b.se
 comparison.querySelectorAll('[data-pitch]').forEach(b=>b.onclick=()=>{pause();pos=0;s.pitchMode=b.dataset.pitch;resetTypeTiming();syncPitch();render();save();});syncPitch();
 const resetDialog=document.createElement('dialog');resetDialog.id='reset-confirm';resetDialog.innerHTML='<h2>악보를 초기화할까요?</h2><p>제목과 배치한 음이 지워집니다.<br>선택한 음높이 모드는 유지됩니다.</p><div><button value="cancel">아니오</button><button value="reset">예</button></div>';document.body.append(resetDialog);resetDialog.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.stopPropagation();const b=resetDialog.contains(document.activeElement)&&document.activeElement.tagName==='BUTTON'?document.activeElement:resetDialog.querySelector('[value=reset]');b.click();}});
 function confirmReset(){return new Promise(resolve=>{const done=value=>{resetDialog.close();resolve(value);};resetDialog.querySelector('[value=cancel]').onclick=()=>done(false);resetDialog.querySelector('[value=reset]').onclick=()=>done(true);resetDialog.oncancel=e=>{e.preventDefault();done(false);};resetDialog.showModal();resetDialog.querySelector('[value=reset]').focus();});}
+
+// ---- Mobile dock: compact instrument bar + touch pads (phones only, see css "Mobile dock") ----
+const hapticSwitch=(()=>{const l=document.createElement('label');l.setAttribute('aria-hidden','true');l.style.cssText='position:fixed;left:-99px;top:0;width:1px;height:1px;opacity:0;pointer-events:none';l.innerHTML='<input type="checkbox" switch tabindex="-1">';document.body.append(l);return l;})();
+function haptic(ms=12){try{if(navigator.vibrate&&navigator.vibrate(ms))return;}catch{}try{hapticSwitch.click();}catch{}}
+const freePadY=[12,10,9,7,5,3,2,0];
+const dock=document.createElement('section');dock.id='mobile-dock';dock.setAttribute('aria-label','모바일 입력 패드');
+dock.innerHTML='<div class="dock-bar"><div class="dock-chips" role="group" aria-label="악기 선택"></div><button type="button" class="dock-mode" aria-label="연주 방식 바꾸기"></button><button type="button" class="dock-more" aria-label="설정 더 보기" aria-expanded="false">⋯</button><button type="button" class="dock-min" aria-label="패드 접기" aria-expanded="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button></div><div class="dock-body"><div class="dock-keys"></div><div class="dock-tools"><button type="button" class="dock-rest">쉼표 <span aria-hidden="true">→</span></button><button type="button" class="dock-back">지우기 <span aria-hidden="true">⌫</span></button></div></div>';
+document.querySelector('main').append(dock);
+const chips=dock.querySelector('.dock-chips');
+for(let g=0;g<6;g++){const b=document.createElement('button');b.type='button';b.className='dock-chip';b.dataset.dockGroup=g;b.style.setProperty('--color',icons.get(g+'-1').color);b.setAttribute('aria-label',groupNames[g]);b.innerHTML=icons.get(g+'-1').svg;b.addEventListener('click',()=>{haptic(8);openKeyPicker(g);syncDock();});chips.append(b);}
+const dockKeys=dock.querySelector('.dock-keys');
+for(let i=0;i<8;i++){const b=document.createElement('button');b.type='button';b.className='dock-key';b.dataset.dockKey=i;b.style.setProperty('--level',i/7);
+ b.addEventListener('pointerdown',e=>{if(e.button!==0||viewing)return;e.preventDefault();padTap(i,b);});
+ b.addEventListener('click',e=>{if(e.detail===0&&!viewing)padTap(i,b);});dockKeys.append(b);}
+function padTap(i,b){
+ haptic();document.body.classList.remove('mouse-placement');
+ const group=randomInstruments?Math.floor(Math.random()*6):Number(selectedKeyIcon.split('-')[0]);
+ if(s.pitchMode==='fixed'){const key=fixedKeys[i];timedInput(group+'-'+lastSlots[group],fixedKeyMap.get(key).y);reactKey(key);}
+ else timedInput(group+'-'+lastSlots[group],freePadY[i]);
+ b.classList.remove('pad-tap');void b.offsetWidth;b.classList.add('pad-tap');
+}
+const sendKey=(key,code)=>document.dispatchEvent(new KeyboardEvent('keydown',{key,code,bubbles:true,cancelable:true}));
+dock.querySelector('.dock-rest').addEventListener('click',()=>{haptic(8);sendKey(' ','Space');});
+dock.querySelector('.dock-back').addEventListener('click',()=>{haptic(8);sendKey('Backspace','Backspace');});
+dock.querySelector('.dock-mode').addEventListener('click',()=>{haptic(8);comparison.querySelector(`[data-pitch="${s.pitchMode==='fixed'?'harmony':'fixed'}"]`).click();syncDock();});
+const dockPref=k=>{try{return localStorage.getItem('playjam.dock.'+k);}catch{return null;}},setDockPref=(k,v)=>{try{localStorage.setItem('playjam.dock.'+k,v);}catch{}};
+function setDockMin(min){document.body.classList.toggle('dock-collapsed',min);if(min)setDockMore(false);const b=dock.querySelector('.dock-min');b.setAttribute('aria-expanded',!min);b.setAttribute('aria-label',min?'패드 펼치기':'패드 접기');setDockPref('min',min?'1':'0');fit(false);}
+function setDockMore(more){document.body.classList.toggle('dock-settings',more);dock.querySelector('.dock-more').setAttribute('aria-expanded',more);fit(false);}
+dock.querySelector('.dock-min').addEventListener('click',()=>{haptic(8);setDockMin(!document.body.classList.contains('dock-collapsed'));});
+dock.querySelector('.dock-more').addEventListener('click',()=>{haptic(8);if(document.body.classList.contains('dock-collapsed'))setDockMin(false);setDockMore(!document.body.classList.contains('dock-settings'));});
+function syncDock(){
+ const group=Number(selectedKeyIcon.split('-')[0]),fixed=s.pitchMode==='fixed';
+ dock.style.setProperty('--color',icons.get(group+'-1').color);dock.classList.toggle('fixed',fixed);
+ chips.querySelectorAll('[data-dock-group]').forEach(b=>b.setAttribute('aria-pressed',!randomInstruments&&Number(b.dataset.dockGroup)===group));
+ dock.querySelector('.dock-mode').textContent=fixed?'건반':'자유';
+ dockKeys.querySelectorAll('[data-dock-key]').forEach((b,i)=>{b.innerHTML=fixed?`<span>${names[i]}${i===7?'<sup class=octave-dot>·</sup>':''}</span>`:'<i aria-hidden="true"></i>';b.setAttribute('aria-label',fixed?names[i]:'높이 '+(i+1));});
+}
+new MutationObserver(syncDock).observe($('launchpad'),{subtree:true,attributes:true,attributeFilter:['aria-pressed']});
+comparison.querySelectorAll('[data-pitch]').forEach(b=>b.addEventListener('click',()=>setTimeout(syncDock)));
+$('random-instrument').addEventListener('click',()=>setTimeout(syncDock));
+$('pages').addEventListener('pointerdown',e=>{if(e.pointerType!=='touch'||viewing||deleteMode)return;const before=s.notes.length;setTimeout(()=>{if(s.notes.length>before)haptic();},0);},true);
+syncDock();if(dockPref('min')==='1')setDockMin(true);
 window.Jam={get state(){return s;},svgPage,render,play,pause};
 })();
