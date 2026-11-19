@@ -451,19 +451,31 @@ main{background:#000}
  .dock-tools button{flex:1;height:34px;min-height:34px;border:1px solid #ffffff1c;border-radius:9px;background:transparent;color:#ccc;font-size:12px}
  #fixed-keyboard{display:none!important}
 }
-#staff-stars{position:absolute;inset:0;pointer-events:none;z-index:29;overflow:hidden}
-#staff-stars i{position:absolute;width:var(--size);height:var(--size);border-radius:50%;background:#fff;box-shadow:0 0 3px #fff8;opacity:var(--lo);animation:star-twinkle 5s ease-in-out infinite alternate}
-@keyframes star-twinkle{from{opacity:var(--lo)}to{opacity:var(--hi)}}
-body.light #staff-stars{display:none}
-@media (prefers-reduced-motion:reduce){#staff-stars i{animation:none}}
 
 #random-instrument .random-switch{position:relative;flex:none;width:26px;height:14px;border-radius:7px;background:#3a3a3a;border:1px solid #555;transition:background .15s,border-color .15s}
 #random-instrument .random-switch span{position:absolute;top:1px;left:1px;width:10px;height:10px;border-radius:50%;background:#999;transition:transform .15s,background .15s}
-#random-instrument[aria-pressed=true] .random-switch{background:#7ddcff55;border-color:#7ddcff}
-#random-instrument[aria-pressed=true] .random-switch span{transform:translateX(12px);background:#fff}
+#random-instrument[aria-pressed=true] .random-switch{background:#6a6a6a;border-color:#8a8a8a}
+#random-instrument[aria-pressed=true] .random-switch span{transform:translateX(12px);background:#e6e6e6}
 #random-instrument[aria-pressed=true]:not(:focus-visible){outline:none}
 #export-menu #link{display:block;width:100%;box-sizing:border-box;padding:8px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);font-size:11px}
 
+/* Help: grouped key list for readability; help and reset dialogs are translucent so the score shows through. */
+#tour{width:min(1180px,calc(100vw - 32px));background:rgba(24,24,24,.8);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border:1px solid #ffffff22}
+#tour::backdrop,#reset-confirm::backdrop{background:#0004;-webkit-backdrop-filter:none;backdrop-filter:none}
+#tour h2{font-size:clamp(22px,2.4vw,30px)}
+#tour .help-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:20px}
+@media(max-width:900px){#tour .help-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}}
+#tour .help-grid section{background:rgba(255,255,255,.04);border:1px solid #ffffff1a;border-radius:12px;padding:16px 16px 10px}
+#tour .help-grid h3{font-size:14px;font-weight:600;color:#eee;margin:0 0 10px;letter-spacing:.02em}
+#tour .help-list{list-style:none;margin:0;padding:0}
+#tour .help-list li{display:flex;align-items:center;gap:12px;padding:7px 0;border-top:1px solid #ffffff10}
+#tour .help-list li:first-child{border-top:0}
+#tour .help-list .keys{flex:0 0 136px;display:flex;flex-wrap:wrap;align-items:center;gap:3px;color:#888;font-size:11px}
+#tour .help-list .desc{font-size:13px;line-height:1.45;color:#ccc}
+#tour .help-list kbd{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 6px;border:1px solid #666;border-bottom-width:2px;border-radius:5px;background:#2a2a2a;color:#eee;font:11px Arial,sans-serif;animation:none}
+#tour .help-list .chip{display:inline-flex;align-items:center;height:22px;padding:0 7px;border:1px solid #555;border-radius:11px;color:#ddd;font-size:11px;white-space:nowrap}
+#tour .help-list .word{color:#aaa;font-size:11px;white-space:nowrap}
+#reset-confirm{background:rgba(30,30,30,.8);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 .mode-switch{display:inline-flex;border:1px solid #555;border-radius:8px;overflow:hidden;flex:none}
 .global-end .mode-switch button,#shared-view-bar .mode-switch button{min-width:0;width:auto;height:30px;padding:0 12px;border:0;border-radius:0;background:transparent;color:#aaa;font-size:12px;font-weight:500}
 .global-end .mode-switch button[aria-pressed=true],#shared-view-bar .mode-switch button[aria-pressed=true]{background:#eee;color:#111}
