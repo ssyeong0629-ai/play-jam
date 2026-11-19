@@ -31,7 +31,11 @@ function save(){chooseHarmony();s.bpm=130;ensureBacking();remember();controls();
 function push(before=clone(s)){cursorHistory.set(before,{...inputCursor});undo.push(before);if(undo.length>60)undo.shift();redo=[];}
 function history(back){resetTypeTiming();if(viewing)return;end(true);pause();const from=back?undo:redo,to=back?redo:undo;if(!from.length)return;const current=clone(s);cursorHistory.set(current,{...inputCursor});to.push(current);s=from.pop();selectedKeyIcon=(s.partGroup||0)+'-0';syncKeySelection();inputCursor={...(cursorHistory.get(s)||inputCursor)};extra=0;render();save();}
 function pageCount(){return Math.max(M.pages(s),extra);}
-function controls(){const keys=document.getElementById('fixed-keyboard');if(keys)keys.hidden=s.pitchMode!=='fixed';document.querySelectorAll('[data-pitch]').forEach(b=>b.setAttribute('aria-pressed',(s.pitchMode||'harmony')===b.dataset.pitch));s.theme='dark';$('undo').disabled=!undo.length;$('redo').disabled=!redo.length;$('bpm').value=s.bpm;$('density').value=s.density;$('loop').setAttribute('aria-pressed',s.loop);document.body.classList.toggle('light',s.theme==='light');syncInputMode();}
+// Pad icons already follow themedSVG via applyVisualTheme; here only the pad names follow the sound theme.
+function syncPads(){const names=window.JamThemes?.names?.[s.soundTheme||'band'];document.querySelectorAll('.launch-pad').forEach(b=>{const g=Number(b.dataset.pad),label=b.querySelector('span');if(label)label.textContent=(names&&names[g])||groupNames[g];});}
+function controls(){syncPads();document.querySelectorAll('#sound-themes [data-sound]').forEach(b=>b.setAttribute('aria-pressed',String((s.soundTheme||'band')===b.dataset.sound)));{const cur=(window.JamThemes?.list||[]).find(x=>x[0]===(s.soundTheme||'band'));const box=document.querySelector('#sound-themes .theme-current');if(cur&&box){box.querySelector('.theme-icon').innerHTML=cur[2];box.querySelector('.theme-name').textContent=cur[1];}}const keys=document.getElementById('fixed-keyboard');if(keys)keys.hidden=s.pitchMode!=='fixed';document.querySelectorAll('[data-pitch]').forEach(b=>b.setAttribute('aria-pressed',(s.pitchMode||'harmony')===b.dataset.pitch));s.theme='dark';$('undo').disabled=!undo.length;$('redo').disabled=!redo.length;$('bpm').value=s.bpm;$('density').value=s.density;$('loop').setAttribute('aria-pressed',s.loop);document.body.classList.toggle('light',s.theme==='light');
+// All themes keep the black screen; only the background particles change (carol: falling snow).
+document.body.dataset.skin=(s.soundTheme==='carol')?'carol':'band';syncInputMode();}
 const groupNames=['Drums','Synth','Bass','Acoustic','Clean','Drive','Hi-hat','Rim','Soft snare','Acoustic tap','Synth pluck','Short bass'];
 const lastSlots=[1,2,2,1,1,3,0,0,0,0,0,0];let paletteGroup=-1;
 function syncPalette(){
@@ -90,13 +94,13 @@ for(let group=0;group<6;group++){
 const soundOrders=[[1,2,3,4,5,0],[2,1,3,4,5,0],[2,1,3,4,5,0],[1,2,3,4,5,0],[1,2,3,4,5,0],[3,1,2,4,5,0],...[0,0,0,0,0,0].map(()=>[0,1,2,3,4,5])];
 const themeInstruments=[1,2,2,1,1,3,0,0,0,0,0,0].map((slot,g)=>icons.get(g+'-'+slot).svg),themeNote=icons.get('0-4').svg;
 function visualKind(n){return s.visualTheme==='mixed'?['instrument','note','circle'][Math.floor(M.hash(n.id)*3)]:(s.visualTheme||'instrument');}
-function themedSVG(group,kind){const color=icons.get(group+'-0').color;return kind==='instrument'?themeInstruments[group]:kind==='note'?themeNote.replaceAll('#FF0049',color):`<svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="10" fill="${color}"/></svg>`;}
+function themedSVG(group,kind){const color=icons.get(group+'-0').color,themed=window.JamThemes?.icons?.[s.soundTheme]?.[group];return kind==='instrument'?(themed||themeInstruments[group]):kind==='note'?themeNote.replaceAll('#FF0049',color):`<svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><circle cx="13" cy="13" r="10" fill="${color}"/></svg>`;}
 function noteSVG(n){return themedSVG(icons.get(n.icon).group,visualKind(n));}
 // Editor icons: each distinct icon is stored once as a <symbol>; notes reference it with <use> instead of repeating ~11KB of SVG per note.
 // Filters are stripped because `.shape svg [filter]{filter:none}` already disables them on screen. PNG export still uses noteSVG.
 const spriteHost=document.createElementNS('http://www.w3.org/2000/svg','svg');spriteHost.setAttribute('aria-hidden','true');spriteHost.style.cssText='position:absolute;width:0;height:0;overflow:hidden';document.body.prepend(spriteHost);
 const spriteRefs=new Map();
-function noteUse(n){const group=icons.get(n.icon).group,kind=visualKind(n),key=group+'|'+kind;let ref=spriteRefs.get(key);
+function noteUse(n){const group=icons.get(n.icon).group,kind=visualKind(n),key=(s.soundTheme||'band')+'|'+group+'|'+kind;let ref=spriteRefs.get(key);
  if(!ref){const markup=themedSVG(group,kind),open=markup.match(/<svg\b[^>]*>/)[0],viewBox=(open.match(/viewBox="([^"]+)"/)||[,'0 0 26 26'])[1],id='pj-icon-'+spriteRefs.size;
   const inner=markup.slice(markup.indexOf(open)+open.length,markup.lastIndexOf('</svg>')).replace(/<defs>[\s\S]*?<\/defs>/g,'').replace(/\sfilter="url\([^)]*\)"/g,'');
   spriteHost.insertAdjacentHTML('beforeend',`<symbol id="${id}" viewBox="${viewBox}">${inner}</symbol>`);
@@ -307,9 +311,10 @@ function updateScrollbar(){
 $('viewport').addEventListener('scroll',updateScrollbar,{passive:true});
 async function preview(n){if(performance.now()-previewAt<85)return;previewAt=performance.now();const token=pending;try{await A.prepare([n]);if(token===pending&&!playing)A.note(n,undefined,s.bpm);}catch{toast('음원을 불러오지 못했어요.');}}
 function snapPoint(p,reach=32){
- // Mouse placement uses the same 1/32 slots as keyboard input and never stacks on an occupied slot.
- const k=Math.round(p.x/PAD_STEP),last=Math.round(1/PAD_STEP)-1;
- const used=new Set(s.notes.filter(n=>n.row===p.row).map(n=>Math.round(n.x/PAD_STEP)));
+ // Mouse placement uses the same 1/32 slots as keyboard input. Like keyboard ensemble input, only the
+ // same instrument may not share a slot; different instruments can sound together on one slot.
+ const k=Math.round(p.x/PAD_STEP),last=Math.round(1/PAD_STEP)-1,group=icons.get(chosen).group;
+ const used=new Set(s.notes.filter(n=>n.row===p.row&&!n.percussion&&icons.get(n.icon).group===group).map(n=>Math.round(n.x/PAD_STEP)));
  for(let d=0;d<=reach;d++)for(const c of d?[k+d,k-d]:[k]){if(c>=0&&c<=last&&!used.has(c))return {...p,x:c*PAD_STEP};}
  return null;
 }
@@ -402,7 +407,7 @@ $('delete-mode').onclick=()=>{end(true);pause();setDeleteMode(!deleteMode);rende
 $('reset').onclick=async()=>{
  end(true);pause();
  if(!await confirmReset())return;
- push();const pitchMode=s.pitchMode||'harmony';s=M.fresh();s.pitchMode=pitchMode;resetTypeTiming();randomInstruments=false;$('random-instrument').setAttribute('aria-pressed','false');syncPitch();inputCursor={row:0,x:0,y:6};extra=0;pos=0;ratio=1;densityBefore=null;choose('0-1');save();$('viewport').scrollTop=0;$('viewport').scrollLeft=0;toast('초기화했어요.');
+ push();const pitchMode=s.pitchMode||'harmony',soundTheme=s.soundTheme||'band';s=M.fresh();s.pitchMode=pitchMode;s.soundTheme=soundTheme;resetTypeTiming();randomInstruments=false;$('random-instrument').setAttribute('aria-pressed','false');syncPitch();inputCursor={row:0,x:0,y:6};extra=0;pos=0;ratio=1;densityBefore=null;choose('0-1');save();$('viewport').scrollTop=0;$('viewport').scrollLeft=0;toast('초기화했어요.');
 };
 $('out').onclick=()=>{ratio=M.clamp(ratio-.1,.25,2.5);fit(false);};$('in').onclick=()=>{ratio=M.clamp(ratio+.1,.25,2.5);fit(false);};$('fit').onclick=$('percent').onclick=()=>fit();window.addEventListener('resize',()=>fit(false));
 function setPanel(closed){
@@ -443,6 +448,14 @@ chosen=(s.partGroup||0)+'-0';if(s.partCursors?.[s.partGroup||0])inputCursor={...
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();});
 
 const comparison=document.createElement('div');comparison.id='pitch-comparison';comparison.innerHTML='<button data-pitch="harmony">자유 연주</button><button data-pitch="fixed">건반 연주</button><details><summary>키별 음 보기</summary><div class="pitch-keys"></div><small>베이스는 한 옥타브 낮게 · 드럼은 타격음 유지</small></details>';$('visual-themes').before(comparison);
+const soundSwitch=document.createElement('div');soundSwitch.id='sound-themes';
+// Theme picker: shows the chosen theme's icon; click to unfold all theme icons and pick one.
+soundSwitch.innerHTML=`<button type="button" class="theme-current" aria-expanded="false" aria-haspopup="true" title="소리 테마 고르기"><span class="theme-label">Theme</span><span class="theme-icon"></span><span class="theme-name"></span><span class="theme-caret" aria-hidden="true">▾</span></button><div class="theme-options" role="group" aria-label="소리 테마" hidden>${JamThemes.list.map(([id,name,icon])=>`<button type="button" data-sound="${id}" title="${name}">${icon}<span>${name}</span></button>`).join('')}</div>`;comparison.before(soundSwitch);
+const themeToggle=soundSwitch.querySelector('.theme-current'),themeOptions=soundSwitch.querySelector('.theme-options');
+function openThemes(open){themeOptions.hidden=!open;themeToggle.setAttribute('aria-expanded',String(open));soundSwitch.classList.toggle('open',open);}
+themeToggle.onclick=()=>{if(!viewing)openThemes(themeOptions.hidden);};
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#sound-themes'))openThemes(false);});
+soundSwitch.querySelectorAll('[data-sound]').forEach(b=>b.onclick=()=>{openThemes(false);if(viewing||(s.soundTheme||'band')===b.dataset.sound)return;pause();pos=0;push();s.soundTheme=b.dataset.sound;render();save();});controls();
 
 comparison.querySelector('details').remove();
 const keyboard=document.createElement('section');keyboard.id='fixed-keyboard';keyboard.innerHTML='<div class="piano-keys"></div>';

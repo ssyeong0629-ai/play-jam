@@ -480,3 +480,18 @@ main{background:#000}
 .global-end .mode-switch button,#shared-view-bar .mode-switch button{min-width:0;width:auto;height:30px;padding:0 12px;border:0;border-radius:0;background:transparent;color:#aaa;font-size:12px;font-weight:500}
 .global-end .mode-switch button[aria-pressed=true],#shared-view-bar .mode-switch button[aria-pressed=true]{background:#eee;color:#111}
 .shared-view #shared-view-bar>.mode-switch{display:inline-flex}
+
+#sound-themes{position:relative;margin:0 0 8px}
+#sound-themes .theme-current{display:flex;align-items:center;gap:8px;width:100%;padding:7px 10px;border:1px solid #555;border-radius:8px;background:transparent;color:#ddd;font-size:11px;text-align:left}
+#sound-themes .theme-label{color:#888;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+#sound-themes .theme-icon svg{width:18px;height:18px;display:block}
+#sound-themes .theme-name{flex:1}
+#sound-themes .theme-caret{color:#888;transition:transform .15s}
+#sound-themes.open .theme-caret{transform:rotate(180deg)}
+#sound-themes .theme-options{position:absolute;top:calc(100% + 4px);right:0;z-index:40;min-width:150px;display:flex;flex-direction:column;gap:2px;padding:5px;border:1px solid #555;border-radius:9px;background:#1e1e1e;box-shadow:0 10px 28px #0008}
+#sound-themes .theme-options[hidden]{display:none}
+#sound-themes .theme-options button{display:flex;align-items:center;gap:10px;width:100%;padding:7px 10px;border:0;border-radius:6px;background:transparent;color:#ccc;font-size:12px;text-align:left}
+#sound-themes .theme-options button:hover{background:#ffffff12}
+#sound-themes .theme-options button svg{width:18px;height:18px;flex:none}
+#sound-themes .theme-options button[aria-pressed=true]{background:#ffffff1c;color:#fff}
+#sound-themes .theme-options button[aria-pressed=true]::after{content:'✓';margin-left:auto;color:#bbb;font-size:11px}
