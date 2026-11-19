@@ -1,21 +1,4 @@
- 'use strict';
-(()=>{
-const viewport=document.getElementById('viewport'),stage=document.querySelector('main'),canvas=document.createElement('canvas');
-canvas.id='staff-sparkles';canvas.setAttribute('aria-hidden','true');
-Object.assign(canvas.style,{position:'fixed',pointerEvents:'none',zIndex:'24'});stage.append(canvas);
-const ctx=canvas.getContext('2d'),motion=matchMedia('(prefers-reduced-motion: reduce)');
-let w=0,h=0,last=0,raf=0,maskDirty=true,staffMasks=[];
-function refreshMasks(){if(!maskDirty)return;maskDirty=false;const base=stage.getBoundingClientRect();staffMasks=[...viewport.querySelectorAll('.staff')].map(el=>{const r=el.getBoundingClientRect();const sy=r.height/112;return{x:r.left-base.left-4,y:r.top-base.top+31*sy-4,w:r.width+8,h:52*sy+8};}).filter(r=>r.y+r.h>0&&r.y<h);}
-viewport.addEventListener('scroll',()=>{maskDirty=true;},{passive:true});
-new MutationObserver(()=>{maskDirty=true;}).observe(document.getElementById('pages'),{childList:true,subtree:true,attributes:true,attributeFilter:['style']});
-
-const points=Array.from({length:160},()=>({x:Math.random(),y:Math.random(),speed:7+Math.random()*11,phase:Math.random()*Math.PI*2,rate:.5+Math.random(),size:.65+Math.random()*.8}));
-const stars=Array.from({length:500},()=>({x:Math.random(),y:Math.random(),phase:Math.random()*6.28,rate:.4+Math.random()*.8}));
-const glow=document.createElement('canvas');glow.width=glow.height=32;const g=glow.getContext('2d'),gradient=g.createRadialGradient(16,16,0,16,16,16);gradient.addColorStop(0,'#ffffff');gradient.addColorStop(.15,'#ffffffaa');gradient.addColorStop(1,'#ffffff00');g.fillStyle=gradient;g.fillRect(0,0,32,32);
-function resize(){maskDirty=true;const b=stage.getBoundingClientRect();w=b.width;h=b.height;const d=Math.min(devicePixelRatio||1,1.5);canvas.width=Math.round(w*d);canvas.height=Math.round(h*d);Object.assign(canvas.style,{left:b.left+'px',top:b.top+'px',width:w+'px',height:h+'px'});ctx.setTransform(d,0,0,d,0,0);}
-function draw(now){raf=0;if(document.hidden||motion.matches)return;if(now-last<1000/30){raf=requestAnimationFrame(draw);return;}const dt=Math.min((now-last)/1000,.05);last=now;ctx.clearRect(0,0,w,h);const strength=.30+.09*(Number(document.getElementById('density').value)/100),count=Math.min(points.length,Math.max(45,Math.round(w*h/7000)));for(let i=0;i<count;i++){const p=points[i];p.y=(p.y+dt*p.speed/Math.max(h,1))%1;const x=p.x*w+Math.sin(now*.00025+p.phase)*5,y=p.y*h,twinkle=Math.pow(.5+.5*Math.sin(now*.001*p.rate+p.phase),3);ctx.globalAlpha=strength*(.3+.7*twinkle);ctx.drawImage(glow,x-5,y-5,10,10);ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(x,y,p.size,0,Math.PI*2);ctx.fill();if(twinkle>.95&&i%5===0){ctx.strokeStyle='#fff';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(x-2.5,y);ctx.lineTo(x+2.5,y);ctx.moveTo(x,y-2.5);ctx.lineTo(x,y+2.5);ctx.stroke();}}for(let i=0;i<stars.length;i++){const p=stars[i],x=p.x*w,y=p.y*h,t=Math.pow(.5+.5*Math.sin(now*.001*p.rate+p.phase),4);ctx.globalAlpha=(.08+t*.75)*strength;ctx.drawImage(glow,x-6,y-6,12,12);ctx.fillStyle='#fff';ctx.fillRect(x-.5,y-.5,1,1);if(t>.85&&i%4===0){ctx.strokeStyle='#fff';ctx.lineWidth=.65;ctx.beginPath();ctx.moveTo(x-3,y);ctx.lineTo(x+3,y);ctx.moveTo(x,y-3);ctx.lineTo(x,y+3);ctx.stroke();}}ctx.globalAlpha=1;refreshMasks();for(const r of staffMasks)ctx.clearRect(r.x,r.y,r.w,r.h);raf=requestAnimationFrame(draw);}
-function resume(){if(raf)cancelAnimationFrame(raf);raf=0;last=performance.now();if(!document.hidden&&!motion.matches)raf=requestAnimationFrame(draw);else ctx.clearRect(0,0,w,h);}
-new ResizeObserver(resize).observe(viewport);addEventListener('resize',resize);document.addEventListener('visibilitychange',resume);motion.addEventListener('change',resume);resize();resume();
-})();
+'use strict';
+// Background snow/star canvas removed; only keyboard-cursor hiding remains.
 
 (()=>{let timer;function show(){clearTimeout(timer);document.body.classList.remove('keyboard-cursor-hidden');}window.addEventListener('keydown',e=>{if(e.ctrlKey||e.metaKey||e.altKey||e.target.closest?.('input,textarea,select,[contenteditable],dialog')||document.querySelector('dialog[open]')||document.body.classList.contains('shared-view'))return;if(e.key.length!==1&&!['Backspace','ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key))return;document.body.classList.add('keyboard-cursor-hidden');clearTimeout(timer);timer=setTimeout(show,1600);},true);document.addEventListener('pointermove',show,{passive:true});document.addEventListener('pointerdown',show,{passive:true});addEventListener('blur',show);})();

@@ -418,3 +418,6 @@ main{background:#000}
 /* Floating controls without header panels or dividing rules. */
 .global{background:rgba(18,18,18,.16);border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
 .workspace-header{background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+
+/* Touch devices have no keyboard: hide the A S D F typing hint. */
+@media (hover:none) and (pointer:coarse){#typing-guide{display:none!important}}

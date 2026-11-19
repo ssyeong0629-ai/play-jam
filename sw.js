@@ -1,6 +1,7 @@
-const cacheName = 'play-jam-draft-v4keys1';
-const files = ['./index.html', './css/app.css?v=draft4keys1', './js/icons.js', './assets/audio/bank.js',
-  './js/audio.js?v=draft4keys1', './js/model.js?v=draft4keys1', './js/app.js?v=draft4keys1', './js/install.js', './js/experience.js',
+const cacheName = 'play-jam-v5';
+const files = ['./', './index.html', './css/app.css', './js/icons.js', './assets/audio/bank.js',
+  './js/audio.js', './js/candidates.js', './js/harmony.js', './js/model.js', './js/diverse.js',
+  './js/app.js', './js/jelly.js', './js/experience.js', './js/install.js', './js/staff-sparkles.js',
   './manifest.webmanifest', './app-icon.png', './app-icon-192.png'];
 
 self.addEventListener('install', event => {
@@ -12,7 +13,8 @@ self.addEventListener('fetch', event => {
   if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
   event.respondWith(fetch(request).catch(async () => {
     const cache = await caches.open(cacheName);
-    return await cache.match(request) ||
+    // Pages request versioned URLs (?v=...); match the cached file regardless of the query.
+    return await cache.match(request, {ignoreSearch: true}) ||
       (request.mode === 'navigate' ? await cache.match('./index.html') : Response.error());
   }));
 });
