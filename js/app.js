@@ -224,11 +224,14 @@ function metrics(){
 }
 function visualOffsets(){
  const out=new Map(),rows=new Map(),candidates=[[0,0],[0,-13],[0,13],[-14,0],[14,0],[-14,-13],[14,13],[14,-13],[-14,13]];
+ // Icons are drawn exactly where they were placed. Only when one would sit on exactly the same spot as another
+ // (same slot and height) is it nudged a little so both stay visible.
  for(const n of s.notes){const placed=rows.get(n.row)||[],base=visualKind(n)==='circle'?10:26,x=M.xOf(n.x),y=M.yOf(n.y);let best=null;
+  if(!placed.some(q=>Math.abs(q.x0-x)<1&&Math.abs(q.y0-y)<1)){out.set(n.id,{dx:0,dy:0,size:base});placed.push({x,y,size:base,x0:x,y0:y});rows.set(n.row,placed);continue;}
   search:for(const scale of [1,.82])for(const [dx,dy] of candidates){const size=base*scale,cx=x+dx,cy=y+dy;if(cx-size/2<0||cx+size/2>686)continue;let overlap=0;for(const q of placed){const ox=Math.max(0,(size+q.size)/2+2-Math.abs(cx-q.x)),oy=Math.max(0,(size+q.size)/2+2-Math.abs(cy-q.y));overlap+=ox*oy;}
    const score=overlap*100+dx*dx+dy*dy+(1-scale)*900;if(!best||score<best.score)best={dx,dy,size,score};if(best.score===0)break search;
   }
-  best??={dx:0,dy:0,size:base};out.set(n.id,best);placed.push({x:x+best.dx,y:y+best.dy,size:best.size});rows.set(n.row,placed);
+  best??={dx:0,dy:0,size:base};out.set(n.id,best);placed.push({x:x+best.dx,y:y+best.dy,size:best.size,x0:x,y0:y});rows.set(n.row,placed);
  }return out;
 }
 function render(anchor=0){
@@ -252,7 +255,7 @@ function render(anchor=0){
    const r=M.start(p)+j,art=rowArt(r);
    for(let part=0;part<divisions;part++){
     const offset=part*642/divisions,w=segmentWidth();
-    html+=`<div class="staff" data-row="${r}" data-part="${part}" style="top:${M.top(r)+(j*(divisions-1)+part)*126}px;width:${editorStaffWidth}px"><svg class="staff-art" preserveAspectRatio="none" viewBox="${offset} 0 ${w} 112">`;
+    html+=`<div class="staff" data-row="${r}" data-part="${part}" style="top:${M.top(r)+(j*(divisions-1)+part)*134}px;width:${editorStaffWidth}px"><svg class="staff-art" preserveAspectRatio="none" viewBox="${offset} 0 ${w} 112">`;
     for(let k=2;k<=10;k+=2)html+=`<path class="staff-line" d="M${offset} ${M.yOf(k)}h${w}"/>`;
     html+=art+'</svg>'+`<button class="row-play" aria-label="이 줄부터 재생" title="이 줄부터 재생" data-from="${r*8+part*8/divisions}">▶</button>`;
     for(const n of s.notes.filter(n=>n.row===r&&segmentOf(n.x)===part)){
@@ -310,15 +313,30 @@ function updateScrollbar(){
 }
 $('viewport').addEventListener('scroll',updateScrollbar,{passive:true});
 async function preview(n){if(performance.now()-previewAt<85)return;previewAt=performance.now();const token=pending;try{await A.prepare([n]);if(token===pending&&!playing)A.note(n,undefined,s.bpm);}catch{toast('음원을 불러오지 못했어요.');}}
-function snapPoint(p,reach=32){
- // Mouse placement uses the same 1/32 slots as keyboard input. Like keyboard ensemble input, only the
- // same instrument may not share a slot; different instruments can sound together on one slot.
+function snapPoint(p,reach=1){
+ // Mouse placement uses the same 1/32 slots as keyboard input. A slot counts as taken only when the same
+ // instrument already sits there at exactly the same height (the icons would be one on top of the other);
+ // any other overlap is allowed so the symbol lands where it was clicked;
+ // then the symbol moves to the next free slot, at most 1 slot away, so it never jumps far from the click.
  const k=Math.round(p.x/PAD_STEP),last=Math.round(1/PAD_STEP)-1,group=icons.get(chosen).group;
- const used=new Set(s.notes.filter(n=>n.row===p.row&&!n.percussion&&icons.get(n.icon).group===group).map(n=>Math.round(n.x/PAD_STEP)));
+ const used=new Set(s.notes.filter(n=>n.row===p.row&&!n.percussion&&icons.get(n.icon).group===group&&n.y===p.y).map(n=>Math.round(n.x/PAD_STEP)));
  for(let d=0;d<=reach;d++)for(const c of d?[k+d,k-d]:[k]){if(c>=0&&c<=last&&!used.has(c))return {...p,x:c*PAD_STEP};}
  return null;
 }
 function place(p,reach){if(!p||p.row>=M.MAX)return false;if(s.notes.length>=5000){toast('이 작품의 아이콘 한도에 도달했어요.');return false;}p=snapPoint(p,reach);if(!p)return false;const n={id:'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),icon:chosen,...p,voice:JamVoicePools[icons.get(chosen).group]?.[Math.floor(Math.random()*JamVoicePools[icons.get(chosen).group].length)]};s.notes.push(n);if(p.x>.95&&p.row===M.start(M.pageOf(p.row))+M.count(M.pageOf(p.row))-1&&p.row+1<M.MAX)extra=M.pageOf(p.row)+2;inputCursor=nextSlot({row:p.row,x:p.x,y:p.y});if(inputCursor.row>=M.MAX)inputCursor={row:M.MAX-1,x:1-PAD_STEP,y:p.y};extra=Math.max(extra,M.pageOf(inputCursor.row)+1);preview(n);return true;}
+// Placement preview: while the mouse moves over the score (no button down), a faint copy of the chosen symbol
+// shows exactly where a click would put it (after slot snapping and the 1-slot nudge), so nothing lands by surprise.
+let ghost=null;
+function hideGhost(){if(ghost){ghost.remove();ghost=null;}}
+function showGhost(e){
+ if(e.pointerType!=='mouse'||e.buttons||deleteMode||viewing||gesture){hideGhost();return;}
+ const p=point(e.clientX,e.clientY),q=p&&snapPoint(p,1);if(!q){hideGhost();return;}
+ const part=segmentOf(q.x),row=document.querySelector(`.staff[data-row="${q.row}"][data-part="${part}"]`);if(!row){hideGhost();return;}
+ if(!ghost||!ghost.isConnected){ghost=document.createElement('div');ghost.className='note note-ghost';ghost.setAttribute('aria-hidden','true');}
+ const key=chosen+'|'+(s.soundTheme||'band');if(ghost.dataset.key!==key){ghost.dataset.key=key;ghost.innerHTML=`<span class="shape" style="width:26px;height:26px">${noteUse({id:'ghost',icon:chosen})}</span>`;ghost.style.setProperty('--color',icons.get(chosen).color);}
+ const tmp={id:'ghost',icon:chosen,row:q.row,x:q.x,y:q.y};s.notes.push(tmp);let off;try{off=visualOffsets().get('ghost');}finally{s.notes.pop();}
+ ghost.style.left=(M.xOf(q.x)+(off?.dx||0)-part*642/divisions)*staffScaleX+'px';ghost.style.top=M.yOf(q.y)+(off?.dy||0)+'px';if(ghost.parentElement!==row)row.append(ghost);}
+$('pages').addEventListener('pointermove',showGhost);$('pages').addEventListener('pointerleave',hideGhost);$('pages').addEventListener('pointerdown',hideGhost);
 const stampInterval = 90;
 const viewport = $('viewport');
 function noteAt(x,y){
@@ -332,7 +350,7 @@ function erase(ids){
  extra=0;
  return true;
 }
-function stamp(x,y,reach=32){
+function stamp(x,y,reach=1){
  if(!place(point(x,y),reach))return;
  gesture.changed=true;
  render();
@@ -373,7 +391,7 @@ function moveGesture(e){
   }
   if(erase(ids)){g.changed=true;render();}
  }else if(performance.now()-g.at>=stampInterval){
-  stamp(x,y,2);
+  stamp(x,y,1);
   g.at=performance.now();
  }
  g.x=x;g.y=y;
@@ -422,7 +440,8 @@ function svgPage(p){applyVisualTheme();const offsets=visualOffsets();let parts=`
 // The link field only appears when copying to the clipboard fails; clicking elsewhere hides it.
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('#export-menu,#copy'))$('export-menu').hidden=true;});
 // Always export every page of the score, one PNG per page.
-$('png').onclick=async()=>{const pages=Array.from({length:M.pages(s)},(_,i)=>i);$('png').disabled=true;try{for(const p of pages){const url=URL.createObjectURL(new Blob([svgPage(p)],{type:'image/svg+xml'}));try{const image=new Image();image.src=url;await image.decode();const canvas=document.createElement('canvas');canvas.width=1588;canvas.height=2246;canvas.getContext('2d').drawImage(image,0,0,1588,2246);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw Error();const a=document.createElement('a'),download=URL.createObjectURL(blob);a.href=download;a.download=`PLAY-JAM-${p+1}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(download),30000);}finally{URL.revokeObjectURL(url);}if(pages.length>1)await new Promise(r=>setTimeout(r,350));}if(pages.length>1)toast(`악보 이미지 ${pages.length}장을 저장했어요.`);}catch{toast('이미지를 저장하지 못했어요.');}finally{$('png').disabled=false;}};
+// ⬇ opens the save window (js/save.js: preview, PNG/PDF, found winter pictures); the old direct PNG export stays as a fallback.
+$('png').onclick=()=>window.JamSave?window.JamSave.open():legacyPNG();const legacyPNG=async()=>{const pages=Array.from({length:M.pages(s)},(_,i)=>i);$('png').disabled=true;try{for(const p of pages){const url=URL.createObjectURL(new Blob([svgPage(p)],{type:'image/svg+xml'}));try{const image=new Image();image.src=url;await image.decode();const canvas=document.createElement('canvas');canvas.width=1588;canvas.height=2246;canvas.getContext('2d').drawImage(image,0,0,1588,2246);if(p===0)window.JamEaster?.stamp?.(canvas.getContext('2d'),s);const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw Error();const a=document.createElement('a'),download=URL.createObjectURL(blob);a.href=download;a.download=`PLAY-JAM-${p+1}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(download),30000);}finally{URL.revokeObjectURL(url);}if(pages.length>1)await new Promise(r=>setTimeout(r,350));}if(pages.length>1)toast(`악보 이미지 ${pages.length}장을 저장했어요.`);}catch{toast('이미지를 저장하지 못했어요.');}finally{$('png').disabled=false;}};
 $('copy').onclick=async()=>{chooseHarmony(true);ensureBacking();if(location.protocol==='file:')return toast('공유 링크는 GitHub Pages에 올린 뒤 사용할 수 있어요.');let binary='';for(const b of new TextEncoder().encode(JSON.stringify(s)))binary+=String.fromCharCode(b);const link=location.origin+location.pathname+'#jam='+btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');try{await navigator.clipboard.writeText(link);toast('공유 링크를 복사했어요.');}catch{$('export-menu').hidden=false;$('link').value=link;$('link').select();toast('링크를 직접 복사해 주세요.');}};
 function demo(mode){
  const notes=['0-1','1-1','2-1','3-1','4-1','5-1'];

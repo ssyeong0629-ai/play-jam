@@ -495,3 +495,117 @@ main{background:#000}
 #sound-themes .theme-options button svg{width:18px;height:18px;flex:none}
 #sound-themes .theme-options button[aria-pressed=true]{background:#ffffff1c;color:#fff}
 #sound-themes .theme-options button[aria-pressed=true]::after{content:'✓';margin-left:auto;color:#bbb;font-size:11px}
+/* Follow-along tutorial bubble + target ring */
+#coach{position:fixed;z-index:60;width:min(300px,calc(100vw - 24px));padding:14px 16px 12px;border:1px solid #ffffff2e;border-radius:12px;background:rgba(28,28,28,.94);color:#eee;box-shadow:0 12px 32px #0009;font-size:13px;line-height:1.5}
+#coach[hidden],#coach-ring[hidden]{display:none}
+#coach .coach-dots{display:flex;gap:5px;margin-bottom:8px}
+#coach .coach-dots span{width:18px;height:3px;border-radius:2px;background:#ffffff26}
+#coach .coach-dots span.on{background:#eee}
+#coach .coach-dots span.done{background:#ffffff80}
+#coach .coach-title{display:block;font-size:14px;margin-bottom:4px}
+#coach .coach-text{margin:0 0 10px;color:#bbb}
+#coach .coach-text b{color:#fff}
+#coach .coach-actions{display:flex;justify-content:flex-end;gap:6px}
+#coach .coach-actions button{border:1px solid #555;border-radius:7px;background:transparent;color:#ccc;padding:5px 10px;font-size:12px;cursor:pointer}
+#coach .coach-actions .coach-next{background:#e6e6e6;color:#111;border-color:#e6e6e6}
+#coach .coach-arrow{position:absolute;top:-6px;width:10px;height:10px;margin-left:-5px;background:rgba(28,28,28,.94);border-left:1px solid #ffffff2e;border-top:1px solid #ffffff2e;transform:rotate(45deg)}
+#coach .coach-arrow[hidden]{display:none}
+#coach-ring{position:fixed;z-index:59;border:2px solid #fff;border-radius:12px;box-shadow:0 0 0 4px #ffffff22,0 0 18px #ffffff55;pointer-events:none;animation:coach-pulse 1.4s ease-in-out infinite alternate}
+@keyframes coach-pulse{from{box-shadow:0 0 0 2px #ffffff22,0 0 10px #ffffff33}to{box-shadow:0 0 0 6px #ffffff18,0 0 22px #ffffff66}}
+@media (prefers-reduced-motion:reduce){#coach-ring{animation:none}}
+/* Help: first-time summary, replay button, small easter-egg hint */
+#tour .help-first{margin:14px 0 0;padding:10px 14px;border:1px solid #ffffff1f;border-radius:10px;background:rgba(255,255,255,.05);display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:13px;color:#ddd}
+#tour .help-first b{color:#fff}
+#tour .help-first button{margin-left:auto;border:1px solid #666;border-radius:7px;background:transparent;color:#ddd;padding:5px 10px;font-size:12px;cursor:pointer}
+#tour .help-hint{margin:12px 2px 0;color:#9a9a9a;font-size:12px}
+
+/* 초안10: winter easter egg collection chip + panel */
+.egg-chip{display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:12px;padding:8px 12px;border:1px solid #ffffff26;border-radius:10px;background:transparent;color:#bbb;font:inherit;font-size:11px;cursor:pointer}
+.egg-chip:hover{border-color:#ffffff55;color:#fff}.egg-chip b{color:#fff;font-weight:600}
+#egg-board{position:fixed;z-index:61;width:310px;padding:14px 14px 12px;border:1px solid #ffffff2e;border-radius:14px;background:#151515f2;color:#eee;box-shadow:0 12px 40px #000a;font-size:12px}
+#egg-board h3{margin:0 0 10px;font-size:13px;font-weight:600}#egg-board h3 b{color:#7DDCFF}
+.egg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px 4px}
+.egg-cell{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:10px;color:#888;text-align:center;word-break:keep-all}
+.egg-cell canvas{width:46px;height:46px}.egg-cell.in-score span{color:#fff}
+.egg-cell .q{display:grid;place-items:center;width:46px;height:46px;border:1px dashed #ffffff33;border-radius:50%;color:#666;font-size:16px;font-style:normal}
+#egg-board .egg-note{margin:12px 0 0;color:#aaa;line-height:1.55}#egg-board .egg-note b{color:#fff;font-weight:500}
+#egg-board .egg-toggle{display:flex;gap:6px;align-items:center;margin-top:10px;color:#ddd;cursor:pointer}
+#toast small{display:block;margin-top:3px;color:#bbb;font-size:11px}
+body.shared-view #toast{bottom:96px}
+/* 초안10 v2: discovery message (centered, translucent), chip under the zoom controls, wordless tutorial */
+#winter-msg{position:fixed;top:50%;left:50%;z-index:95;max-width:min(440px,calc(100vw - 32px));padding:16px 24px;border:1px solid #ffffff22;border-radius:14px;background:rgba(24,24,24,.6);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);color:#fff;text-align:center;pointer-events:none;opacity:0;transform:translate(-50%,-50%) scale(.96);transition:opacity .35s ease,transform .35s ease}
+#winter-msg.show{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#winter-msg strong{display:block;font-size:15px;font-weight:600;letter-spacing:-.01em}
+#winter-msg span{display:block;margin-top:6px;font-size:12px;color:#ccc}
+#egg-chip{position:fixed;z-index:30;width:auto;margin:0;gap:10px;padding:6px 12px;border:1px solid #ffffff40;border-radius:999px;background:rgba(24,24,24,.6);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);color:#ddd;font-size:11px}
+#egg-chip:hover{border-color:#ffffff80;color:#fff}
+body.shared-view #egg-chip{display:none}
+#coach-keys,#coach-hint{position:fixed;z-index:60;transform:translate(-50%,-50%);pointer-events:none}
+#coach-keys[hidden],#coach-hint[hidden],#coach-ring[hidden]{display:none}
+#coach-keys .coach-caps{display:flex;gap:10px}
+#coach-keys kbd{display:grid;place-items:center;width:44px;height:44px;border:1px solid #ffffff66;border-radius:8px;background:#ffffff10;color:#ffffffcc;font:14px Arial;box-shadow:0 0 14px #ffffff22;animation:coach-key 2.4s ease-in-out infinite}
+#coach-keys kbd:nth-child(2){animation-delay:.3s}#coach-keys kbd:nth-child(3){animation-delay:.6s}#coach-keys kbd:nth-child(4){animation-delay:.9s}
+#coach-keys kbd.hit{animation:coach-hit .45s ease-out}
+@keyframes coach-key{0%,70%,100%{opacity:.45;box-shadow:0 0 10px #ffffff18}35%{opacity:1;box-shadow:0 0 22px #ffffff66,0 0 0 2px #ffffff22}}
+@keyframes coach-hit{from{background:#ffffff66;color:#000;box-shadow:0 0 28px #ffffffaa}to{background:#ffffff10}}
+#coach-keys .coach-steps{display:flex;justify-content:center;gap:6px;margin-top:12px}
+#coach-keys .coach-steps i{width:7px;height:7px;border-radius:50%;background:#ffffff2a;transition:background .2s,box-shadow .2s}
+#coach-keys .coach-steps i.on{background:#fff;box-shadow:0 0 8px #fff}
+#coach-keys .coach-x,#coach-hint .coach-x{position:absolute;top:-14px;right:-26px;width:22px;height:22px;padding:0;border:1px solid #ffffff33;border-radius:50%;background:rgba(24,24,24,.6);color:#aaa;font-size:13px;line-height:1;cursor:pointer;pointer-events:auto}
+#coach-keys .coach-x:hover,#coach-hint .coach-x:hover{color:#fff;border-color:#ffffff88}
+#coach-hint{transform:translate(-50%,0)}
+#coach-hint .coach-icon{display:grid;place-items:center;width:52px;height:52px;border:1px solid #ffffff55;border-radius:50%;background:#ffffff14;color:#ffffffcc;box-shadow:0 0 18px #ffffff33;animation:coach-bob 1.3s ease-in-out infinite alternate}
+#coach-hint .coach-icon svg{width:24px;height:24px}
+#coach-hint .coach-x{top:-6px;right:-30px}
+@keyframes coach-bob{from{transform:translateY(0);opacity:.55}to{transform:translateY(-8px);opacity:1}}
+#coach-ring{animation:coach-pulse 1.2s ease-in-out infinite alternate;border-radius:14px}
+body.coach-on #typing-guide{display:none!important}
+@media (prefers-reduced-motion:reduce){#coach-keys kbd,#coach-hint .coach-icon,#coach-ring{animation:none}}
+#egg-chip span{display:inline-flex;align-items:center;gap:5px}#egg-chip .egg-ico{font-style:normal;font-size:15px;line-height:1;color:#dff4ff}
+/* 초안10: every popup is translucent like the help window */
+#egg-chip .egg-ico{width:14px;height:14px;flex:none}
+#toast,#egg-board,#export-menu{background:rgba(24,24,24,.6)!important;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);border:1px solid #ffffff22;border-radius:12px;color:#fff}
+#toast{padding:12px 20px}
+/* 초안10: save window (translucent like the other windows) */
+#save-dialog{width:min(640px,calc(100vw - 32px));padding:22px 24px 18px;border:1px solid #ffffff22;border-radius:16px;background:rgba(24,24,24,.72);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#eee;box-shadow:0 18px 60px #000a}
+#save-dialog::backdrop{background:#0006}
+#save-dialog header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+#save-dialog h2{margin:0;font-size:17px;font-weight:600}
+#save-dialog .save-x{width:28px;height:28px;border:0;background:transparent;color:#aaa;font-size:20px;cursor:pointer}
+#save-dialog .save-body{display:flex;gap:22px;align-items:flex-start}
+#save-dialog .save-preview{display:flex;flex-direction:column;align-items:center;gap:6px;flex:none}
+#save-dialog .save-preview canvas{width:240px;height:340px;border:1px solid #ffffff22;border-radius:6px;background:#202020}
+#save-dialog .save-preview small{color:#999;font-size:11px}
+#save-dialog .save-options{flex:1;display:flex;flex-direction:column;gap:14px;min-width:0}
+#save-dialog fieldset{margin:0;padding:0;border:0;display:flex;flex-direction:column;gap:8px}
+#save-dialog legend{margin-bottom:6px;color:#999;font-size:11px;letter-spacing:.04em}
+#save-dialog label{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer}
+#save-dialog label span{color:#888;font-size:11px}
+#save-dialog input{accent-color:#e6e6e6}
+#save-dialog .save-place{display:flex;gap:16px;padding-left:24px}
+#save-dialog .save-place.off{opacity:.35}
+#save-dialog .save-none{margin:2px 0 0;color:#888;font-size:11px;line-height:1.6}
+#save-dialog footer{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
+#save-dialog footer button{padding:8px 16px;border:1px solid #555;border-radius:8px;background:transparent;color:#ddd;font:inherit;font-size:13px;cursor:pointer}
+#save-dialog footer .save-go{background:#e6e6e6;color:#111;border-color:#e6e6e6}
+#save-dialog footer .save-go:disabled{opacity:.5}
+#reset-confirm{background:rgba(24,24,24,.72)!important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);border-color:#ffffff22!important}
+@media (max-width:560px){#save-dialog .save-body{flex-direction:column;align-items:center}}
+#save-dialog .save-nav{display:flex;align-items:center;gap:10px}#save-dialog .save-nav button{width:24px;height:24px;padding:0;border:1px solid #ffffff33;border-radius:50%;background:transparent;color:#ccc;cursor:pointer}#save-dialog .save-nav button:disabled{opacity:.3}#save-dialog .save-nav button[hidden]{display:none}
+/* 초안10: tutorial button steps — white dotted circle + soft round glow on the button; the step number stays still */
+#coach-ring{border:0!important;border-radius:50%!important;background:none!important;box-shadow:none!important;animation:none!important;overflow:visible}
+#coach-ring .coach-glow{position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle closest-side,#ffffff00 46%,#ffffff55 62%,#ffffff22 80%,#ffffff00 100%);animation:coach-glow 1.3s ease-in-out infinite alternate}
+#coach-ring .coach-dash{position:absolute;inset:0;border:2px dotted #fff;border-radius:50%;filter:drop-shadow(0 0 4px #fff) drop-shadow(0 0 10px #ffffffaa);animation:coach-spin 6s linear infinite}
+#coach-ring .coach-num{position:absolute;left:-4px;top:-4px;z-index:1;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#fff;color:#111;font:700 11px Arial}
+@keyframes coach-glow{from{opacity:.45;transform:scale(.94)}to{opacity:1;transform:scale(1.06)}}
+@keyframes coach-spin{to{transform:rotate(360deg)}}
+#coach-hint{transform:none}#coach-hint .coach-x{position:static}
+@media (prefers-reduced-motion:reduce){#coach-ring .coach-glow,#coach-ring .coach-dash{animation:none}}
+#coach-ring.soft .coach-num{display:none}#coach-ring.soft .coach-dash{opacity:.55}
+/* 초안10: slimmer play button and 편집|감상 switch */
+#play{width:38px!important;height:38px!important;min-height:38px!important;border-radius:8px!important;font-size:15px!important}
+.mode-switch{border-radius:7px}
+.mode-switch button,#shared-view-bar .mode-switch button{height:26px!important;padding:0 10px!important;font-size:11px!important}
+/* 초안10: placement preview (faint symbol where a click will land) */
+.note.note-ghost{opacity:.38;pointer-events:none;z-index:1;filter:saturate(.8)}
+.note.note-ghost .shape{animation:none}

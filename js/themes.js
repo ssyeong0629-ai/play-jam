@@ -130,7 +130,7 @@ const beatIcons=[
  I('#FFE700','<circle cx="13" cy="7.5" r="5" fill="#FFE70055"/><path d="M8.5 6.3h9M8.5 8.7h9" stroke-width=".75"/><path d="M11 12.5l1 10h2l1-10z" fill="#FFE700"/><circle cx="13" cy="7.5" r="1" fill="#FFE700" stroke="none"/>',[11.5,21.5,13,12.5],1.05),
  I('#B58AFF','<circle cx="12" cy="14" r="8.5" fill="#B58AFF33"/><circle cx="12" cy="14" r="5" stroke-width=".75"/><circle cx="12" cy="14" r="1.8" fill="#B58AFF" stroke="none"/><path d="M22 2.5V10l-5.5 4"/>',[20,21.5,12.7,12.5],1.05)
 ];
-window.JamThemes={current:theme,icons:{carol:carolIcons,beatbox:beatIcons},names:{carol:['썰매방울','글로켄슈필','튜바','첼레스타','오르골','핸드벨'],beatbox:['보컬 드럼','입 톡','입 베이스','코러스','보컬','스크래치']},list:[
+window.JamThemes={current:theme,icons:{carol:carolIcons,beatbox:beatIcons},names:{carol:['Sleigh Bells','Glockenspiel','Tuba','Celesta','Music Box','Handbell'],beatbox:['Vocal Drum','Click','Lip Bass','Chorus','Vocal','Scratch']},list:[
  ['band','밴드',svg('<path d="M15 3l6 6-2 2-6-6z"/><path d="M14 9l-4.2 4.2"/><path d="M9.8 13.2a3.6 3.6 0 1 0 1 1"/><circle cx="8" cy="16" r="1"/>')],
  ['carol','캐롤',svg('<path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20.5a2 2 0 0 0 4 0"/><path d="M12 2v1.5"/>')],
  ['beatbox','비트박스',svg('<rect x="8.5" y="2.5" width="7" height="11" rx="3.5"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21M9 21h6"/>')]
