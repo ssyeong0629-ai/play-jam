@@ -7,7 +7,7 @@
 // Choices are remembered in this browser. The PDF is built here from JPEG page images (no library).
 (()=>{
 const $=id=>document.getElementById(id);
-const KEY='playjam.save.options',STICKER_KEY='playjam.eggs.sticker';
+const KEY='mobile12.playjam.save.options',STICKER_KEY='mobile12.playjam.eggs.sticker';
 const get=k=>{try{return localStorage.getItem(k);}catch{return null;}},put=(k,v)=>{try{localStorage.setItem(k,v);}catch{}};
 let opts={format:'png',place:'lyrics'};try{Object.assign(opts,JSON.parse(get(KEY)||'{}'));}catch{}if(opts.place!=='bottom')opts.place='lyrics';
 const withEggs=()=>get(STICKER_KEY)!=='0';

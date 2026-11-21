@@ -14,11 +14,12 @@
 // The help dialog has "튜토리얼 다시 보기". The user's own score is set aside during the tutorial and put back after
 // (kept in this browser, so even a reload in the middle restores it).
 (()=>{
-const KEY='playjam.tutorial.done',STASH='playjam.tutorial.stash';
+const KEY='mobile12.playjam.tutorial.done',STASH='mobile12.playjam.tutorial.stash';
 const $=id=>document.getElementById(id);
 // four guides from the start of the first line, close together (3 slots apart), one per key A S D F
 const GUIDES=[{icon:'0-1',x:1/32,y:8},{icon:'1-1',x:4/32,y:6},{icon:'2-1',x:7/32,y:7},{icon:'3-1',x:10/32,y:4}];
-let i=-1,keys,ring,spot,timer,placed=0,escHint=null,stepAt=0,bypass=false,escView=null;
+const escView=$('wide').querySelector('.coach-esc-view');
+let i=-1,keys,ring,spot,timer,placed=0,escHint=null,stepAt=0,bypass=false;
 const stored=k=>{try{return localStorage.getItem(k);}catch{return null;}};
 const store=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch{}};
 
@@ -26,41 +27,79 @@ const store=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(
 function restore(){const raw=stored(STASH);if(!raw||!window.Jam)return;try{const st=JSON.parse(raw),s=window.Jam.state;s.notes=st.notes||[];s.eggs=st.eggs||[];}catch{}store(STASH,null);window.Jam.guides?.([]);window.Jam.render();}
 restore();
 
+const mobile=matchMedia('(max-width:600px)');
+let practiceGroup=null;
 function build(){
  keys=document.createElement('div');keys.id='coach-keys';keys.setAttribute('aria-hidden','true');
- keys.innerHTML='<div class="coach-caps"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd></div><div class="coach-steps"><i></i><i></i><i></i><i></i></div>';
+ keys.innerHTML='<span class="touch-instruction"></span><div class="coach-caps"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd></div><div class="coach-steps"><i></i><i></i><i></i><i></i></div>';
  ring=document.createElement('div');ring.id='coach-ring';ring.setAttribute('aria-hidden','true');ring.innerHTML='<i class="coach-glow"></i><i class="coach-dash"></i><b class="coach-num"></b>';
  spot=document.createElement('div');spot.id='coach-spot';spot.setAttribute('aria-hidden','true');spot.hidden=true;
  document.body.append(spot,ring,keys);
  // keys: during ① any letter/number key places the next guide; other keys are paused until the save window
  addEventListener('keydown',e=>{
-  if(i<0)return;
+  if(i<0||i===5&&(e.target.matches?.('.native-typing')||!e.isTrusted))return;
   if(e.key==='Escape'){if(i===4)return;if(i<=2&&!document.querySelector('dialog[open]')){e.preventDefault();finish(false);}return;}
   if(i===3)return;                                   // the save window handles its own keys
-  if(i===1&&e.code==='Space')return;                 // Space also plays
+  if(i===1&&e.code==='Space'&&e.shiftKey){
+   e.preventDefault();e.stopImmediatePropagation();preview();return;
+  }
   if(e.metaKey||e.ctrlKey)return;
   e.preventDefault();e.stopImmediatePropagation();
   if(i===0&&!e.repeat&&e.key.length===1)placeNext(e.code);
  },true);
  // clicks: only the highlighted button works during ②–③; nothing during ①
- const gate=e=>{if(i<0||i===3||bypass)return;const ok=(i===1&&e.target.closest?.('#play'))||(i===2&&e.target.closest?.('#png'))||(i===4&&e.target.closest?.('#edit-shared'));if(!ok){e.preventDefault();e.stopImmediatePropagation();}};
+ const gate=e=>{if(i<0||i===3||bypass)return;if(i===0&&mobile.matches){
+   const chip=e.target.closest?.('.dock-chip');
+   if(chip){
+    if(e.type==='click'){
+     practiceGroup=Number(chip.dataset.dockGroup);
+     if(window.Jam.state.pitchMode!=='fixed'){
+      e.stopImmediatePropagation();
+      placeNext('',Math.floor(Math.random()*8));
+      return;
+     }
+     keys.querySelector('.touch-instruction').textContent='아래 건반을 한 번 눌러보세요';
+    }
+    return;
+   }
+   const pad=e.target.closest?.('.dock-key');
+   if(pad&&practiceGroup!==null){
+    e.stopImmediatePropagation();
+    if(e.type==='click')placeNext('',Number(pad.dataset.dockKey));
+    return;
+   }
+  }
+  const ok=(i===5&&e.target.closest?.('.native-typing'))||(i===1&&e.target.closest?.('#play'))||(i===2&&e.target.closest?.('#png'))||(i===4&&e.target.closest?.('#wide, #edit-shared'));if(!ok){e.preventDefault();e.stopImmediatePropagation();}};
  for(const t of ['pointerdown','mousedown','click','dblclick'])addEventListener(t,gate,{capture:true});
  addEventListener('resize',place);$('viewport').addEventListener('scroll',place,{passive:true});
+ const input=document.querySelector('.native-typing');
+ input.addEventListener('scoreinput',()=>{
+  if(i!==5)return;
+  input.blur();
+  requestAnimationFrame(()=>{if(i===5)show(1);});
+ });
+ $('play').addEventListener('click',e=>{if(i===1){e.stopImmediatePropagation();preview();}},true);
  $('png').addEventListener('click',()=>{if(i===2)setTimeout(()=>show(3),60);},true);
 }
-function placeNext(code){
+function placeNext(code,pad){
  const g=GUIDES[placed];if(!g)return;
- window.Jam.addNote({...g,row:0,id:'tut-'+placed});placed++;
+ const note=pad===undefined?g:{...g,icon:practiceGroup+'-1',y:[12,10,9,7,5,3,2,0][pad]};
+ window.Jam.addNote({...note,row:0,id:'tut-'+placed});placed++;
  window.Jam.guides(GUIDES.slice(placed).map(x=>({...x,row:0})));
  const k=/^Key([A-Z])$/.exec(code||'')?.[1]||'';keys.querySelectorAll('kbd').forEach((el,n)=>{if(el.textContent===k||(!'ASDF'.includes(k||'-')&&n===placed-1)){el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');}});
  keys.querySelectorAll('.coach-steps i').forEach((el,n)=>el.classList.toggle('on',n<placed));
+ if(pad!==undefined){window.Jam.guides([]);show(5);return;}
  if(placed>=GUIDES.length)setTimeout(()=>show(1),450);
 }
 function show(n){i=n;document.body.classList.toggle('coach-on',n>=0);
+ $('wide').classList.toggle('coach-return',n===4);
+ const input=document.querySelector('.native-typing');
+ input.classList.toggle('coach-type',n===5);
+ input.placeholder=n===5?(window.Jam.state.pitchMode==='fixed'?'A 입력':'한 글자 입력'):'타이핑으로 연주';
  keys.hidden=n!==0;ring.hidden=!(n===1||n===2);
  // view step (after ▶): the score shows in the view mode while it plays; a glowing ESC keycap shows how to go back
- if(n===4){if(!escView){escView=document.createElement('div');escView.className='coach-esc coach-esc-view';escView.setAttribute('aria-hidden','true');escView.innerHTML='<kbd>ESC</kbd>';document.body.append(escView);}escView.hidden=false;setTimeout(()=>{if(i===4)chime(.04);},700);}
- else if(escView)escView.hidden=true;
+ if(n===4){escView.textContent=mobile.matches?'편집으로 돌아가기':'Esc';escView.hidden=false;setTimeout(()=>{if(i===4)chime(.04);},700);}
+ else escView.hidden=true;
  if(n===1||n===2){ring.querySelector('.coach-num').textContent=n;ring.classList.remove('urge');stepAt=performance.now();
   // where the eye should go: sparkles flow from the placed notes (or from ▶) to the button, and the rest of the screen dims
   const from=n===1?[...document.querySelectorAll('[data-note^="tut-"]')].map(el=>el.getBoundingClientRect()):[$('play').getBoundingClientRect()];
@@ -72,7 +111,7 @@ function show(n){i=n;document.body.classList.toggle('coach-on',n>=0);
 function place(){
  if(i<0||!keys)return;
  if(i===0){const v=$('viewport').getBoundingClientRect();keys.style.left=v.left+v.width/2+'px';keys.style.top=v.top+v.height*.6+'px';return;}
- if(i!==1&&i!==2)return;const t=$(i===1?'play':'png');if(!t)return;const r=t.getBoundingClientRect(),d=Math.max(r.width,r.height)+30,cx=r.left+r.width/2,cy=r.top+r.height/2;
+ if(i!==1&&i!==2)return;const t=$(i===1?'play':'png');if(!t)return;const r=t.getBoundingClientRect(),d=Math.hypot(r.width,r.height)+12,cx=r.left+r.width/2,cy=r.top+r.height/2;
  Object.assign(ring.style,{left:cx-d/2+'px',top:cy-d/2+'px',width:d+'px',height:d+'px',visibility:''});
  Object.assign(spot.style,{left:cx-d/2+'px',top:cy-d/2+'px',width:d+'px',height:d+'px'});
 }
@@ -97,23 +136,32 @@ function flow(fromRects,to){
 let actx=null;
 function chime(gain=.05){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();const t0=actx.currentTime+.02;
  [[1318.5,0],[1760,.16]].forEach(([f,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t0+d);g.gain.linearRampToValueAtTime(gain,t0+d+.015);g.gain.exponentialRampToValueAtTime(.0001,t0+d+.9);o.connect(g).connect(actx.destination);o.start(t0+d);o.stop(t0+d+1);});}catch{}}
+function preview(){
+ bypass=true;
+ try{if(!document.body.classList.contains('shared-view'))$('wide').click();}
+ finally{bypass=false;}
+ window.Jam.play?.();
+ show(4);
+}
 function tick(){
  if(i<0)return;
  if((i===1||i===2)&&performance.now()-stepAt>5000&&!ring.classList.contains('urge')){ring.classList.add('urge');chime(.035);}
- if(i===1&&$('play').textContent==='Ⅱ'){bypass=true;try{if(!document.body.classList.contains('shared-view'))$('view-mode')?.click();}finally{bypass=false;}window.Jam.play?.();show(4);}
- else if(i===4&&!document.body.classList.contains('shared-view'))show(2);
+ if(i===4&&!document.body.classList.contains('shared-view'))show(2);
  else if(i===3&&!document.querySelector('#save-dialog[open]'))finish(true);
 }
 function begin(){
  if(!window.Jam)return;if(!keys)build();
+ practiceGroup=null;
+ keys.querySelector('.touch-instruction').textContent='아래 악기를 한 번 눌러보세요';
+ if(mobile.matches&&document.body.classList.contains('dock-collapsed'))document.querySelector('.dock-min').click();
  const s=window.Jam.state;window.Jam.pause?.();
  if(!stored(STASH))store(STASH,JSON.stringify({notes:s.notes,eggs:s.eggs||[]}));
- s.notes=[];s.eggs=[];placed=0;window.Jam.render();window.Jam.guides(GUIDES.map(g=>({...g,row:0})));
- $('viewport').scrollTop=0;show(0);clearInterval(timer);timer=setInterval(tick,200);
+ s.notes=[];s.eggs=[];placed=0;window.Jam.render();window.Jam.guides(mobile.matches?[]:GUIDES.map(g=>({...g,row:0})));
+ $('viewport').scrollTop=0;show(mobile.matches?5:0);clearInterval(timer);timer=setInterval(tick,200);
 }
 function finish(completed){
- clearInterval(timer);i=-1;document.body.classList.remove('coach-on');
- if(keys){keys.hidden=true;ring.hidden=true;spot.hidden=true;ring.classList.remove('urge');}escHint?.classList.remove('coach-hl');escHint=null;if(escView)escView.hidden=true;
+ clearInterval(timer);$('wide').classList.remove('coach-return');i=-1;document.body.classList.remove('coach-on');
+ if(keys){keys.hidden=true;ring.hidden=true;spot.hidden=true;ring.classList.remove('urge');}escHint?.classList.remove('coach-hl');escHint=null;escView.hidden=true;
  if(document.body.classList.contains('shared-view')&&!window.Jam?.state?.__shared){bypass=true;try{document.querySelector('.mode-switch [data-mode="edit"]')?.click();}finally{bypass=false;}}
  window.Jam?.pause?.();restore();store(KEY,'1');
  if(completed){window.JamEaster?.say?.('연주하다가 겨울 단어를 찾아보세요 ❄','',{ms:3800});hintHelp();}

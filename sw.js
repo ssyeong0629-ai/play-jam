@@ -1,4 +1,4 @@
-const cacheName = 'play-jam-v15';
+const cacheName = 'mobile12-playjam-v1';
 const files = ['./', './index.html', './css/app.css', './js/icons.js', './assets/audio/bank.js',
   './js/audio.js', './js/candidates.js', './js/harmony.js', './js/model.js', './js/diverse.js', './js/themes.js',
   './js/app.js', './js/jelly.js', './js/experience.js', './js/install.js', './js/easter.js', './js/tutorial.js','./js/save.js', './js/staff-sparkles.js',
@@ -21,7 +21,7 @@ self.addEventListener('fetch', event => {
 
 self.addEventListener('activate', event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(
-    keys.filter(key => key.startsWith('play-jam-') && key !== cacheName)
+    keys.filter(key => key.startsWith('mobile12-playjam-') && key !== cacheName)
       .map(key => caches.delete(key))
   )).then(() => self.clients.claim()));
 });

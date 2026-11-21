@@ -627,9 +627,6 @@ body:not(.shared-view) #loop{display:none!important}
 #restart{display:inline-flex;align-items:center;justify-content:center}
 #restart svg{display:block}
 /* 초안10: ESC keycap shown in the view mode during the tutorial */
-.coach-esc-view{position:fixed;left:50%;bottom:96px;z-index:62;transform:translateX(-50%);pointer-events:none}
-.coach-esc-view[hidden]{display:none}
-.coach-esc-view kbd{display:grid;place-items:center;min-width:46px;height:30px;padding:0 10px;border:1px solid #ffffffaa;border-radius:7px;background:#ffffff1a;color:#fff;font:13px Arial;box-shadow:0 0 16px #ffffff66;animation:coach-key 1.6s ease-in-out infinite}
 /* 초안10: tutorial — the save window's × glows instead of an ESC keycap */
 #save-dialog .save-x.coach-hl{border-radius:50%;outline:2px dotted #fff;outline-offset:3px;box-shadow:0 0 14px 4px #ffffff55;color:#fff;animation:coach-x 1.2s ease-in-out infinite alternate}
 @keyframes coach-x{from{box-shadow:0 0 8px 2px #ffffff33}to{box-shadow:0 0 18px 6px #ffffff77}}
@@ -738,3 +735,187 @@ body.collapsed .workspace-header{padding-left:14px!important}
 #loop svg{width:12px;height:12px}
 #loop[aria-pressed="true"]{color:#fff!important;border-color:#fff;box-shadow:0 0 8px #ffffff66}
 #loop[aria-pressed="true"]::after{content:'';position:absolute;right:1px;top:1px;width:5px;height:5px;border-radius:50%;background:#fff}
+
+
+/* Score view entry and exit */
+.playback-buttons #wide {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  min-width: 26px;
+  min-height: 26px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ink);
+}
+.playback-buttons #wide:hover { border-color: var(--line); }
+#wide .contract-icon, .shared-view #wide .expand-icon { display: none; }
+.shared-view #wide .contract-icon { display: initial; }
+.shared-view #shared-view-bar { display: none !important; }
+.shared-view .workspace > .playback-buttons {
+  position: relative;
+  align-self: flex-end;
+  flex: none;
+  margin: 12px 16px 0;
+}
+.shared-view .playback-buttons #wide {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  box-sizing: border-box;
+}
+.shared-view #wide svg { width: 12px; height: 12px; }
+#wide .coach-esc-view {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  padding: 4px 8px;
+  border: 1px solid #ffffffaa;
+  border-radius: 6px;
+  background: #242424;
+  color: #fff;
+  font: 12px/1.25 system-ui;
+  pointer-events: none;
+  animation: coach-key 1.6s ease-in-out infinite;
+}
+#wide .coach-esc-view[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  #wide .coach-esc-view { animation: none; }
+}
+/* Keep the numbered cue on the score side of the toolbar. */
+#coach-ring .coach-num {
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+.shared-view .playback-buttons #loop { min-height: 26px !important; }
+
+/* Let controls wrap as groups when the score shares space with the sidebar. */
+@media (max-width: 900px) {
+  .workspace-header, body.collapsed .workspace-header {
+    flex-wrap: wrap;
+    height: auto !important;
+    min-height: 46px !important;
+    padding: 5px 10px !important;
+    row-gap: 4px !important;
+  }
+  .workspace-header button, .dock-mode { white-space: nowrap; }
+}
+@media (max-width: 600px) {
+  header.global { flex-flow: row nowrap; justify-content: space-between; }
+  header.global .brand { width: auto; }
+  header.global .transport:empty { display: none; }
+  .workspace-header, body.collapsed .workspace-header {
+    display: grid;
+    grid-template-columns: auto auto auto auto 1fr;
+    grid-template-areas: "fold play undo redo del" "zoom zoom copy save reset";
+    justify-items: start;
+    column-gap: 4px !important;
+  }
+  .workspace-header #collapse { grid-area: fold; }
+  .workspace-header .playback-buttons { grid-area: play; }
+  .workspace-header #undo { grid-area: undo; }
+  .workspace-header #redo { grid-area: redo; }
+  .workspace-header #delete-mode { grid-area: del; }
+  .workspace-header .zoom { grid-area: zoom; }
+  .workspace-header #copy { grid-area: copy; }
+  .workspace-header #png { grid-area: save; }
+  .workspace-header #reset { grid-area: reset; }
+  .workspace-header > :is(#collapse,.playback-buttons,.zoom,#copy,#reset) { margin: 0 !important; }
+  .workspace-header :is(#copy,#reset) { border-left: 0; }
+  .workspace, #viewport { min-height: 0; }
+  #mobile-dock { max-height: 38dvh; overflow-y: auto; }
+  body.dock-settings main aside#sidebar { max-height: 26dvh; }
+  .shared-view.dock-settings main aside#sidebar { display: none; }
+  .dock-tools button { min-width: 0; white-space: nowrap; padding-inline: 3px; }
+  #tour, #save-dialog { max-height: calc(100dvh - 24px); overflow-y: auto; }
+  #tour .help-grid { grid-template-columns: minmax(0,1fr); }
+  #tour .help-list .keys { flex-basis: 38%; min-width: 0; }
+  #tour .desc, #save-dialog label { word-break: keep-all; overflow-wrap: anywhere; }
+  #save-dialog { padding: 16px; }
+  #save-dialog .save-body { flex-direction: column; align-items: stretch; gap: 14px; }
+  #save-dialog .save-preview canvas { width: min(100%, 28dvh, 200px); height: auto; aspect-ratio: 794/1123; }
+  #save-dialog .save-place { flex-wrap: wrap; gap: 8px; }
+  #save-dialog footer { flex-wrap: wrap; }
+}
+.touch-instruction,#mobile-actions[hidden] {display:none}
+@media(max-width:600px){
+ body{--header:38px}
+ header.global{display:flex;flex-wrap:nowrap;height:38px!important;min-height:38px!important;padding:0 8px!important}
+ header.global .transport{display:none}
+ header.global .global-end{margin:0 0 0 auto}
+ header.global #help{white-space:nowrap;width:auto!important;height:32px!important;min-height:32px}
+ main aside#sidebar,.workspace-header #collapse,.dock-min{display:none!important}
+ .workspace-header,body.collapsed .workspace-header{display:flex;flex-wrap:nowrap;height:42px!important;min-height:42px!important;padding:2px 6px!important;gap:4px!important}
+ .workspace-header .playback-buttons{order:0}
+ .workspace-header #undo{order:1}
+ .workspace-header #png{order:2;margin-left:auto}
+ .workspace-header .dock-more{order:3;font-size:21px!important}
+ .workspace-header .playback-buttons :is(#restart,#play,#wide),.shared-view .playback-buttons :is(#restart,#play,#wide,#loop){min-width:34px!important;width:34px!important;min-height:34px!important;height:34px!important}
+ #mobile-actions{position:absolute;right:6px;top:100%;z-index:5;background:#202020;border:1px solid #555;border-radius:9px;padding:6px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;width:min(248px,96vw);max-height:55dvh;overflow:auto}
+ #mobile-actions button{margin:0!important;min-height:34px}
+ #mobile-actions > :is(#copy,#redo,#delete-mode,#reset)::after{content:attr(aria-label);font:11px system-ui;margin-left:3px}
+ #mobile-actions > :is(#delete-mode,#reset)::after{display:none}
+ #mobile-actions > :is(.zoom,#sound-themes,#visual-themes){grid-column:1/-1;margin:0!important}
+ #mobile-actions .zoom{justify-content:center}
+ #mobile-dock{padding:4px 6px max(4px,env(safe-area-inset-bottom))}
+ body.dock-collapsed .dock-body{display:block}
+ .dock-chip{height:36px;min-height:36px}
+ .dock-body,.dock-tools{margin-top:4px}
+ .dock-key{height:42px;min-height:42px}
+ .dock-key i{bottom:4px}
+ .dock-chips{gap:4px}
+ #coach-keys .coach-caps{display:none}
+ #coach-keys .touch-instruction{display:block;white-space:nowrap;background:#202020;padding:7px 12px;border-radius:8px;font-size:13px}
+ #wide .coach-esc-view{white-space:nowrap}
+ .shared-view .workspace>.playback-buttons{margin:6px 8px 0}
+}
+#mobile-quick{display:none}
+#wide.coach-return{outline:2px solid #fff;outline-offset:2px;box-shadow:0 0 12px #fff8}
+@media(max-width:600px){
+ #mobile-quick{display:grid;grid-template-columns:1fr 1fr;gap:3px 6px;padding:0 6px 4px;position:relative;z-index:22}
+ .shared-view #mobile-quick,.dock-mode{display:none}
+ #mobile-quick #pitch-comparison,#mobile-quick #visual-themes,#mobile-quick #sound-themes{margin:0;min-width:0}
+ #mobile-quick #pitch-comparison{flex-wrap:nowrap}
+ #mobile-quick #pitch-comparison button{padding:4px 2px;white-space:nowrap}
+ #mobile-quick #visual-themes{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+ #mobile-quick #visual-themes button{height:30px;min-height:30px;padding:3px}
+ #mobile-quick .theme-current{min-height:34px;gap:4px;padding:4px 6px}
+ #mobile-quick .theme-label{display:none}
+ .global-end #egg-chip{position:static;width:auto;min-width:0;height:28px;padding:2px 6px;gap:4px;font-size:10px}
+ #coach-keys .coach-steps{display:none}
+ .shared-view .playback-buttons #wide.coach-return{display:flex;width:auto!important;align-items:center;gap:5px;padding:0 8px;background:#fafafa;color:#171717}
+ #wide.coach-return .coach-esc-view{position:static;color:inherit;background:none;border:0;box-shadow:none;padding:0;animation:none;font:bold 12px system-ui}
+}
+@media(max-width:600px){
+ #mobile-dock{position:relative;overflow:visible;max-height:none}
+ #mobile-dock #mobile-quick{grid-template-columns:minmax(108px,2fr) minmax(0,3fr);align-items:center;padding:0 0 4px}
+ #mobile-quick #visual-themes{grid-column:auto}
+ #mobile-quick .theme-options{top:auto;bottom:calc(100% + 4px);left:0;right:auto}
+ #mobile-dock:not(.fixed) .dock-keys{display:none}
+ .dock-tools #pitch-comparison{display:flex;flex:none;flex-wrap:nowrap;gap:2px;margin:0}
+ .dock-tools #pitch-comparison button{padding:0 5px;white-space:nowrap}
+ .dock-random{height:36px;padding:0 6px;border:1px solid var(--line);font-size:12px}
+}
+@media(max-width:600px){
+ main{bottom:var(--keyboard-inset,0px)}
+ .dock-tools .native-typing{flex:1;min-width:54px;max-width:90px;height:34px;resize:none;overflow:hidden;box-sizing:border-box;margin:0;padding:6px 3px;border:1px solid #666;border-radius:8px;color:var(--ink);background:var(--panel);font:16px/20px system-ui;text-align:center}
+ .native-typing::placeholder{font-size:12px;color:#ddd}
+ #mobile-dock:focus-within .native-typing:focus{outline:1px solid #fff}
+}
+@media(max-width:600px){
+ .typing-active #mobile-dock :is(#mobile-quick,.dock-bar,.dock-keys),
+ .typing-active #mobile-dock .dock-tools > :not(.native-typing){display:none}
+ .typing-active #mobile-dock .dock-tools,.typing-active #mobile-dock .dock-body{margin:0}
+ .typing-active #mobile-dock .native-typing,.native-typing.coach-type{max-width:none}
+ .native-typing.coach-type{outline:2px solid white;background:#383838}
+ .typing-active .typed-latest::after{content:'';position:absolute;inset:-4px;border:2px solid white;border-radius:50%;box-shadow:0 0 5px #111;pointer-events:none}
+}
+@media(max-width:600px){
+ #mobile-dock .dock-keys,.dock-tools .dock-rest,.dock-tools .dock-back{display:none}
+ .dock-tools .native-typing{max-width:none;border-color:#888;color:transparent;caret-color:transparent;-webkit-text-fill-color:transparent;text-decoration-color:transparent}
+ .dock-tools .native-typing::placeholder{color:#eee;-webkit-text-fill-color:#eee;opacity:1}
+}

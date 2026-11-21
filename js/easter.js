@@ -20,7 +20,7 @@ const EGGS=[
  {id:'snowflake',name:'눈송이',keys:['SNSTHDDL','SNOWFLAKE']},
  {id:'snowglobe',name:'스노우볼',keys:['TMSHDNQHF','SNOWGLOBE']}
 ];
-const COL_KEY='playjam.eggs.found',STICKER_KEY='playjam.eggs.sticker';
+const COL_KEY='mobile12.playjam.eggs.found',STICKER_KEY='mobile12.playjam.eggs.sticker';
 const $=id=>document.getElementById(id);
 const get=k=>{try{return localStorage.getItem(k);}catch{return null;}},put=(k,v)=>{try{localStorage.setItem(k,v);}catch{}};
 const known=id=>EGGS.some(e=>e.id===id),nameOf=id=>EGGS.find(e=>e.id===id)?.name||'';
@@ -492,8 +492,15 @@ function fillBoard(){const col=collection(),mine=scoreEggs();
  const r=$('egg-chip')?.getBoundingClientRect();if(r){board.style.left=Math.max(12,Math.min(innerWidth-board.offsetWidth-12,r.right-board.offsetWidth))+'px';board.style.top=r.bottom+8+'px';}
 }
 // The chip sits just under the work header on the right, its edge lined up with the Reset label (same side margin).
-function placeChip(){const b=$('egg-chip'),w=document.querySelector('.workspace-header');if(!b||!w)return;const r=w.getBoundingClientRect();if(!r.width){b.style.visibility='hidden';return;}b.style.visibility='';b.style.top=r.bottom+10+'px';const rs=$('reset')?.getBoundingClientRect(),edge=rs&&rs.width?rs.right-10:r.right-18;b.style.right=Math.max(8,innerWidth-edge)+'px';}
-function buildChip(){if($('egg-chip')||!document.querySelector('.workspace-header .zoom'))return;const b=document.createElement('button');b.type='button';b.id='egg-chip';b.className='egg-chip';b.setAttribute('aria-haspopup','dialog');document.body.append(b);b.onclick=()=>toggleBoard();updateChip();placeChip();addEventListener('resize',placeChip);setInterval(placeChip,600);}
+function placeChip(){const b=$('egg-chip'),w=document.querySelector('.workspace-header');if(!b||!w)return;if(matchMedia('(max-width:600px)').matches){
+ const header=document.querySelector('.global-end');
+ if(b.parentElement!==header)header.prepend(b);
+ b.style.visibility='';
+ return;
+}
+if(b.parentElement!==document.body)document.body.append(b);
+const r=w.getBoundingClientRect();if(!r.width){b.style.visibility='hidden';return;}b.style.visibility='';b.style.top=r.bottom+10+'px';const rs=$('reset')?.getBoundingClientRect(),edge=rs&&rs.width?rs.right-10:r.right-18;b.style.right=Math.max(8,innerWidth-edge)+'px';}
+function buildChip(){if($('egg-chip')||!document.querySelector('.workspace-header'))return;const b=document.createElement('button');b.type='button';b.id='egg-chip';b.className='egg-chip';b.setAttribute('aria-haspopup','dialog');document.body.append(b);b.onclick=()=>toggleBoard();updateChip();placeChip();addEventListener('resize',placeChip);setInterval(placeChip,600);}
 buildChip();
 
 // ---------- playback & shared links ----------
