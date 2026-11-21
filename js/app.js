@@ -183,7 +183,7 @@ document.addEventListener('keydown',e=>{
  if(e.metaKey||e.ctrlKey||e.altKey||viewing||inputMode!=='pad'||e.target.closest?.('input,textarea,select,[contenteditable],dialog')||document.querySelector('dialog[open]'))return;
  if(supportedPunctuation.has(e.key)||'，。？！、'.includes(e.key)){e.preventDefault();e.stopImmediatePropagation();if(!e.repeat)punctuationInput(e.key);return;}
  const k=(e.code?.replace(/^(Key|Digit|Numpad)/,'')||e.key).toUpperCase(),mapped=(s.pitchMode==='fixed'?fixedKeyMap:keyMap).get(k);
- if(e.code==='Space'){resetTypeTiming();e.preventDefault();e.stopImmediatePropagation();if(!e.repeat){pause();inputCursor=nextSlot(inputCursor);inputCursor.row=Math.min(inputCursor.row,M.MAX-1);extra=Math.max(extra,M.pageOf(inputCursor.row)+1);render();drawInputCursor(true);remember();}}
+ if(e.code==='Space'&&e.shiftKey){e.preventDefault();e.stopImmediatePropagation();if(!e.repeat)(playing?pause():play());return;}if(e.code==='Space'){resetTypeTiming();e.preventDefault();e.stopImmediatePropagation();if(!e.repeat){pause();inputCursor=nextSlot(inputCursor);inputCursor.row=Math.min(inputCursor.row,M.MAX-1);extra=Math.max(extra,M.pageOf(inputCursor.row)+1);render();drawInputCursor(true);remember();}}
  else if(/^[1-6]$/.test(k)){e.preventDefault();e.stopImmediatePropagation();if(!e.repeat)openKeyPicker(Number(k)-1);}
  else if(mapped){e.preventDefault();e.stopImmediatePropagation();if(!e.repeat){const group=randomInstruments?Math.floor(Math.random()*6):Number(selectedKeyIcon.split('-')[0]);timedInput(group+'-'+lastSlots[group],mapped.y);if(s.pitchMode==='fixed')reactKey(k);}}
  else if(e.key==='Enter'||['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(e.key)){
@@ -224,10 +224,10 @@ function metrics(){
 }
 function visualOffsets(){
  const out=new Map(),rows=new Map(),candidates=[[0,0],[0,-13],[0,13],[-14,0],[14,0],[-14,-13],[14,13],[14,-13],[-14,13]];
- // Icons are drawn exactly where they were placed. Only when one would sit on exactly the same spot as another
- // (same slot and height) is it nudged a little so both stay visible.
+ // Icons are drawn exactly where they were placed. Up to half an icon of overlap is fine; only when one would
+ // cover more than half of another (by area) is it nudged a little so both stay readable.
  for(const n of s.notes){const placed=rows.get(n.row)||[],base=visualKind(n)==='circle'?10:26,x=M.xOf(n.x),y=M.yOf(n.y);let best=null;
-  if(!placed.some(q=>Math.abs(q.x0-x)<1&&Math.abs(q.y0-y)<1)){out.set(n.id,{dx:0,dy:0,size:base});placed.push({x,y,size:base,x0:x,y0:y});rows.set(n.row,placed);continue;}
+  if(!placed.some(q=>{const sz=(base+q.size)/2,ox=Math.max(0,sz-Math.abs(q.x-x)),oy=Math.max(0,sz-Math.abs(q.y-y));return ox*oy>Math.min(base,q.size)**2*.5;})){out.set(n.id,{dx:0,dy:0,size:base});placed.push({x,y,size:base,x0:x,y0:y});rows.set(n.row,placed);continue;}
   search:for(const scale of [1,.82])for(const [dx,dy] of candidates){const size=base*scale,cx=x+dx,cy=y+dy;if(cx-size/2<0||cx+size/2>686)continue;let overlap=0;for(const q of placed){const ox=Math.max(0,(size+q.size)/2+2-Math.abs(cx-q.x)),oy=Math.max(0,(size+q.size)/2+2-Math.abs(cy-q.y));overlap+=ox*oy;}
    const score=overlap*100+dx*dx+dy*dy+(1-scale)*900;if(!best||score<best.score)best={dx,dy,size,score};if(best.score===0)break search;
   }
@@ -267,7 +267,7 @@ function render(anchor=0){
   }
   html+=`<footer><span>PLAY JAM</span><span>${esc(s.date)}</span></footer></section>`;
  }
- pages.innerHTML=html;
+ pages.innerHTML=html;drawGuides();
  pages.querySelectorAll('.row-play').forEach(b=>b.onclick=()=>{pause();pos=Number(b.dataset.from);if(pos>=length()){head();return toast('이 줄 이후에 기호를 놓아주세요.');}head();play();});
  for(const field of ['title','artist']){
   const el=pages.querySelector('.'+field);
@@ -315,11 +315,11 @@ $('viewport').addEventListener('scroll',updateScrollbar,{passive:true});
 async function preview(n){if(performance.now()-previewAt<85)return;previewAt=performance.now();const token=pending;try{await A.prepare([n]);if(token===pending&&!playing)A.note(n,undefined,s.bpm);}catch{toast('음원을 불러오지 못했어요.');}}
 function snapPoint(p,reach=1){
  // Mouse placement uses the same 1/32 slots as keyboard input. A slot counts as taken only when the same
- // instrument already sits there at exactly the same height (the icons would be one on top of the other);
- // any other overlap is allowed so the symbol lands where it was clicked;
+ // instrument would cover more than half of an existing icon of the same instrument (same slot and 0–1 height
+ // steps apart); up to half an icon of overlap is allowed so the symbol lands where it was clicked;
  // then the symbol moves to the next free slot, at most 1 slot away, so it never jumps far from the click.
  const k=Math.round(p.x/PAD_STEP),last=Math.round(1/PAD_STEP)-1,group=icons.get(chosen).group;
- const used=new Set(s.notes.filter(n=>n.row===p.row&&!n.percussion&&icons.get(n.icon).group===group&&n.y===p.y).map(n=>Math.round(n.x/PAD_STEP)));
+ const used=new Set(s.notes.filter(n=>n.row===p.row&&!n.percussion&&icons.get(n.icon).group===group&&Math.abs(n.y-p.y)<2).map(n=>Math.round(n.x/PAD_STEP)));
  for(let d=0;d<=reach;d++)for(const c of d?[k+d,k-d]:[k]){if(c>=0&&c<=last&&!used.has(c))return {...p,x:c*PAD_STEP};}
  return null;
 }
@@ -337,6 +337,10 @@ function showGhost(e){
  const tmp={id:'ghost',icon:chosen,row:q.row,x:q.x,y:q.y};s.notes.push(tmp);let off;try{off=visualOffsets().get('ghost');}finally{s.notes.pop();}
  ghost.style.left=(M.xOf(q.x)+(off?.dx||0)-part*642/divisions)*staffScaleX+'px';ghost.style.top=M.yOf(q.y)+(off?.dy||0)+'px';if(ghost.parentElement!==row)row.append(ghost);}
 $('pages').addEventListener('pointermove',showGhost);$('pages').addEventListener('pointerleave',hideGhost);$('pages').addEventListener('pointerdown',hideGhost);
+// Tutorial guides: faint symbols at preset spots that keys snap onto (js/tutorial.js). Redrawn after every render.
+let guideNotes=[];
+function drawGuides(){document.querySelectorAll('.note-guide').forEach(e=>e.remove());for(const g of guideNotes){const part=segmentOf(g.x),row=document.querySelector(`.staff[data-row="${g.row}"][data-part="${part}"]`);if(!row)continue;const el=document.createElement('div');el.className='note note-ghost note-guide';el.setAttribute('aria-hidden','true');el.innerHTML=`<span class="shape" style="width:26px;height:26px">${noteUse({id:'guide',icon:g.icon})}</span>`;el.style.left=(M.xOf(g.x)-part*642/divisions)*staffScaleX+'px';el.style.top=M.yOf(g.y)+'px';row.append(el);}}
+function addNote(g){const group=icons.get(g.icon).group,pool=JamVoicePools[group];const n={id:g.id||'n'+Date.now().toString(36)+Math.random().toString(36).slice(2,7),icon:g.icon,row:g.row,x:g.x,y:g.y,...(pool?{voice:pool[Math.floor(Math.random()*pool.length)]}:{})};s.notes.push(n);render();preview(n);return n;}
 const stampInterval = 90;
 const viewport = $('viewport');
 function noteAt(x,y){
@@ -529,5 +533,19 @@ comparison.querySelectorAll('[data-pitch]').forEach(b=>b.addEventListener('click
 $('random-instrument').addEventListener('click',()=>setTimeout(syncDock));
 $('pages').addEventListener('pointerdown',e=>{if(e.pointerType!=='touch'||viewing||deleteMode)return;const before=s.notes.length;setTimeout(()=>{if(s.notes.length>before)haptic();},0);},true);
 syncDock();if(dockPref('min')==='1')setDockMin(true);
-window.Jam={get state(){return s;},svgPage,render,play,pause};
+// The ⏮ ▶ pair lives in the work header right after Delete. In the view mode it stays at exactly the same spot on
+// screen (it floats there, with Loop added) instead of jumping to a bottom bar, so the eye doesn't lose it.
+{const pbx=document.querySelector('.playback-buttons');let last=null;
+ const remember=()=>{if(document.body.classList.contains('shared-view')||!pbx)return;const r=pbx.getBoundingClientRect();if(r.width)last={left:r.left,top:r.top};};
+ const placeTransport=()=>{if(!pbx)return;
+  if(document.body.classList.contains('shared-view')){const at=last||{left:($('viewport')?.getBoundingClientRect().left||0)+20,top:(document.querySelector('header.global')?.getBoundingClientRect().bottom||52)+14};
+   if(pbx.parentElement!==document.body)document.body.append(pbx);pbx.classList.add('floating');pbx.style.left=at.left+'px';pbx.style.top=at.top+'px';}
+  else{pbx.classList.remove('floating');pbx.style.left=pbx.style.top='';const d=$('delete-mode');if(d&&pbx.previousElementSibling!==d)d.after(pbx);remember();}};
+ new MutationObserver(placeTransport).observe(document.body,{attributes:true,attributeFilter:['class']});placeTransport();
+ addEventListener('resize',()=>{remember();if(document.body.classList.contains('shared-view'))placeTransport();});setInterval(remember,800);}
+// Share (🔗) and save (⬇) live in the work header too, between the zoom and Reset; the top bar keeps only 도움말.
+{const ws=document.querySelector('.workspace-header'),r=$('reset');for(const id of ['copy','png']){const b=$(id);if(ws&&b&&r)ws.insertBefore(b,r);}}
+// Shortcut: Shift+Space plays / pauses from anywhere (Space alone moves to the next slot while typing).
+addEventListener('keydown',e=>{if(e.code!=='Space'||!e.shiftKey||e.metaKey||e.ctrlKey||e.altKey||e.repeat)return;if(e.target.closest?.('input,textarea,select,[contenteditable]')||document.querySelector('dialog[open]'))return;e.preventDefault();e.stopImmediatePropagation();playing?pause():play();},true);
+window.Jam={get state(){return s;},guides(list){guideNotes=list||[];drawGuides();},addNote,svgPage,render,play,pause};
 })();

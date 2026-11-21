@@ -1,62 +1,127 @@
 'use strict';
-// Follow-along tutorial without words (3 steps): light and translucent icons show what to do next.
-//  ① glowing A S D F keycaps in the middle of the score → place 3 symbols
-//  ② a white dotted circle + a soft round glow on ▶, with a fixed number 1 → press play
-//  ③ the same on ⬇ with a fixed number 2 → open the save window
-// Shown once after START (remembered in this browser). No close mark on screen; Esc ends it quietly. The help dialog has "튜토리얼 다시 보기".
+// Guided first-play tutorial (no words, except key labels):
+//  ① Glowing A S D F keycaps. Four faint instruments wait at the start of the first line; any key snaps the next one into place
+//     (other clicks and keys are paused meanwhile).
+//  ② After the fourth, snow flows from the notes to ▶, the rest of the screen dims, and a dotted glowing
+//     circle with "1" sits on ▶ with a soft "띵–동" chime — only ▶ (or Space) works — listen. If nothing happens for 5s
+//     the circle pulses harder (and chimes once more, softer).
+//  ②' Pressing ▶ switches to the view (감상) mode while it plays; a glowing ESC keycap (with a soft chime) shows how to
+//     come back. Esc returns to editing.
+//  ③ A circle with "2" on ⬇ — the save window opens; its × button glows (dotted circle) to show how to leave it.
+//  When the save window closes: the four tutorial notes disappear (the score goes back to how it was), a small
+//  "연주하다가 겨울 단어를 찾아보세요" message shows and the ? button glows softly for ~3s.
+// Shown once after START (remembered in this browser). Esc during ①–② ends it early (also cleans up).
+// The help dialog has "튜토리얼 다시 보기". The user's own score is set aside during the tutorial and put back after
+// (kept in this browser, so even a reload in the middle restores it).
 (()=>{
-const KEY='playjam.tutorial.done',NEED=3;
+const KEY='playjam.tutorial.done',STASH='playjam.tutorial.stash';
 const $=id=>document.getElementById(id);
-let i=-1,keys,hint,ring,timer,startNotes=0;
+// four guides from the start of the first line, close together (3 slots apart), one per key A S D F
+const GUIDES=[{icon:'0-1',x:1/32,y:8},{icon:'1-1',x:4/32,y:6},{icon:'2-1',x:7/32,y:7},{icon:'3-1',x:10/32,y:4}];
+let i=-1,keys,ring,spot,timer,placed=0,escHint=null,stepAt=0,bypass=false,escView=null;
 const stored=k=>{try{return localStorage.getItem(k);}catch{return null;}};
-const store=(k,v)=>{try{localStorage.setItem(k,v);}catch{}};
+const store=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v);}catch{}};
+
+// put the user's own score back (also after a reload in the middle of the tutorial)
+function restore(){const raw=stored(STASH);if(!raw||!window.Jam)return;try{const st=JSON.parse(raw),s=window.Jam.state;s.notes=st.notes||[];s.eggs=st.eggs||[];}catch{}store(STASH,null);window.Jam.guides?.([]);window.Jam.render();}
+restore();
+
 function build(){
  keys=document.createElement('div');keys.id='coach-keys';keys.setAttribute('aria-hidden','true');
- keys.innerHTML='<div class="coach-caps"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd></div><div class="coach-steps"><i></i><i></i><i></i></div>';
- hint=document.createElement('div');hint.id='coach-hint';
- hint.hidden=true;
+ keys.innerHTML='<div class="coach-caps"><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><kbd>F</kbd></div><div class="coach-steps"><i></i><i></i><i></i><i></i></div>';
  ring=document.createElement('div');ring.id='coach-ring';ring.setAttribute('aria-hidden','true');ring.innerHTML='<i class="coach-glow"></i><i class="coach-dash"></i><b class="coach-num"></b>';
- document.body.append(ring,keys,hint);
- addEventListener('keydown',e=>{if(i>=0&&e.key==='Escape'&&!document.querySelector('dialog[open]'))finish(false);},true);
- // pressing a key lights up its keycap
- addEventListener('keydown',e=>{if(i!==0)return;const k=/^Key([A-Z])$/.exec(e.code||'')?.[1];keys.querySelectorAll('kbd').forEach(el=>{if(el.textContent===k){el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');}});},true);
+ spot=document.createElement('div');spot.id='coach-spot';spot.setAttribute('aria-hidden','true');spot.hidden=true;
+ document.body.append(spot,ring,keys);
+ // keys: during ① any letter/number key places the next guide; other keys are paused until the save window
+ addEventListener('keydown',e=>{
+  if(i<0)return;
+  if(e.key==='Escape'){if(i===4)return;if(i<=2&&!document.querySelector('dialog[open]')){e.preventDefault();finish(false);}return;}
+  if(i===3)return;                                   // the save window handles its own keys
+  if(i===1&&e.code==='Space')return;                 // Space also plays
+  if(e.metaKey||e.ctrlKey)return;
+  e.preventDefault();e.stopImmediatePropagation();
+  if(i===0&&!e.repeat&&e.key.length===1)placeNext(e.code);
+ },true);
+ // clicks: only the highlighted button works during ②–③; nothing during ①
+ const gate=e=>{if(i<0||i===3||bypass)return;const ok=(i===1&&e.target.closest?.('#play'))||(i===2&&e.target.closest?.('#png'))||(i===4&&e.target.closest?.('#edit-shared'));if(!ok){e.preventDefault();e.stopImmediatePropagation();}};
+ for(const t of ['pointerdown','mousedown','click','dblclick'])addEventListener(t,gate,{capture:true});
  addEventListener('resize',place);$('viewport').addEventListener('scroll',place,{passive:true});
- $('png').addEventListener('click',()=>{if(i===2)finish(true);},true);
+ $('png').addEventListener('click',()=>{if(i===2)setTimeout(()=>show(3),60);},true);
+}
+function placeNext(code){
+ const g=GUIDES[placed];if(!g)return;
+ window.Jam.addNote({...g,row:0,id:'tut-'+placed});placed++;
+ window.Jam.guides(GUIDES.slice(placed).map(x=>({...x,row:0})));
+ const k=/^Key([A-Z])$/.exec(code||'')?.[1]||'';keys.querySelectorAll('kbd').forEach((el,n)=>{if(el.textContent===k||(!'ASDF'.includes(k||'-')&&n===placed-1)){el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');}});
+ keys.querySelectorAll('.coach-steps i').forEach((el,n)=>el.classList.toggle('on',n<placed));
+ if(placed>=GUIDES.length)setTimeout(()=>show(1),450);
 }
 function show(n){i=n;document.body.classList.toggle('coach-on',n>=0);
- keys.hidden=n!==0;hint.hidden=true;ring.hidden=n===0;
- if(n>0){hint.dataset.step=n;ring.querySelector('.coach-num').textContent=n;}
+ keys.hidden=n!==0;ring.hidden=!(n===1||n===2);
+ // view step (after ▶): the score shows in the view mode while it plays; a glowing ESC keycap shows how to go back
+ if(n===4){if(!escView){escView=document.createElement('div');escView.className='coach-esc coach-esc-view';escView.setAttribute('aria-hidden','true');escView.innerHTML='<kbd>ESC</kbd>';document.body.append(escView);}escView.hidden=false;setTimeout(()=>{if(i===4)chime(.04);},700);}
+ else if(escView)escView.hidden=true;
+ if(n===1||n===2){ring.querySelector('.coach-num').textContent=n;ring.classList.remove('urge');stepAt=performance.now();
+  // where the eye should go: sparkles flow from the placed notes (or from ▶) to the button, and the rest of the screen dims
+  const from=n===1?[...document.querySelectorAll('[data-note^="tut-"]')].map(el=>el.getBoundingClientRect()):[$('play').getBoundingClientRect()];
+  flow(from,$(n===1?'play':'png').getBoundingClientRect());setTimeout(()=>{if(i===n)chime();},1150);}
+ spot.hidden=!(n===1||n===2);
+ // save step: the window's × button glows (dotted circle) to show how to leave
+ if(n===3){const x=document.querySelector('#save-dialog .save-x');if(x&&!x.classList.contains('coach-hl')){x.classList.add('coach-hl');escHint=x;setTimeout(()=>{if(i===3)chime(.035);},500);}}
  place();}
 function place(){
  if(i<0||!keys)return;
- if(i===0){const v=$('viewport').getBoundingClientRect();keys.style.left=v.left+v.width/2+'px';keys.style.top=v.top+v.height*.38+'px';return;}
- const t=$(i===1?'play':'png');if(!t)return;const r=t.getBoundingClientRect();
- // a circle of light centered on the button, a bit larger than it; the × sits at its lower right
- const d=Math.max(r.width,r.height)+30,cx=r.left+r.width/2,cy=r.top+r.height/2;
- Object.assign(ring.style,{left:cx-d/2+'px',top:cy-d/2+'px',width:d+'px',height:d+'px'});
- hint.style.left=Math.min(innerWidth-16,cx+d/2+4)+'px';hint.style.top=cy+d/2-6+'px';
+ if(i===0){const v=$('viewport').getBoundingClientRect();keys.style.left=v.left+v.width/2+'px';keys.style.top=v.top+v.height*.6+'px';return;}
+ if(i!==1&&i!==2)return;const t=$(i===1?'play':'png');if(!t)return;const r=t.getBoundingClientRect(),d=Math.max(r.width,r.height)+30,cx=r.left+r.width/2,cy=r.top+r.height/2;
+ Object.assign(ring.style,{left:cx-d/2+'px',top:cy-d/2+'px',width:d+'px',height:d+'px',visibility:''});
+ Object.assign(spot.style,{left:cx-d/2+'px',top:cy-d/2+'px',width:d+'px',height:d+'px'});
 }
+// Soft white snow flies from the given boxes to the target button along gentle curves, then bursts there
+// like a tiny firework of snow (~1.8s in all).
+function flow(fromRects,to){
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches||!fromRects.length)return;
+ const c=document.createElement('canvas'),x=c.getContext('2d'),dpr=Math.min(devicePixelRatio||1,2),W=innerWidth,H=innerHeight;
+ c.className='coach-flow';c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);document.body.append(c);
+ const tx=to.left+to.width/2,ty=to.top+to.height/2,parts=[],burst=[];
+ fromRects.forEach(r=>{for(let k=0;k<12;k++){const sx=r.left+r.width/2+(Math.random()-.5)*14,sy=r.top+r.height/2+(Math.random()-.5)*14;parts.push({sx,sy,cx:(sx+tx)/2+(Math.random()-.5)*160,cy:Math.min(sy,ty)-40-Math.random()*90,d:Math.random()*300,s:.7+Math.random()*1.1});}});
+ const start=performance.now(),fly=900,arrive=fly+300;let last=start,burstDone=false;
+ const dot=(px,py,r,a)=>{x.globalAlpha=a*.18;x.fillStyle='#fff';x.beginPath();x.arc(px,py,r*2.6,0,Math.PI*2);x.fill();x.globalAlpha=a;x.beginPath();x.arc(px,py,r,0,Math.PI*2);x.fill();};
+ (function frame(now){const t=now-start,dt=Math.min(.05,(now-last)/1000);last=now;x.clearRect(0,0,W,H);x.globalCompositeOperation='lighter';
+  for(const p of parts){const u=Math.min(1,Math.max(0,(t-p.d)/fly));if(!u||u>=1)continue;const e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2,a=(1-e)*(1-e),b=2*e*(1-e),q=e*e;
+   dot(a*p.sx+b*p.cx+q*tx,a*p.sy+b*p.cy+q*ty,p.s,.55);}
+  if(t>=arrive&&!burstDone){burstDone=true;for(let k=0;k<40;k++){const an=Math.random()*Math.PI*2,sp=50+Math.random()*120;burst.push({x:tx,y:ty,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp,life:0,max:.7+Math.random()*.5,s:.6+Math.random()*1});}}
+  for(const b of burst){b.life+=dt;b.vx*=Math.exp(-2.6*dt);b.vy=b.vy*Math.exp(-2.6*dt)+30*dt;b.x+=b.vx*dt;b.y+=b.vy*dt;const f=Math.max(0,1-b.life/b.max);if(f)dot(b.x,b.y,b.s*(.6+.4*f),.6*f);}
+  if(t<arrive+1300)requestAnimationFrame(frame);else c.remove();})(start);
+}
+// A soft two-note bell ("띵–동", quiet sine tones with a gentle fade) that says "press something now".
+let actx=null;
+function chime(gain=.05){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();if(actx.state==='suspended')actx.resume();const t0=actx.currentTime+.02;
+ [[1318.5,0],[1760,.16]].forEach(([f,d])=>{const o=actx.createOscillator(),g=actx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,t0+d);g.gain.linearRampToValueAtTime(gain,t0+d+.015);g.gain.exponentialRampToValueAtTime(.0001,t0+d+.9);o.connect(g).connect(actx.destination);o.start(t0+d);o.stop(t0+d+1);});}catch{}}
 function tick(){
- if(i<0)return;const J=window.Jam;if(!J)return;
- const away=document.body.classList.contains('shared-view')||!!document.querySelector('dialog[open]');
- keys.style.visibility=hint.style.visibility=ring.style.visibility=away?'hidden':'';if(away)return;
- if(i===0){const placed=Math.max(0,J.state.notes.length-startNotes);keys.querySelectorAll('.coach-steps i').forEach((el,k)=>el.classList.toggle('on',k<placed));if(placed>=NEED)show(1);}
- else if(i===1){if($('play').textContent==='Ⅱ')show(2);}
+ if(i<0)return;
+ if((i===1||i===2)&&performance.now()-stepAt>5000&&!ring.classList.contains('urge')){ring.classList.add('urge');chime(.035);}
+ if(i===1&&$('play').textContent==='Ⅱ'){bypass=true;try{if(!document.body.classList.contains('shared-view'))$('view-mode')?.click();}finally{bypass=false;}window.Jam.play?.();show(4);}
+ else if(i===4&&!document.body.classList.contains('shared-view'))show(2);
+ else if(i===3&&!document.querySelector('#save-dialog[open]'))finish(true);
 }
 function begin(){
- if(!keys)build();startNotes=window.Jam?.state.notes.length||0;show(0);clearInterval(timer);timer=setInterval(tick,200);
+ if(!window.Jam)return;if(!keys)build();
+ const s=window.Jam.state;window.Jam.pause?.();
+ if(!stored(STASH))store(STASH,JSON.stringify({notes:s.notes,eggs:s.eggs||[]}));
+ s.notes=[];s.eggs=[];placed=0;window.Jam.render();window.Jam.guides(GUIDES.map(g=>({...g,row:0})));
+ $('viewport').scrollTop=0;show(0);clearInterval(timer);timer=setInterval(tick,200);
 }
 function finish(completed){
- clearInterval(timer);i=-1;document.body.classList.remove('coach-on');if(keys){keys.hidden=true;hint.hidden=true;ring.hidden=true;}store(KEY,'1');
- if(completed){window.JamEaster?.say?.('완성! ❄','연주하다가 겨울 단어를 찾아보세요');hintHelp();}
+ clearInterval(timer);i=-1;document.body.classList.remove('coach-on');
+ if(keys){keys.hidden=true;ring.hidden=true;spot.hidden=true;ring.classList.remove('urge');}escHint?.classList.remove('coach-hl');escHint=null;if(escView)escView.hidden=true;
+ if(document.body.classList.contains('shared-view')&&!window.Jam?.state?.__shared){bypass=true;try{document.querySelector('.mode-switch [data-mode="edit"]')?.click();}finally{bypass=false;}}
+ window.Jam?.pause?.();restore();store(KEY,'1');
+ if(completed){window.JamEaster?.say?.('연주하다가 겨울 단어를 찾아보세요 ❄','',{ms:3800});hintHelp();}
 }
 // After finishing, the ? (help) button glows softly for ~3s, without a number — a light hint, not a step.
-// It waits until the save window (opened by the last step) is closed.
-function hintHelp(){const startAt=Date.now();(function wait(){
- if(document.querySelector('dialog[open]')){if(Date.now()-startAt<20000)setTimeout(wait,300);return;}
- const t=$('help');if(!t||!ring)return;const r=t.getBoundingClientRect(),d=Math.max(r.width,r.height)+30;
+function hintHelp(){setTimeout(()=>{const t=$('help');if(!t||!ring)return;const r=t.getBoundingClientRect(),d=Math.max(r.width,r.height)+30;
  Object.assign(ring.style,{left:r.left+r.width/2-d/2+'px',top:r.top+r.height/2-d/2+'px',width:d+'px',height:d+'px',visibility:''});
- ring.classList.add('soft');ring.hidden=false;setTimeout(()=>{ring.hidden=true;ring.classList.remove('soft');},3200);})();}
+ ring.classList.add('soft');ring.hidden=false;setTimeout(()=>{ring.hidden=true;ring.classList.remove('soft');},3200);},600);}
 // Start after START on a first visit (not for shared links, which open in view mode).
 $('start').addEventListener('click',()=>{if(!stored(KEY)&&!document.body.classList.contains('shared-view'))setTimeout(begin,250);});
 window.JamTutorial={begin,finish};

@@ -491,8 +491,8 @@ function fillBoard(){const col=collection(),mine=scoreEggs();
  board.querySelectorAll('canvas[data-egg]').forEach(cv=>drawSticker(cv.getContext('2d'),cv.dataset.egg,46,46,88));
  const r=$('egg-chip')?.getBoundingClientRect();if(r){board.style.left=Math.max(12,Math.min(innerWidth-board.offsetWidth-12,r.right-board.offsetWidth))+'px';board.style.top=r.bottom+8+'px';}
 }
-// The chip sits just under the "− 100% + Fit" zoom controls, aligned to their right edge.
-function placeChip(){const b=$('egg-chip'),z=document.querySelector('.workspace-header .zoom');if(!b||!z)return;const r=z.getBoundingClientRect();if(!r.width){b.style.visibility='hidden';return;}b.style.visibility='';b.style.top=r.bottom+6+'px';b.style.right=Math.max(8,innerWidth-r.right)+'px';}
+// The chip sits just under the work header on the right, its edge lined up with the Reset label (same side margin).
+function placeChip(){const b=$('egg-chip'),w=document.querySelector('.workspace-header');if(!b||!w)return;const r=w.getBoundingClientRect();if(!r.width){b.style.visibility='hidden';return;}b.style.visibility='';b.style.top=r.bottom+10+'px';const rs=$('reset')?.getBoundingClientRect(),edge=rs&&rs.width?rs.right-10:r.right-18;b.style.right=Math.max(8,innerWidth-edge)+'px';}
 function buildChip(){if($('egg-chip')||!document.querySelector('.workspace-header .zoom'))return;const b=document.createElement('button');b.type='button';b.id='egg-chip';b.className='egg-chip';b.setAttribute('aria-haspopup','dialog');document.body.append(b);b.onclick=()=>toggleBoard();updateChip();placeChip();addEventListener('resize',placeChip);setInterval(placeChip,600);}
 buildChip();
 
